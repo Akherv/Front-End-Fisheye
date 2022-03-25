@@ -6,6 +6,15 @@
     background-color: #FAFAFA;
     height: 300px;
     margin: 0 100px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
+    padding: 0 4%;
+}
+
+.photograph-header__presentation {
+    min-height: 200px;
+    grid-column: 30%;
 }
 
 .contact_button {
@@ -19,6 +28,15 @@
     background-color: #901C1C;
     border-radius: 5px;
     cursor: pointer;
+    grid-column: 30%;
+}
+
+.photograph-header__picture {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    grid-column: 30%;
 }
 
 .modal {

@@ -10,20 +10,13 @@ function photographerFactory(data) {
     } = data;
 
     const picture = `assets/photographers/Photographers_ID/${portrait}`;
-    // const portfolio = `photographer.html/?id=${id}`;
-    const portfolio = `#`;
+    const portfolio = `photographer.html?id=${id}`;
 
     function getUserCardDOM() {
         const article = document.createElement('article');
         const a = document.createElement('a');
         a.setAttribute("href", portfolio);
         a.setAttribute("aria-label", name);
-        a.addEventListener('click', function () {
-            console.log(a);
-            // let params = (new URL(document.location)).searchParams;
-            // let idPortfolio = params.get('id'); 
-            // console.log(idPortfolio);
-        });
         const img = document.createElement('img');
         img.setAttribute("src", picture);
         img.setAttribute("alt", "");
@@ -47,6 +40,3 @@ function photographerFactory(data) {
         getUserCardDOM
     }
 }
-
-
-
