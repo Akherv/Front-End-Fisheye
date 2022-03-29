@@ -1,12 +1,14 @@
     async function getPhotographers() {
         var myHeaders = new Headers();
 
-        var myInit = { method: 'GET',
-                       headers: myHeaders,
-                       mode: 'cors',
-                       cache: 'default' };
+        var myInit = {
+            method: 'GET',
+            headers: myHeaders,
+            mode: 'cors',
+            cache: 'default'
+        };
 
-        let url = "./data/photographers.json";
+        let url = './data/photographers.json';
 
         try {
             const response = await fetch(url, myInit);
@@ -15,6 +17,11 @@
             //     photographers
             // } = datas;
             console.log(datas);
+
+            localStorage.setItem('dataPhotographers', JSON.stringify(datas.photographers));
+
+            localStorage.setItem('dataMedias', JSON.stringify(datas.media));
+
             return ({
                 photographers: [...datas.photographers]
             });
@@ -26,7 +33,7 @@
     }
 
     async function displayData(photographers) {
-        const photographersSection = document.querySelector(".photographer_section");
+        const photographersSection = document.querySelector('.photographer_section');
 
         photographers.forEach((photographer) => {
             const photographerModel = photographerFactory(photographer);
@@ -34,9 +41,9 @@
             photographersSection.appendChild(userCardDOM);
         });
 
-        
-        
-     
+
+
+
     };
 
     async function init() {

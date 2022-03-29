@@ -15,11 +15,13 @@ function photographerFactory(data) {
     function getUserCardDOM() {
         const article = document.createElement('article');
         const a = document.createElement('a');
-        a.setAttribute("href", portfolio);
-        a.setAttribute("aria-label", name);
+        a.setAttribute('href', portfolio);
+        a.setAttribute('aria-label', name);
+
         const img = document.createElement('img');
-        img.setAttribute("src", picture);
-        img.setAttribute("alt", "");
+        img.setAttribute('src', picture);
+        img.setAttribute('alt', '');
+        img.classList.add('photographer_section_picture');
         const h2 = document.createElement('h2');
         h2.textContent = name;
 
