@@ -9,8 +9,6 @@ function mediaFactory(data, photographer_name) {
         video
     } = data;
 
-    console.log(photographer_name)
-
     const photographerName = photographer_name;
 
     let mediaLink = getMediaLink();
@@ -30,8 +28,8 @@ function mediaFactory(data, photographer_name) {
             const image = document.createElement('img');
             image.setAttribute('src', mediaLink);
             image.setAttribute('alt', title);
-            image.classList.add('portfolio_picture');
-            console.log(image)
+            image.classList.add('media' ,'portfolio_picture');
+            // console.log(image)
             return image;
 
         } else {
@@ -42,7 +40,7 @@ function mediaFactory(data, photographer_name) {
             source.setAttribute('src', mediaLink);
             source.setAttribute('type', "video/mp4");
             video.appendChild(source);
-            console.log(video)
+            // console.log(video)
             return video;
         }
     }

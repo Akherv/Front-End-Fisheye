@@ -5,7 +5,7 @@
   const photographer = photographerBio[0];
   const photographerName = photographerBio[0].name;
   displayBio(photographer);
-  displayPortfolio(photographerMedias,photographerName);
+  displayPortfolio(photographerMedias, photographerName);
 })()
 
 
@@ -70,17 +70,51 @@ function displayBio(data) {
   return (main, presentationDiv);
 }
 
-function displayPortfolio(medias,photographerName) {
+function displayPortfolio(medias, photographerName) {
   const main = document.querySelector('main');
   const portfolioDiv = document.createElement('div');
-      portfolioDiv.classList.add('portfolio');
+  portfolioDiv.classList.add('portfolio');
 
   medias.forEach((media) => {
     const mediaModel = mediaFactory(media, photographerName);
     const userMediaDOM = mediaModel.getUserMediaDOM();
-    
     portfolioDiv.appendChild(userMediaDOM);
     main.appendChild(portfolioDiv);
   });
+
+  createSlider();
+
+}
+
+
+function createSlider() {
+  const medias = document.querySelectorAll('.media');
+  const sliderModal = document.getElementById('slider_modal');
+  const modal = document.querySelector('#slider_modal .modal');
+
+  medias.forEach(el => el.addEventListener('click', displaySlider));
+
+  function createSlider(el) {
+    const media = el;
+    const prevBtn = document.createElement('span');
+    prevBtn.classList.add('sliderBtn', 'prevBtn');
+    const forwardBtn = document.createElement('span');
+    forwardBtn.classList.add('sliderBtn', 'forwardBtn');
+    const closeBtn = document.createElement('img');
+    closeBtn.setAttribute('src', 'assets/icons/close.svg');
+    closeBtn.classList.add('.closeBtn');
+    const content = document.querySelector('.content');
+
+    sliderModal.appendChild(closeBtn);
+    content.appendChild(prevBtn);
+    content.appendChild(media);
+    content.appendChild(forwardBtn);
+    modal.appendChild(content);
+  }
+
+  function displaySlider() {
+    createSlider(this);
+    sliderModal.style.display = 'block'
+  }
 
 }

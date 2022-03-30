@@ -1,6 +1,7 @@
 const contactBtn = document.querySelector(".photograph-header .contact_button");
 const modal = document.getElementById("contact_modal");
 const closeBtn = document.querySelectorAll('.closeBtn');
+const sliderModal = document.getElementById('slider_modal');
 
 
 contactBtn.addEventListener('click', displayModal);
@@ -12,4 +13,5 @@ function displayModal() {
 
 function closeModal() {
     modal.style.display = "none";
+    sliderModal.style.display = 'none'
 }
