@@ -12,15 +12,11 @@
 
         try {
             const response = await fetch(url, myInit);
-            const datas = await response.json()
-            // const {
-            //     photographers
-            // } = datas;
+            const datas = await response.json();
             console.log(datas);
 
-            localStorage.setItem('dataPhotographers', JSON.stringify(datas.photographers));
-
-            localStorage.setItem('dataMedias', JSON.stringify(datas.media));
+            localStorage.setItem('photographersBio', JSON.stringify(datas.photographers));
+            localStorage.setItem('photographersMedias', JSON.stringify(datas.media));
 
             return ({
                 photographers: [...datas.photographers]
@@ -28,11 +24,9 @@
         } catch (error) {
             console.log('Fetch error: ', error);
         }
-
-
     }
 
-    async function displayData(photographers) {
+    async function displayPhotographers(photographers) {
         const photographersSection = document.querySelector('.photographer_section');
 
         photographers.forEach((photographer) => {
@@ -40,10 +34,6 @@
             const userCardDOM = photographerModel.getUserCardDOM();
             photographersSection.appendChild(userCardDOM);
         });
-
-
-
-
     };
 
     async function init() {
@@ -51,7 +41,7 @@
         const {
             photographers
         } = await getPhotographers();
-        displayData(photographers);
+        displayPhotographers(photographers);
     };
 
     init();

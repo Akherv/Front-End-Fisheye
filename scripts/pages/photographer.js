@@ -1,34 +1,27 @@
 (async function () {
-  const photographerId = getphotographerId();
-  const photographerData = await getPhotographerDatas(photographerId);
-  const medias = await getPhotographerMedias(photographerId)
-  const photographer_name = photographerData[0].name;
-  displayPhotographerBio(photographerData[0]);
-  displayPortfolio(medias,photographer_name);
+  const photographerId = new URL(location.href).searchParams.get('id');
+  const photographerBio = await getPhotographerBio(photographerId);
+  const photographerMedias = await getPhotographerMedias(photographerId)
+  const photographer = photographerBio[0];
+  const photographerName = photographerBio[0].name;
+  displayBio(photographer);
+  displayPortfolio(photographerMedias,photographerName);
 })()
 
 
-function getphotographerId() {
-  return new URL(location.href).searchParams.get('id');
-}
-
-function getPhotographerDatas(photographerId) {
-  const dataPhotographers = localStorage.getItem('dataPhotographers');
-  const photographers = JSON.parse(dataPhotographers);
-  const bio = photographers.filter(el => el.id === +photographerId);
-  return bio;
+function getPhotographerBio(photographerId) {
+  const photographersBio = JSON.parse(localStorage.getItem('photographersBio'));
+  const userBio = photographersBio.filter(el => el.id === +photographerId);
+  return userBio;
 }
 
 function getPhotographerMedias(photographerId) {
-  const dataMedias = localStorage.getItem('dataMedias');
-  const medias = JSON.parse(dataMedias);
-  const portfolio = medias.filter(el => el.photographerId === +photographerId);
-
+  const photographersMedias = JSON.parse(localStorage.getItem('photographersMedias'));
+  const portfolio = photographersMedias.filter(el => el.photographerId === +photographerId);
   return portfolio;
 }
 
-
-function displayPhotographerBio(data) {
+function displayBio(data) {
   const {
     name,
     city,
@@ -77,90 +70,17 @@ function displayPhotographerBio(data) {
   return (main, presentationDiv);
 }
 
-function displayPortfolio(medias,photographer_name) {
+function displayPortfolio(medias,photographerName) {
   const main = document.querySelector('main');
+  const portfolioDiv = document.createElement('div');
+      portfolioDiv.classList.add('portfolio');
 
   medias.forEach((media) => {
-    const mediaModel = mediaFactory(media, photographer_name);
+    const mediaModel = mediaFactory(media, photographerName);
     const userMediaDOM = mediaModel.getUserMediaDOM();
     
-    main.appendChild(userMediaDOM);
+    portfolioDiv.appendChild(userMediaDOM);
+    main.appendChild(portfolioDiv);
   });
 
-}
-
-function mediaFactory(data,photographer_name) {
-  const {
-    id,
-    title,
-    image,
-    likes,
-    date,
-    price,
-    video
-  } = data;
-
-  console.log(photographer_name)
-
-  const photographerName = photographer_name;
-  
-  let mediaLink = getImgOrVideo();
-  function getImgOrVideo() {
-    if (image) {
-      return `assets/photographers/${photographerName}/${image}`;
-    } else {
-      return `assets/photographers/${photographerName}/${video}`;
-    }
-  }
-  const mediaDisplay = displayImgOrVideo();
-  function displayImgOrVideo() {
-    if (image) {
-      const image = document.createElement('img');
-      image.setAttribute('src', mediaLink);
-      image.setAttribute('alt', title);
-      image.classList.add('portfolio_picture');
-      console.log(image)
-      return image;
-
-    } else {
-      const video = document.createElement('video');
-      const source = document.createElement('source');
-      video.setAttribute('controls', '');
-      video.classList.add('portfolio_video');
-      source.setAttribute('src', mediaLink);
-      source.setAttribute('type', "video/mp4");
-      video.appendChild(source);
-      console.log(video)
-      return video;
-    }
-  }
-
-  function getUserMediaDOM() {
-    const portfolioDiv = document.createElement('div');
-    portfolioDiv.classList.add('portfolio');
-    portfolioDiv.appendChild(mediaDisplay);
-    return (portfolioDiv);
-  }
-  return {
-    mediaLink,
-    getUserMediaDOM
-  };
-}
-
-//Contact-form
-
-// const contactBtn = document.querySelector('.contact_button');
-// const closeBtn = document.querySelectorAll('.closeBtn');
-
-const contactModal = document.querySelector('.contact_Modal');
-// contactBtn.addEventListener('click', openContactModal)
-// closeBtn.forEach(btn=>btn.addEventListener('click', closeModal))
-
-function displayModal() {
-  contactModal.style.display = 'block'
-}
-
-
-function closeModal() {
-  contactModal.style.display = 'none'
 }
