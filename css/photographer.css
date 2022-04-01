@@ -28,14 +28,14 @@
     height: 1px;
 }
 
-.prevBtn {
+#prevBtn {
     border-top: 40px solid transparent;
     border-right: 40px solid black;
     border-bottom: 40px solid transparent;
     border-left: 40px solid transparent;
 }
 
-.forwardBtn {
+#nextBtn {
     border-top: 40px solid transparent;
     border-right: 40px solid transparent;
     border-bottom: 40px solid transparent;
@@ -46,9 +46,15 @@
     cursor: pointer;
 }
 
-/* .mediaModal {
+.mediaModal {
+    width: 400px;
+    height: 400px;
+}
 
-} */
+.portfolio_picture,
+.portfolio_video {
+    height: 100px;
+}
 
 .photograph-header {
     /* background-color: #FAFAFA; */

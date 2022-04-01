@@ -1,17 +1,14 @@
-const contactBtn = document.querySelector(".photograph-header .contact_button");
-const modal = document.getElementById("contact_modal");
-const closeBtn = document.querySelectorAll('.closeBtn');
-const sliderModal = document.getElementById('slider_modal');
+const contactModalBtn = document.querySelector(".photograph-header .contact_button") 
+const contactModal = document.getElementById("contact_modal") 
+const contactModalCloseBtn = document.querySelector('#contact_modal .closeBtn') 
 
+contactModalBtn.addEventListener('click', displayContactModal) 
+contactModalCloseBtn.addEventListener('click', closeContactModal) 
 
-contactBtn.addEventListener('click', displayModal);
-closeBtn.forEach(el=> el.addEventListener('click', closeModal));
-
-function displayModal() {
-	modal.style.display = "block";
+function displayContactModal() {
+	contactModal.style.display = "block" 
 }
 
-function closeModal() {
-    modal.style.display = "none";
-    sliderModal.style.display = 'none'
+function closeContactModal() {
+    contactModal.style.display = "none" 
 }

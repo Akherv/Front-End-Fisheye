@@ -1,4 +1,4 @@
-function mediaFactory(data, photographer_name) {
+function mediaFactory(media, photographer_name) {
     const {
         id,
         title,
@@ -7,46 +7,47 @@ function mediaFactory(data, photographer_name) {
         date,
         price,
         video
-    } = data;
+    } = media
 
-    const photographerName = photographer_name;
+    const photographerName = photographer_name
 
-    let mediaLink = getMediaLink();
+    const mediaLink = getMediaLink()
 
     function getMediaLink() {
         if (image) {
-            return `assets/photographers/${photographerName}/${image}`;
+            return `assets/photographers/${photographerName}/${image}`
+        } else if (video) {
+            return `assets/photographers/${photographerName}/${video}`
         } else {
-            return `assets/photographers/${photographerName}/${video}`;
+            console.log('error: aucun média')
         }
     }
 
-    const mediaType = getUserMediaDOM();
-
     function getUserMediaDOM() {
+        // console.log(media)
         if (image) {
-            const image = document.createElement('img');
-            image.setAttribute('src', mediaLink);
-            image.setAttribute('alt', title);
-            image.classList.add('media' ,'portfolio_picture');
-            // console.log(image)
-            return image;
+            const image = document.createElement('img')
+            image.setAttribute('src', mediaLink)
+            image.setAttribute('alt', title)
+            image.classList.add('media', 'portfolio_picture')
+            return image
 
+        } else if (video) {
+            const video = document.createElement('video')
+            const source = document.createElement('source')
+            // video.setAttribute('controls', '') 
+            video.classList.add('media', 'portfolio_video')
+            source.setAttribute('src', mediaLink)
+            source.setAttribute('type', "video/mp4")
+            video.appendChild(source)
+            return video
         } else {
-            const video = document.createElement('video');
-            const source = document.createElement('source');
-            video.setAttribute('controls', '');
-            video.classList.add('portfolio_video');
-            source.setAttribute('src', mediaLink);
-            source.setAttribute('type', "video/mp4");
-            video.appendChild(source);
-            // console.log(video)
-            return video;
+            console.log('error: aucun média')
         }
     }
 
     return {
         mediaLink,
         getUserMediaDOM
-    };
+    }
 }
