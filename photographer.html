@@ -23,6 +23,13 @@
     <div class="photograph-header">
       <button class="contact_button">Contactez-moi</button>
     </div>
+    <div id="filterContainer">
+      <select name="filter" id="filter">
+        <option value="">All</option>
+        <option value="img">img</option>
+        <option value="video">video</option>
+      </select>
+    </div>
   </main>
   <div id="contact_modal">
     <div class="modal">
@@ -53,6 +60,7 @@
     </div>
   </div>
   <script src="scripts/factories/media.js"></script>
+  <script src="scripts/utils/filter.js"></script>
   <script src="scripts/utils/slider.js"></script>
   <script src="scripts/pages/photographer.js"></script>
   <script src="scripts/utils/contactForm.js"></script>

@@ -7,6 +7,7 @@ function displaySlider() {
     const mediaContainer = document.querySelector('#mediaContainer')
     const nextBtn = document.querySelector('#nextBtn')
 
+
     mediasPortfolio.forEach(media => media.addEventListener('click', displaySliderModal))
     sliderCloseBtn.addEventListener('click', closeSliderModal)
 
