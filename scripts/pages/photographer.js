@@ -70,7 +70,6 @@ function displayBio(data) {
   return (main, presentationDiv) 
 }
 
-
 function displayPortfolio(photographerMedias, photographerName) {
   const main = document.querySelector('main') 
   const portfolioDiv = document.createElement('div') 

@@ -9,6 +9,7 @@ function mediaFactory(media, photographer_name) {
         video
     } = media
 
+
     const photographerName = photographer_name
 
     const mediaLink = getMediaLink()
@@ -24,7 +25,6 @@ function mediaFactory(media, photographer_name) {
     }
 
     function getUserMediaDOM() {
-        // console.log(media)
         if (image) {
             const image = document.createElement('img')
             image.setAttribute('src', mediaLink)
@@ -35,7 +35,6 @@ function mediaFactory(media, photographer_name) {
         } else if (video) {
             const video = document.createElement('video')
             const source = document.createElement('source')
-            // video.setAttribute('controls', '') 
             video.classList.add('media', 'portfolio_video')
             source.setAttribute('src', mediaLink)
             source.setAttribute('type', "video/mp4")

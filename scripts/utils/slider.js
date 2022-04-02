@@ -1,35 +1,34 @@
-function displaySlider(photographerMedias) {
+function displaySlider() {
 
     const mediasPortfolio = document.querySelectorAll(".portfolio .media")
     const sliderModal = document.querySelector('#slider_modal')
-    const sliderModalCloseBtn = document.querySelector('#slider_modal .closeBtn')
+    const sliderCloseBtn = document.querySelector('#slider_modal .closeBtn')
     const prevBtn = document.querySelector('#prevBtn')
     const mediaContainer = document.querySelector('#mediaContainer')
     const nextBtn = document.querySelector('#nextBtn')
 
-    mediasPortfolio.forEach(btn => btn.addEventListener('click', displaySliderModal))
-    sliderModalCloseBtn.addEventListener('click', closeSliderModal)
+    mediasPortfolio.forEach(media => media.addEventListener('click', displaySliderModal))
+    sliderCloseBtn.addEventListener('click', closeSliderModal)
 
     function displaySliderModal(e) {
         const el = e.target
         let currentIndex = [...el.parentElement.children].indexOf(el)
-        createSliderDOM(el)
-        MediaNavigation(this, currentIndex)
-        return sliderModal.style.display = "block"
+        createMediaDOM(currentIndex)
+        MediaNavigation(currentIndex)
+        sliderModal.style.display = "block"
     }
 
     function closeSliderModal() {
         removeSliderDOM()
-        return sliderModal.style.display = "none"
+        sliderModal.style.display = "none"
     }
 
-    async function createSliderDOM(el) {
-        const media = el
+    function createMediaDOM(currentIndex) {
+        let media = mediasPortfolio[currentIndex]
         const mediaChilds = media.children
-        let mediaClone;
 
         if (mediaChilds.length >= 1) {
-            let child = await getChilds(mediaChilds);
+            let child = getChilds(mediaChilds);
 
             function getChilds(mediaChilds) {
                 for (elt in mediaChilds) {
@@ -53,45 +52,34 @@ function displaySlider(photographerMedias) {
     }
 
     function removeSliderDOM() {
-        const media = document.querySelector('.mediaModal')
-        media.remove()
+        const media = document.querySelectorAll('.mediaModal')
+        media.forEach(el => el.remove())
     }
 
-    function MediaNavigation(el, index) {
-        let currentIndex = index
-        console.log(currentIndex)
-
-        if (currentIndex >= 0) {
+    function MediaNavigation(currentIndex) {
+        if (currentIndex === 0) {
+            prevBtn.removeEventListener('click', decreaseSlideIndex)
+        } else if (currentIndex === mediasPortfolio.length - 1) {
+            nextBtn.removeEventListener('click', increaseSlideIndex)
+        } else {
             prevBtn.addEventListener('click', decreaseSlideIndex)
             nextBtn.addEventListener('click', increaseSlideIndex)
+        }
 
-            function decreaseSlideIndex() {
-                if(currentIndex > 0) {
-                    currentIndex--
-                }
-                changeCurrentMedia(el,currentIndex)
+        function decreaseSlideIndex() {
+            if (currentIndex > 0) {
+                removeSliderDOM(currentIndex)
+                currentIndex--
+                createMediaDOM(currentIndex)
             }
+        }
 
-            function increaseSlideIndex() {
-                if(currentIndex < mediasPortfolio.length-1) {
-                    currentIndex++
-                }
-                changeCurrentMedia(el,currentIndex)
+        function increaseSlideIndex() {
+            if (currentIndex < mediasPortfolio.length - 1) {
+                removeSliderDOM(currentIndex)
+                currentIndex++
+                createMediaDOM(currentIndex)
             }
-
-            function changeCurrentMedia(el,currentIndex) {
-                const media = document.querySelector('.mediaModal')
-                console.log(media,currentIndex)
-                if (media.tagName === 'IMG') {
-                    media.setAttribute('src', mediasPortfolio[currentIndex].src)
-                    media.setAttribute('alt', mediasPortfolio[currentIndex].alt)
-                } 
-                if (media.tagName === 'VIDEO') {
-                    let firstMediaChild = media.firstChild;
-                    firstMediaChild.setAttribute('src', mediasPortfolio[currentIndex].src)
-                }
-            }
-         
         }
     }
 }
