@@ -1,16 +1,16 @@
 async function initPhotographerPage() {
+
+  var filterState = 'popularite';
+
   const photographerId = new URL(location.href).searchParams.get('id')
   const photographerBio = await getPhotographerBio(photographerId)
-  const photographerMedias = await getPhotographerMedias(photographerId)
+  const photographerMedias = await getPhotographerMedias(photographerId,filterState)
   const photographer = photographerBio[0]
   const photographerName = photographerBio[0].name
 
-  var filterState = 'all';
-
   displayBio(photographer)
-  displayPortfolio(photographerMedias, photographerName, filterState)
+  displayPortfolio(photographerMedias, photographerName)
   displaySlider(photographerMedias)
-
 
   function getPhotographerBio(photographerId) {
     const photographersBio = JSON.parse(localStorage.getItem('photographersBio'))
@@ -18,22 +18,27 @@ async function initPhotographerPage() {
     return userBio
   }
 
-  function getPhotographerMedias(photographerId) {
+  function getPhotographerMedias(photographerId, filterState) {
     const photographersMedias = JSON.parse(localStorage.getItem('photographersMedias'))
     const portfolio = photographersMedias.filter(el => el.photographerId === +photographerId)
-    console.log(portfolio)
-    //let sortByPopularity = portfolio.sort((a,b)=>a.likes-b.likes);
-    //console.log(sortByPopularity)
-    //let sortByDate = portfolio.sort((a,b)=> new Date(a.date)- new Date(b.date));
-    //console.log(sortByDate)
-    // let sortByTitle = portfolio.sort(
-    // function(a, b){
-    //   if(a.title < b.title) { return -1; }
-    //   if(a.title > b.title) { return 1; }
-    //   return 0;
-    // });
-    // console.log(sortByTitle)
-    return portfolio
+
+    if(filterState === 'popularite') {
+      portfolio.sort((a,b)=>a.likes-b.likes);
+      return portfolio
+    } else if(filterState === 'date') {
+      portfolio.sort((a,b)=> new Date(a.date)- new Date(b.date));
+      return portfolio
+    } else if(filterState === 'title') {
+      portfolio.sort(
+        function(a, b){
+          if(a.title < b.title) { return -1; }
+          if(a.title > b.title) { return 1; }
+          return 0;
+        });
+      return portfolio
+    } else {
+      return portfolio
+    }
   }
 
   function displayBio(data) {
@@ -91,32 +96,12 @@ async function initPhotographerPage() {
     }
     const portfolioDiv = document.createElement('div')
     portfolioDiv.classList.add('portfolio')
-    var arr = []
 
     photographerMedias.forEach((media) => {
       const mediaModel = mediaFactory(media, photographerName)
       const userMediaDOM = mediaModel.getUserMediaDOM()
-      arr.push(userMediaDOM)
+      portfolioDiv.appendChild(userMediaDOM)
     })
-
-    var fragment = document.createDocumentFragment();
-    arr.forEach(item => {
-      fragment.appendChild(item)
-      if (filterState === 'img') {
-        if (item.tagName === 'IMG') {
-          portfolioDiv.appendChild(item)
-        }
-      }
-      if (filterState === 'video') {
-        if (item.tagName === 'VIDEO') {
-          portfolioDiv.appendChild(item)
-        }
-      }
-
-      if (filterState === 'all') {
-        portfolioDiv.appendChild(item)
-      }
-    });
     main.appendChild(portfolioDiv)
   }
 
@@ -126,23 +111,20 @@ async function initPhotographerPage() {
 
     function sortMedia(e) {
       elt = e.target.value
-      if (elt === 'img') {
-        filterState = 'img'
-        displayPortfolio(photographerMedias, photographerName)
-      } else if (elt === 'video') {
-        filterState = 'video'
-        displayPortfolio(photographerMedias, photographerName)
-      } else if (elt === 'all') {
-        filterState = 'all'
-        displayPortfolio(photographerMedias, photographerName)
-      } else {
-        filterState = 'all'
-        displayPortfolio(photographerMedias, photographerName)
+      if (elt === 'date') {
+        filterState = 'date'
+      } 
+      if (elt === 'title') {
+        filterState = 'title'
+      } 
+      if(elt === 'popularite') {
+        filterState = 'popularite'
       }
-      return filterState
+      let photographerMediasFiltered =  getPhotographerMedias(photographerId,filterState)
+      displayPortfolio(photographerMediasFiltered, photographerName)
     }
-    return filterState
   }
   checkStateFilterBtn();
+
 }
 initPhotographerPage()
