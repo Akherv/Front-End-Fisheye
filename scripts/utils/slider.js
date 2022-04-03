@@ -1,5 +1,6 @@
 function displaySlider() {
 
+    const main = document.querySelector("#main")
     const mediasPortfolio = document.querySelectorAll(".portfolio .media")
     const sliderModal = document.querySelector('#slider_modal')
     const sliderCloseBtn = document.querySelector('#slider_modal .closeBtn')
@@ -7,20 +8,21 @@ function displaySlider() {
     const mediaContainer = document.querySelector('#mediaContainer')
     const nextBtn = document.querySelector('#nextBtn')
 
-
     mediasPortfolio.forEach(media => media.addEventListener('click', displaySliderModal))
     sliderCloseBtn.addEventListener('click', closeSliderModal)
 
     function displaySliderModal(e) {
         const el = e.target
-        let currentIndex = [...el.parentElement.children].indexOf(el)
+        let currentIndex = [...el.parentElement.parentElement.children].indexOf(el.parentElement)
         createMediaDOM(currentIndex)
         MediaNavigation(currentIndex)
-        sliderModal.style.display = "block"
+       sliderModal.style.display = "block"
+       main.style.display = "none"
     }
 
     function closeSliderModal() {
         removeSliderDOM()
+        main.style.display = "block"
         sliderModal.style.display = "none"
     }
 
@@ -65,7 +67,7 @@ function displaySlider() {
         // } else {
             prevBtn.addEventListener('click', decreaseSlideIndex)
             nextBtn.addEventListener('click', increaseSlideIndex)
-        //}
+        // }
 
         function decreaseSlideIndex() {
             if (currentIndex > 0) {

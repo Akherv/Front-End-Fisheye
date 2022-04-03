@@ -4,7 +4,7 @@ async function initPhotographerPage() {
 
   const photographerId = new URL(location.href).searchParams.get('id')
   const photographerBio = await getPhotographerBio(photographerId)
-  const photographerMedias = await getPhotographerMedias(photographerId,filterState)
+  const photographerMedias = await getPhotographerMedias(photographerId, filterState)
   const photographer = photographerBio[0]
   const photographerName = photographerBio[0].name
 
@@ -22,17 +22,23 @@ async function initPhotographerPage() {
     const photographersMedias = JSON.parse(localStorage.getItem('photographersMedias'))
     const portfolio = photographersMedias.filter(el => el.photographerId === +photographerId)
 
-    if(filterState === 'popularite') {
-      portfolio.sort((a,b)=>a.likes-b.likes);
+    if (filterState === 'popularite') {
+      portfolio.sort((a, b) => b.likes - a.likes);
+
+
       return portfolio
-    } else if(filterState === 'date') {
-      portfolio.sort((a,b)=> new Date(a.date)- new Date(b.date));
+    } else if (filterState === 'date') {
+      portfolio.sort((a, b) => new Date(a.date) - new Date(b.date));
       return portfolio
-    } else if(filterState === 'title') {
+    } else if (filterState === 'title') {
       portfolio.sort(
-        function(a, b){
-          if(a.title < b.title) { return -1; }
-          if(a.title > b.title) { return 1; }
+        function (a, b) {
+          if (a.title < b.title) {
+            return -1;
+          }
+          if (a.title > b.title) {
+            return 1;
+          }
           return 0;
         });
       return portfolio
@@ -52,6 +58,7 @@ async function initPhotographerPage() {
     } = data
 
 
+    const heart = `assets/icons/heart.svg`
     const picture = `assets/photographers/Photographers_ID/${portrait}`
 
     const photographHeader = document.querySelector('.photograph-header')
@@ -61,10 +68,16 @@ async function initPhotographerPage() {
     presentationDiv.classList.add('photograph-header__presentation')
     const h1 = document.createElement('h1')
     h1.textContent = name
-    const presentationText = document.createElement('p')
-    presentationText.innerHTML = `${city}, ${country}<br>${tagline}`
+    const presentationTextDiv = document.createElement('div')
+    presentationTextDiv.classList.add('presentationTextDiv')
+    const p1 = document.createElement('p')
+    const p2 = document.createElement('p')
+    p1.textContent = `${city}, ${country}`
+    p2.textContent = `${tagline}`
+    presentationTextDiv.appendChild(p1)
+    presentationTextDiv.appendChild(p2)
     presentationDiv.appendChild(h1)
-    presentationDiv.appendChild(presentationText)
+    presentationDiv.appendChild(presentationTextDiv)
 
     const img = document.createElement('img')
     img.setAttribute('src', picture)
@@ -73,10 +86,15 @@ async function initPhotographerPage() {
 
 
     const informationDiv = document.createElement('div')
-    const informationLikes = document.createElement('p')
-    informationLikes.textContent = '-200 000'
-    const informationPrice = document.createElement('p')
+    const informationLikes = document.createElement('span')
+    informationLikes.textContent = '-200 000' ////////////////////////// TODO
+    const imgHeart = document.createElement('img')
+    imgHeart.setAttribute('src', heart)
+    imgHeart.classList.add('informationDiv_imgHeart')
+    const informationPrice = document.createElement('span')
+    informationDiv.classList.add('informationDiv')
     informationPrice.textContent = `${price}€/jour`
+    informationLikes.appendChild(imgHeart)
     informationDiv.appendChild(informationLikes)
     informationDiv.appendChild(informationPrice)
 
@@ -113,15 +131,16 @@ async function initPhotographerPage() {
       elt = e.target.value
       if (elt === 'date') {
         filterState = 'date'
-      } 
+      }
       if (elt === 'title') {
         filterState = 'title'
-      } 
-      if(elt === 'popularite') {
+      }
+      if (elt === 'popularite') {
         filterState = 'popularite'
       }
-      let photographerMediasFiltered =  getPhotographerMedias(photographerId,filterState)
+      let photographerMediasFiltered = getPhotographerMedias(photographerId, filterState)
       displayPortfolio(photographerMediasFiltered, photographerName)
+      displaySlider(photographerMedias)
     }
   }
   checkStateFilterBtn();

@@ -16,7 +16,7 @@
 <body>
   <header>
     <a href="index.html">
-    <img src="assets/images/logo.png" class="logo" />
+      <img src="assets/images/logo.png" class="logo" />
     </a>
   </header>
   <main id="main">
@@ -24,18 +24,21 @@
       <button class="contact_button">Contactez-moi</button>
     </div>
     <div id="filterContainer">
-      <select name="filter" id="filter">
-        <option value="popularite">popularite</option>
-        <option value="date">date</option>
-        <option value="title">titre</option>
-      </select>
+      <label for="filter">Trier par</label>
+      <div class="select-wrapper">
+        <select name="filter" id="filter">
+          <option value="popularite">popularite</option>
+          <option value="date">date</option>
+          <option value="title">titre</option>
+        </select>
+      </div>
     </div>
   </main>
   <div id="contact_modal">
     <div class="modal">
       <header>
         <h2>Contactez-moi</h2>
-        <img class="closeBtn" src="assets/icons/close.svg"/>
+        <img class="closeBtn" src="assets/icons/close.svg" />
       </header>
       <form>
         <div>
@@ -48,19 +51,15 @@
   </div>
   <div id="slider_modal">
     <div class="modal">
-      <header>
-        <h2>Medias</h2>
-        <img class="closeBtn" src="assets/icons/close.svg"/>
-      </header>
-        <div class="content">
-          <div id="prevBtn" class="sliderBtn"></div>
-          <div id="mediaContainer"></div>
-          <div id="nextBtn" class="sliderBtn"></div>
-        </div>
+      <div class="content">
+        <img class="closeBtn" src="assets/icons/closeSlider.svg" />
+        <div id="prevBtn" class="sliderBtn"></div>
+        <div id="mediaContainer"></div>
+        <div id="nextBtn" class="sliderBtn"></div>
+      </div>
     </div>
   </div>
   <script src="scripts/factories/media.js"></script>
-  <script src="scripts/utils/filter.js"></script>
   <script src="scripts/utils/slider.js"></script>
   <script src="scripts/pages/photographer.js"></script>
   <script src="scripts/utils/contactForm.js"></script>
