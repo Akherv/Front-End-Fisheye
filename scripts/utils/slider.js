@@ -58,14 +58,14 @@ function displaySlider() {
     }
 
     function MediaNavigation(currentIndex) {
-        if (currentIndex === 0) {
-            prevBtn.removeEventListener('click', decreaseSlideIndex)
-        } else if (currentIndex === mediasPortfolio.length - 1) {
-            nextBtn.removeEventListener('click', increaseSlideIndex)
-        } else {
+        // if (currentIndex === 0) {
+        //     prevBtn.removeEventListener('click', decreaseSlideIndex)
+        // } else if (currentIndex === mediasPortfolio.length - 1) {
+        //     nextBtn.removeEventListener('click', increaseSlideIndex)
+        // } else {
             prevBtn.addEventListener('click', decreaseSlideIndex)
             nextBtn.addEventListener('click', increaseSlideIndex)
-        }
+        //}
 
         function decreaseSlideIndex() {
             if (currentIndex > 0) {

@@ -5,12 +5,12 @@ async function initPhotographerPage() {
   const photographer = photographerBio[0]
   const photographerName = photographerBio[0].name
 
+  var filterState = 'all';
+
   displayBio(photographer)
-  displayPortfolio(photographerMedias, photographerName)
+  displayPortfolio(photographerMedias, photographerName, filterState)
   displaySlider(photographerMedias)
 
-
-  var filterState = 'all';
 
   function getPhotographerBio(photographerId) {
     const photographersBio = JSON.parse(localStorage.getItem('photographersBio'))
@@ -21,6 +21,18 @@ async function initPhotographerPage() {
   function getPhotographerMedias(photographerId) {
     const photographersMedias = JSON.parse(localStorage.getItem('photographersMedias'))
     const portfolio = photographersMedias.filter(el => el.photographerId === +photographerId)
+    console.log(portfolio)
+    //let sortByPopularity = portfolio.sort((a,b)=>a.likes-b.likes);
+    //console.log(sortByPopularity)
+    //let sortByDate = portfolio.sort((a,b)=> new Date(a.date)- new Date(b.date));
+    //console.log(sortByDate)
+    // let sortByTitle = portfolio.sort(
+    // function(a, b){
+    //   if(a.title < b.title) { return -1; }
+    //   if(a.title > b.title) { return 1; }
+    //   return 0;
+    // });
+    // console.log(sortByTitle)
     return portfolio
   }
 
@@ -86,17 +98,25 @@ async function initPhotographerPage() {
       const userMediaDOM = mediaModel.getUserMediaDOM()
       arr.push(userMediaDOM)
     })
+
     var fragment = document.createDocumentFragment();
-    arr.forEach(function (item) {
+    arr.forEach(item => {
       fragment.appendChild(item)
+      if (filterState === 'img') {
+        if (item.tagName === 'IMG') {
+          portfolioDiv.appendChild(item)
+        }
+      }
+      if (filterState === 'video') {
+        if (item.tagName === 'VIDEO') {
+          portfolioDiv.appendChild(item)
+        }
+      }
+
+      if (filterState === 'all') {
+        portfolioDiv.appendChild(item)
+      }
     });
-    for (el of arr) {
-      // if(el.tagName === 'IMG') {
-      var z = filterMedias(el, filterState)
-      console.log(z)
-      portfolioDiv.appendChild(z)
-    }
-    // }
     main.appendChild(portfolioDiv)
   }
 
@@ -112,37 +132,17 @@ async function initPhotographerPage() {
       } else if (elt === 'video') {
         filterState = 'video'
         displayPortfolio(photographerMedias, photographerName)
+      } else if (elt === 'all') {
+        filterState = 'all'
+        displayPortfolio(photographerMedias, photographerName)
       } else {
         filterState = 'all'
+        displayPortfolio(photographerMedias, photographerName)
       }
       return filterState
     }
     return filterState
   }
   checkStateFilterBtn();
-
-  function filterMedias(medias, filterState) {
-
-    if (filterState === 'img') {
-      if (medias.tagName === 'IMG') {
-        console.log(medias)
-        return medias
-      } 
-      else {
-        delete medias
-      }
-    } else if (filterState === 'video') {
-      if (medias.tagName === 'VIDEO') {
-        console.log(medias)
-        return medias
-      } 
-      // else {
-      //   delete medias
-      // }
-    } else {
-      return medias
-    }
-  }
-  console.log(filterState)
 }
 initPhotographerPage()
