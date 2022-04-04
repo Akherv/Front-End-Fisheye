@@ -5,13 +5,11 @@
 .photograph-header {
     height: 300px;
     margin: 0 100px;
-    /* display: grid; */
-    /* grid-template-columns: repeat(auto-fit, minmax(200px, 30%));
-    grid-column-gap: 10px; */
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 4%;
+    background-color: #FAFAFA;
 }
 
 .photograph-header h1 {
@@ -20,12 +18,16 @@
 
 .photograph-header__presentation {
     min-height: 200px;
-    /* grid-column: 30%; */
 }
 
 .presentationTextDiv :first-child {
     color: #901C1C;
 }
+
+.presentationTextDiv :last-child {
+    color: #525252;
+}
+
 
 .contact_button {
     font-size: 20px;
@@ -38,7 +40,11 @@
     background-color: #901C1C;
     border-radius: 5px;
     cursor: pointer;
-    /* grid-column: 30%; */
+}
+
+.contact_button:hover {
+    background-color: #DB8876;
+    color: #000;
 }
 
 .photographer_section_picture,
@@ -47,16 +53,15 @@
     height: 200px;
     border-radius: 50%;
     object-fit: cover;
-    /* grid-column: 30%; */
 }
 
 /*=============================================
 =                    filter                 =
 =============================================*/
 #filterContainer {
-   margin-bottom: 40px;
-   margin: 0 100px 40px 100px;
-   padding: 0 4%;
+    margin-bottom: 40px;
+    margin: 40px 100px;
+    padding: 0 4%;
 }
 
 select {
@@ -106,32 +111,44 @@ select:focus {
     width: 170px;
     height: 69px;
     position: relative;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 select>option {
     position: absolute;
     bottom: 0;
     padding: 30px;
+    height: 69px;
+    background-color: blue;
 }
-
-
 
 /*=============================================
 =                  portfolio                  =
 =============================================*/
 
 .portfolio {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
     grid-gap: 20px;
-    justify-content: space-between;
     margin: 0 100px;
     padding: 0 4%;
+    grid-template-columns: repeat(auto-fit, minmax(355px, 1fr));
+    justify-items: center;
 }
+
+
+@media screen and (max-width: 1440px) {
+    .photograph-header{margin:0 4%}
+    .filterContainer{margin:0 4%}
+    .portfolio {margin: 0 4%;}
+  }
+
 
 .portfolio_mediaContainer {
     height: 350px;
     width: 350px;
+    padding: 0 20px;
+    margin-bottom: 40px;
 }
 
 .portfolioMediaContent {
@@ -145,7 +162,7 @@ select>option {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom:40px;
+    margin-bottom: 40px;
 }
 
 .portfolio_mediaContainer h2,
@@ -188,6 +205,7 @@ select>option {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 20;
 }
 
 #slider_modal {
@@ -222,6 +240,8 @@ select>option {
 .modal header {
     justify-content: space-between;
     width: 100%;
+    margin-top: 20px;
+    margin-bottom: 60px;
 }
 
 .modal header img {
@@ -231,7 +251,7 @@ select>option {
 .modal header h2 {
     font-size: 64px;
     font-weight: normal;
-    text-align: center;
+    text-align: left;
 }
 
 form {
@@ -259,6 +279,16 @@ form input {
     height: 68px;
     border: none;
     border-radius: 5px;
+}
+
+form textarea {
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+}
+
+.contact_button:hover {
+    background-color: rgb(144, 28, 28, 0.8);
 }
 
 /*=============================================
@@ -303,6 +333,7 @@ form input {
     justify-content: space-between;
     align-items: center;
     position: relative;
+    border: none;
 }
 
 .sliderBtn {
@@ -311,7 +342,7 @@ form input {
     height: 60px;
     margin: 20px;
     cursor: pointer;
-    position:relative;
+    position: relative;
 }
 
 
@@ -320,7 +351,7 @@ form input {
     position: absolute;
     width: 50px;
     height: 5px;
-    top:55%;
+    top: 55%;
     left: 0;
     transform-origin: left;
     transform: translateY(-50%) rotate(-45deg);
@@ -333,12 +364,12 @@ form input {
     width: 50px;
     height: 5px;
     z-index: 2;
-    top:50%;
+    top: 50%;
     left: 0;
     transform: translateY(-50%) rotate(45deg);
     background-color: #901C1C;
     transform-origin: left;
-} 
+}
 
 
 #nextBtn::before {
@@ -346,7 +377,7 @@ form input {
     position: absolute;
     width: 50px;
     height: 5px;
-    top:55%;
+    top: 55%;
     right: 0;
     transform-origin: right;
     transform: translateY(-50%) rotate(45deg);
@@ -358,7 +389,7 @@ form input {
     position: absolute;
     width: 50px;
     height: 5px;
-    top:50%;
+    top: 50%;
     right: 0;
     transform-origin: right;
     transform: translateY(-50%) rotate(-45deg);
@@ -399,8 +430,20 @@ form input {
     justify-content: space-between;
     padding: 1em;
     border-radius: 5px 5px 0 0;
+    z-index: 10;
 }
 
-.informationDiv_imgHeart {
-    filter: grayscale(1)
+.informationDiv>span {
+    display: flex;
+    align-items: center;
+}
+
+
+
+/*=============================================
+=                    Element                 =
+=============================================*/
+
+.heart {
+    cursor: pointer;
 }

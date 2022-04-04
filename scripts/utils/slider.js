@@ -1,6 +1,7 @@
 function displaySlider() {
 
-    const main = document.querySelector("#main")
+    // const body = document.querySelector("body")
+    const main = document.querySelector('main')
     const mediasPortfolio = document.querySelectorAll(".portfolio .media")
     const sliderModal = document.querySelector('#slider_modal')
     const sliderCloseBtn = document.querySelector('#slider_modal .closeBtn')
@@ -8,28 +9,39 @@ function displaySlider() {
     const mediaContainer = document.querySelector('#mediaContainer')
     const nextBtn = document.querySelector('#nextBtn')
 
-    mediasPortfolio.forEach(media => media.addEventListener('click', displaySliderModal))
+    mediasPortfolio.forEach((media,idx) => media.addEventListener('click', function(e){
+        displaySliderModal(e,idx)
+    }))
     sliderCloseBtn.addEventListener('click', closeSliderModal)
 
-    function displaySliderModal(e) {
+    //Check the currentIndex of the ta& display the slider modal//////
+    function displaySliderModal(e, idx) {
+        console.log(idx);/////////todo
         const el = e.target
-        let currentIndex = [...el.parentElement.parentElement.children].indexOf(el.parentElement)
+        // let currentIndex = [...el.parentElement.parentElement.children].indexOf(el.parentElement)
+        let currentIndex = idx
         createMediaDOM(currentIndex)
         MediaNavigation(currentIndex)
-       sliderModal.style.display = "block"
-       main.style.display = "none"
+        sliderModal.style.display = "block"
+        // body.style.overflow = "hidden"
+        main.style.display="none"
+
     }
 
+    //Fire the removeSliderDOM function & Close the slider modal 
     function closeSliderModal() {
         removeSliderDOM()
-        main.style.display = "block"
+        // body.style.overflow = "scroll"
+        main.style.display="block"
         sliderModal.style.display = "none"
     }
 
+    //create by cloning portofolio datas 
     function createMediaDOM(currentIndex) {
         let media = mediasPortfolio[currentIndex]
         const mediaChilds = media.children
 
+        //if video
         if (mediaChilds.length >= 1) {
             let child = getChilds(mediaChilds);
 
@@ -46,7 +58,7 @@ function displaySlider() {
             parentClone.appendChild(childClone)
             mediaContainer.appendChild(parentClone)
 
-        } else {
+        } else {//if img
             let mediaClone = media.cloneNode()
             mediaClone.classList.remove('portfolio_picture')
             mediaClone.classList.add('mediaModal')
@@ -54,20 +66,16 @@ function displaySlider() {
         }
     }
 
+    //remove the media on Slider closing
     function removeSliderDOM() {
         const media = document.querySelectorAll('.mediaModal')
         media.forEach(el => el.remove())
     }
 
+    //add the media btn navigation functionality
     function MediaNavigation(currentIndex) {
-        // if (currentIndex === 0) {
-        //     prevBtn.removeEventListener('click', decreaseSlideIndex)
-        // } else if (currentIndex === mediasPortfolio.length - 1) {
-        //     nextBtn.removeEventListener('click', increaseSlideIndex)
-        // } else {
-            prevBtn.addEventListener('click', decreaseSlideIndex)
-            nextBtn.addEventListener('click', increaseSlideIndex)
-        // }
+        prevBtn.addEventListener('click', decreaseSlideIndex)
+        nextBtn.addEventListener('click', increaseSlideIndex)
 
         function decreaseSlideIndex() {
             if (currentIndex > 0) {

@@ -26,7 +26,7 @@ function mediaFactory(media, photographer_name) {
 
     function getUserMediaDOM() {
         if (image) {
-            const mediaContainer = document.createElement('div')
+            const mediaContainer = document.createElement('article')
             const image = document.createElement('img')
 
             mediaContainer.classList.add('portfolio_mediaContainer')
@@ -45,6 +45,8 @@ function mediaFactory(media, photographer_name) {
             const img = document.createElement('img')
             span1.innerHTML = likes 
             img.setAttribute('src', heart)
+            img.setAttribute('alt', 'likes')
+            img.classList.add('heart')
 
             span2.appendChild(img)
             p.appendChild(span1)
@@ -57,7 +59,7 @@ function mediaFactory(media, photographer_name) {
             return mediaContainer
 
         } else if (video) {
-            const mediaContainer = document.createElement('div')
+            const mediaContainer = document.createElement('article')
             const video = document.createElement('video')
             const source = document.createElement('source')
 
@@ -77,6 +79,8 @@ function mediaFactory(media, photographer_name) {
             const img = document.createElement('img')
             span1.innerHTML = likes 
             img.setAttribute('src', heart)
+            img.setAttribute('alt', 'likes')
+            img.classList.add('heart')
 
             span2.appendChild(img)
             p.appendChild(span1)

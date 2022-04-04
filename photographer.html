@@ -6,9 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="css/photographer.css" rel="stylesheet" type="text/css" />
   <link rel="icon" type="image/png" href="#">
   <title>Fisheye - photographe </title>
 </head>
@@ -21,7 +20,7 @@
   </header>
   <main id="main">
     <div class="photograph-header">
-      <button class="contact_button">Contactez-moi</button>
+      <button class="contact_button" aria-label="Contact Me">Contactez-moi</button>
     </div>
     <div id="filterContainer">
       <label for="filter">Trier par</label>
@@ -35,27 +34,33 @@
     </div>
   </main>
   <div id="contact_modal">
-    <div class="modal">
+    <div class="modal" role="dialog" tabindex="0" aria-labelledby="modalHeader">
       <header>
-        <h2>Contactez-moi</h2>
-        <img class="closeBtn" src="assets/icons/close.svg" />
+        <h2 id="modalHeader">Contactez-moi</h2>
+        <img class="closeBtn" src="assets/icons/close.svg" role="button" tabindex="0" aria-label="Close Contact form"/>
       </header>
       <form>
         <div>
-          <label>Prénom</label>
-          <input />
+          <label for="First name">Prénom</label>
+          <input type="text" name="First name" id="First name">
+          <label for="Last name">Nom</label>
+          <input type="text" name="Last name" id="Last name">
+          <label for="Email">Email</label>
+          <input type="email" name="Email" id="Email">
+          <label for="Your message">Votre message</label>
+          <textarea name="Your message" id="Your message" cols="30" rows="10"></textarea>
         </div>
-        <button class="contact_button">Envoyer</button>
+        <button class="contact_button" aria-label="send">Envoyer</button>
       </form>
     </div>
   </div>
   <div id="slider_modal">
     <div class="modal">
-      <div class="content">
-        <img class="closeBtn" src="assets/icons/closeSlider.svg" />
-        <div id="prevBtn" class="sliderBtn"></div>
+      <div class="content" role="dialog" tabindex="0" aria-label="image closeup view">
+        <img class="closeBtn" src="assets/icons/closeSlider.svg" role="button" tabindex="0" aria-label="Close dialog"/>
+        <div id="prevBtn" class="sliderBtn" role="button" tabindex="0" aria-label="previous image"></div>
         <div id="mediaContainer"></div>
-        <div id="nextBtn" class="sliderBtn"></div>
+        <div id="nextBtn" class="sliderBtn" role="button" tabindex="0" aria-label="next image"></div>
       </div>
     </div>
   </div>
