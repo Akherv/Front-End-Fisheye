@@ -16,8 +16,13 @@
             const datas = await response.json()
             console.log(datas)
 
-            localStorage.setItem('photographersBio', JSON.stringify(datas.photographers))
-            localStorage.setItem('photographersMedias', JSON.stringify(datas.media))
+            if(!localStorage.getItem('photographersBio') && !localStorage.getItem('photographersMedias')) {
+                localStorage.setItem('photographersBio', JSON.stringify(datas.photographers))
+                localStorage.setItem('photographersMedias', JSON.stringify(datas.media))
+            } else {
+                console.log('local storage déjà rempli')
+            }
+         
 
             return ({
                 photographers: [...datas.photographers]

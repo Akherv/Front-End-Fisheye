@@ -55,6 +55,7 @@ function displaySlider() {
             parentClone.classList.remove('portfolio_video')
             parentClone.classList.add('mediaModal')
             parentClone.setAttribute('controls', '')
+            parentClone.setAttribute('preload', 'auto')
             parentClone.appendChild(childClone)
             mediaContainer.appendChild(parentClone)
 
@@ -62,6 +63,7 @@ function displaySlider() {
             let mediaClone = media.cloneNode()
             mediaClone.classList.remove('portfolio_picture')
             mediaClone.classList.add('mediaModal')
+         
             mediaContainer.appendChild(mediaClone)
         }
     }

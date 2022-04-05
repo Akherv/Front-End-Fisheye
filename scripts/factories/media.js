@@ -41,6 +41,7 @@ function mediaFactory(media, photographer_name) {
             portfolioMediaContent.classList.add('portfolioMediaContent')
             const p = document.createElement('p') 
             const span1 = document.createElement('span')
+            span1.classList.add('likesNumber')
             const span2 = document.createElement('span')
             const img = document.createElement('img')
             span1.innerHTML = likes 
@@ -65,6 +66,7 @@ function mediaFactory(media, photographer_name) {
 
             mediaContainer.classList.add('portfolio_mediaContainer')
             video.classList.add('media', 'portfolio_video')
+            video.setAttribute('preload', 'metadata')
             source.setAttribute('src', mediaLink)
             source.setAttribute('type', "video/mp4")
 
@@ -78,6 +80,7 @@ function mediaFactory(media, photographer_name) {
             const span2 = document.createElement('span')
             const img = document.createElement('img')
             span1.innerHTML = likes 
+            span1.classList.add('likesNumber')
             img.setAttribute('src', heart)
             img.setAttribute('alt', 'likes')
             img.classList.add('heart')

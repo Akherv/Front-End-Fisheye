@@ -8,10 +8,16 @@ async function initPhotographerPage() {
   const photographer = photographerBio[0]
   const photographerName = photographerBio[0].name
 
+  let globalCounterState = 0;
+
+
   displayBio(photographer)
   displayPortfolio(photographerMedias, photographerName)
   displaySlider(photographerMedias)
   initContactModal(photographerName)
+  initCounter(photographerMedias);
+
+  // refreshGlobalLikesCounter(photographerMedias);
 
   //get photographer bio datas from localStorage
   function getPhotographerBio(photographerId) {
@@ -28,7 +34,7 @@ async function initPhotographerPage() {
     //filter
     if (filterState === 'popularite') {
       portfolio.sort((a, b) => b.likes - a.likes);
-      console.log(portfolio)
+
       return portfolio
     } else if (filterState === 'date') {
       portfolio.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -91,7 +97,10 @@ async function initPhotographerPage() {
     img.classList.add('photograph-header__picture')
     const informationDiv = document.createElement('div')
     const informationLikes = document.createElement('span')
-    informationLikes.textContent = '-200 000' ////////////////////////// TODO
+    const informationLikesSpan1 = document.createElement('span')
+    informationLikes.classList.add('informationLikes')
+    informationLikesSpan1.classList.add('informationLikesNumber')
+    // informationLikesSpan1.textContent = `${globalCounterState}`
     const imgHeart = document.createElement('img')
     imgHeart.setAttribute('src', heart)
     imgHeart.setAttribute('alt', 'likes')
@@ -100,6 +109,7 @@ async function initPhotographerPage() {
     informationDiv.classList.add('informationDiv')
     informationPrice.textContent = `${price}€/jour`
 
+    informationLikes.appendChild(informationLikesSpan1)
     informationLikes.appendChild(imgHeart)
     informationDiv.appendChild(informationLikes)
     informationDiv.appendChild(informationPrice)
@@ -154,9 +164,60 @@ async function initPhotographerPage() {
   function initContactModal() {
     const modalHeader = document.querySelector('#modalHeader')
     const span = document.createElement('span')
-    span.innerHTML= `<br>${photographerName}`;
+    span.innerHTML = `<br>${photographerName}`;
     modalHeader.appendChild(span)
   }
+
+
+
+ function initCounter(photographerMedias){
+  const likesMedia = document.querySelectorAll(".portfolioMediaContent .heart")
+  const likesNumbers = document.querySelectorAll('.likesNumber')
+
+  likesMedia.forEach((media, idx) => media.addEventListener('click', function (e) {
+
+    refreshLocalLikesCounter(photographerMedias, idx);
+    // getPhotographerMedias(photographerId, filterState)
+    refreshGlobalLikesCounter(photographerMedias)
+
+  }))
+
+  //function refreshLikesCounter(e,idx) {
+  //console.log(photographerMedias[idx].likes)
+  // if(likeIsClick) {
+  // }
+  // if(!likeIsClick) {
+  // }
+  //}
+
+  function refreshGlobalLikesCounter(photographerMedias) {
+    const informationLikesNumber = document.querySelector('.informationLikesNumber')
+    console.log(photographerMedias)
+    let sum = 0;
+    photographerMedias.forEach((media) => sum += media.likes)
+    informationLikesNumber.textContent = `${sum}`
+    return sum
+  }
+  refreshGlobalLikesCounter(photographerMedias)
+
+  function refreshLocalLikesCounter(photographerMedias,idx) {
+    console.log('ok')
+    const localIdx = photographerMedias[idx].id;
+    let arrItems = JSON.parse(localStorage.getItem('photographersMedias'));
+    let currentItem = arrItems.filter(el => el.id === localIdx)
+    let updatedItem = currentItem[0].likes++
+
+    localStorage.setItem('photographersMedias', JSON.stringify(arrItems))
+console.log(likesNumbers[idx])
+    likesNumbers[idx].textContent=updatedItem+1;
+    refreshGlobalLikesCounter(photographerMedias);
+
+    // const updateItems = items.forEach((item)=>console.log(item))
+    // let objIndex = items.forEach((el)=>console.log(el.id));
+    // findIndex((obj => obj.id == 342550))
+  }
+
+ }
 
 
 }
