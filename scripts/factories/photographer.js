@@ -11,6 +11,7 @@ function photographerFactory(data) {
 
     const picture = `assets/photographers/Photographers_ID/${portrait}`
     const portfolio = `photographer.html?id=${id}`
+    
 
     function getUserCardDOM() {
         const article = document.createElement('article')

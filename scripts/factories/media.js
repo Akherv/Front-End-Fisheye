@@ -6,7 +6,8 @@ function mediaFactory(media, photographer_name) {
         likes,
         date,
         price,
-        video
+        video,
+        state
     } = media
 
 
@@ -42,11 +43,21 @@ function mediaFactory(media, photographer_name) {
             const p = document.createElement('p') 
             const span1 = document.createElement('span')
             span1.classList.add('likesNumber')
+
             const span2 = document.createElement('span')
             const img = document.createElement('img')
             span1.innerHTML = likes 
             img.setAttribute('src', heart)
             img.setAttribute('alt', 'likes')
+            img.setAttribute('data-count', likes)
+            if(state) {
+                img.setAttribute('data-state', state)
+                img.classList.add('heart','active')
+            } else {
+                img.setAttribute('data-state', false)
+                img.classList.add('heart')
+            }
+
             img.classList.add('heart')
 
             span2.appendChild(img)
@@ -83,7 +94,14 @@ function mediaFactory(media, photographer_name) {
             span1.classList.add('likesNumber')
             img.setAttribute('src', heart)
             img.setAttribute('alt', 'likes')
-            img.classList.add('heart')
+            img.setAttribute('data-count', '')
+            if(state) {
+                img.setAttribute('data-state', state)
+                img.classList.add('heart','active')
+            } else {
+                img.setAttribute('data-state', false)
+                img.classList.add('heart')
+            }
 
             span2.appendChild(img)
             p.appendChild(span1)

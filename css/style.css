@@ -28,7 +28,7 @@ header {
 
 h1 {
     color: #901C1C;
-    margin-right: 100px;
+    /* margin-right: 100px; */
 }
 
 .logo {
@@ -70,7 +70,7 @@ h1 {
 .photographer_section article p span:first-child {
     font-size: 18px;
     font-weight: 600;
-    color:#901C1C
+    color: #901C1C
 }
 
 .photographer_section article p span:last-child {
@@ -80,3 +80,25 @@ h1 {
 }
 
 
+/*=============================================
+=                    RWD                     =
+=============================================*/
+
+@media screen and (max-width:1110px) {
+
+    .photographer_section {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    
+
+
+    @media screen and (max-width:800px) {
+
+        .photographer_section {
+            grid-template-columns: 1fr;
+        }
+    
+    }
+
+}
