@@ -28,7 +28,6 @@ header {
 
 h1 {
     color: #901C1C;
-    /* margin-right: 100px; */
 }
 
 .logo {
@@ -87,18 +86,23 @@ h1 {
 @media screen and (max-width:1110px) {
 
     .photographer_section {
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    
 
+    @media screen and (max-width:830px) {
 
-    @media screen and (max-width:800px) {
+        header {
+            flex-direction: column;
+        }
+
+        .logo {
+            margin-left: 0;
+            margin-top: 20px;
+        }
 
         .photographer_section {
             grid-template-columns: 1fr;
         }
-    
     }
-
 }
