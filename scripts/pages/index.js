@@ -1,54 +1,57 @@
-    async function getPhotographers() {
-        //fetch all datas
-        var myHeaders = new Headers()
+/* eslint-disable no-console */
+import photographerFactory from '../factories/photographer-factory.js';
 
-        var myInit = {
-            method: 'GET',
-            headers: myHeaders,
-            mode: 'cors',
-            cache: 'default'
-        }
+async function getPhotographers() {
+  // fetch all datas
+  const myHeaders = new Headers();
 
-        let url = './data/photographers.json'
+  const myInit = {
+    method: 'GET',
+    headers: myHeaders,
+    mode: 'cors',
+    cache: 'default',
+  };
 
-        try {
-            const response = await fetch(url, myInit)
-            const datas = await response.json()
-            console.log(datas)
+  const url = './data/photographers.json';
 
-            if(!localStorage.getItem('photographersBio') && !localStorage.getItem('photographersMedias')) {
-                localStorage.setItem('photographersBio', JSON.stringify(datas.photographers))
-                localStorage.setItem('photographersMedias', JSON.stringify(datas.media))
-            } else {
-                console.log('local storage déjà rempli')
-            }
-         
+  try {
+    const response = await fetch(url, myInit);
+    const datas = await response.json();
+    console.log(datas);
 
-            return ({
-                photographers: [...datas.photographers]
-            })
-        } catch (error) {
-            console.log('Fetch error: ', error)
-        }
+    if (!localStorage.getItem('photographersBio') && !localStorage.getItem('photographersMedias')) {
+      localStorage.setItem('photographersBio', JSON.stringify(datas.photographers));
+      localStorage.setItem('photographersMedias', JSON.stringify(datas.media));
+    } else {
+      console.log('local storage déjà rempli');
     }
 
-    //create photographers datas with the photographer factory
-    async function displayPhotographers(photographers) {
-        const photographersSection = document.querySelector('.photographer_section')
+    return ({
+      photographers: [...datas.photographers],
+    });
+  } catch (error) {
+    console.log('Fetch error: ', error);
+  }
+  return 0;
+}
 
-        photographers.forEach((photographer) => {
-            const photographerModel = photographerFactory(photographer)
-            const userCardDOM = photographerModel.getUserCardDOM()
-            photographersSection.appendChild(userCardDOM)
-        })
-    }
+// create photographers datas with the photographer factory
+async function displayPhotographers(photographers) {
+  const photographersSection = document.querySelector('.photographer_section');
 
-    //display photographers datas
-    async function init() {
-        const {
-            photographers
-        } = await getPhotographers()
-        displayPhotographers(photographers)
-    }
+  photographers.forEach((photographer) => {
+    const photographerModel = photographerFactory(photographer);
+    const userCardDOM = photographerModel.getUserCardDOM();
+    photographersSection.appendChild(userCardDOM);
+  });
+}
 
-    init()
+// display photographers datas
+async function init() {
+  const {
+    photographers,
+  } = await getPhotographers();
+  displayPhotographers(photographers);
+}
+
+init();

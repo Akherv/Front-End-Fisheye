@@ -14,8 +14,8 @@
 
 <body>
   <header>
-    <a href="index.html">
-      <img src="assets/images/logo.png" class="logo" />
+    <a href="index.html" aria-labelledby="homepage">
+      <img src="assets/images/logo.png" id="homepage" class="logo" alt="Fisheye Home page"/>
     </a>
   </header>
   <main id="main">
@@ -27,13 +27,11 @@
     </div>
     <div id="filterContainer">
       <label for="filter">Trier par</label>
-      <div class="select-wrapper">
         <select name="filter" id="filter">
           <option value="popularite">popularite</option>
           <option value="date">date</option>
           <option value="title">titre</option>
         </select>
-      </div>
     </div>
     <div class="informationdiv">
       <span class="informationLikes"></span>
@@ -43,7 +41,7 @@
     <div class="modal" role="dialog" tabindex="0" aria-labelledby="modalHeader">
       <header>
         <h2 id="modalHeader">Contactez-moi</h2>
-        <img class="closeBtn" src="assets/icons/close.svg" role="button" tabindex="0" aria-label="Close Contact form" />
+        <img class="closeBtn" src="assets/icons/close.svg" role="button" tabindex="0" aria-label="Close Contact form" alt=""/>
       </header>
       <form>
         <div>
@@ -63,17 +61,17 @@
   <div id="slider_modal">
     <div class="modal">
       <div class="content" role="dialog" tabindex="0" aria-label="image closeup view">
-        <img class="closeBtn" src="assets/icons/closeSlider.svg" role="button" tabindex="0" aria-label="Close dialog" />
+        <img class="closeBtn" src="assets/icons/closeSlider.svg" role="button" tabindex="0" aria-label="Close dialog" alt=""/>
         <div id="prevBtn" class="sliderBtn" role="button" tabindex="0" aria-label="previous image"></div>
-        <div id="mediaContainer"></div>
+        <div id="mediaContainer"><div id="mediaTitle"></div></div>
         <div id="nextBtn" class="sliderBtn" role="button" tabindex="0" aria-label="next image"></div>
       </div>
     </div>
   </div>
-  <script src="scripts/factories/media-factory.js"></script>
-  <script src="scripts/utils/slider.js"></script>
-  <script src="scripts/pages/photographer.js"></script>
-  <script src="scripts/utils/contactForm.js"></script>
+  <script type="module" src="scripts/factories/media-factory.js"></script>
+  <script type="module" src="scripts/utils/slider.js"></script>
+  <script type="module" src="scripts/pages/photographer.js"></script>
+  <script type="module" src="scripts/utils/contactForm.js"></script>
 </body>
 
 </html>
