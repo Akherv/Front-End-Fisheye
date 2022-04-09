@@ -28,6 +28,7 @@ header {
 
 h1 {
     color: #901C1C;
+    margin-right: 100px;
 }
 
 .logo {
@@ -94,6 +95,10 @@ h1 {
 
         header {
             flex-direction: column;
+        }
+
+        h1 {
+            margin-right: 0;
         }
 
         .logo {
