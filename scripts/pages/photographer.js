@@ -202,15 +202,15 @@ async function initPhotographerPage() {
 
   // Change the filterstate according to the change event & reload the creation of the medias
   function checkStateFilterBtn() {
-    function sortMedia(e) {
-      const elt = e.target.innerHTML;
-      if (elt === 'Date') {
+    function sortMedia(el) {
+      const elt = el.dataset.value;
+      if (elt === 'date') {
         filterState = 'date';
       }
-      if (elt === 'Titre') {
-        filterState = 'titre';
+      if (elt === 'title') {
+        filterState = 'title';
       }
-      if (elt === 'Popularité') {
+      if (elt === 'popularite') {
         filterState = 'popularite';
       }
       const photographerMediasFiltered = getPhotographerMedias(photographerId, filterState);
@@ -219,8 +219,8 @@ async function initPhotographerPage() {
       initCounter(photographerMedias, photographerId);
     }
     const filterBtn = document.querySelectorAll('.new-option');
-    filterBtn.forEach((el) => el.addEventListener('click', (e) => {
-      sortMedia(e);
+    filterBtn.forEach((el) => el.addEventListener('click', () => {
+      sortMedia(el);
     }));
   }
 
@@ -229,48 +229,28 @@ async function initPhotographerPage() {
   displaySlider(photographerMedias);
 }
 initPhotographerPage();
-
-// const countOption = document.querySelectorAll('.old-select option').length;
+// /////////////////////////
 
 function openSelect() {
-  const heightSelect = document.querySelector('.new-select').clientHeight;
-  let j = 1;
   document.querySelectorAll('.new-select .new-option').forEach((el) => {
     el.classList.add('reveal');
     el.style.boxShadow = '0 1px 1px rgba(0,0,0,0.1)';
     el.style.position = 'unset';
     el.parentElement.overflow = 'visible';
-    // el.style.left = '0';
-    // el.style.top = '0';
-    // el.style.top = `${j * (heightSelect + 1)}px`;
-    j += 1;
+
+    let x = document.querySelector('.selection.open p span').textContent
+    if(el.textContent === x) {
+      el.style.display = 'none';
+    }
   });
 }
 
 function closeSelect() {
-  let i = 0;
   document.querySelectorAll('.new-select .new-option').forEach((el) => {
+    el.previousElementSibling.classList.remove('open');
     el.classList.remove('reveal');
     el.style.position = 'absolute';
     el.parentElement.overflow = '-moz-hidden-unscrollable';
-    // if (i < countOption - 3) {
-    //   el.style.top = '0';
-    //   el.style.boxShadow = 'none';
-    // } 
-    // else if (i === countOption - 3) {
-    //   el.style.top = '3px';
-    // } 
-    // else if (i === countOption - 2) {
-    //   el.style.top = '7px';
-    //   el.style.left = '2px';
-    //   el.style.right = '2px';
-    // } 
-    // else if (i === countOption - 1) {
-    //   el.style.top = '11px';
-    //   el.style.left = '4px';
-    //   el.style.right = '4px';
-    // }
-    i += 1;
   });
 }
 
@@ -282,16 +262,10 @@ if (document.querySelector('.old-select option[selected]').length === 1) {
 }
 
 document.querySelectorAll('.old-select option').forEach((el) => {
-  let newValue = el.value;
-  let newHTML = el.innerHTML;
+  const newValue = el.value;
+  const newHTML = el.innerHTML;
   document.querySelector('.new-select').innerHTML += `<div class="new-option" data-value="${newValue}"><p>${newHTML}</p></div>`;
 });
-
-// let reverseIndex = countOption;
-// document.querySelectorAll('.new-select .new-option').forEach((el) => function () {
-//   el.style.zIndex = reverseIndex;
-//   reverseIndex -= 1;
-// });
 
 closeSelect();
 
@@ -301,18 +275,37 @@ document.querySelector('.selection').addEventListener('click', function () {
   if (this.classList.contains('open') === true) { openSelect(); } else { closeSelect(); }
 });
 
+// close filter on click outside
+const ignoreClickOnMeElement = document.querySelector('.new-select');
+
+document.addEventListener('click', (e) => {
+  const isClickInsideElement = ignoreClickOnMeElement.contains(e.target);
+  if (!isClickInsideElement) {
+    closeSelect();
+  }
+});
+
 // Selection
 document.querySelectorAll('.new-option').forEach((el) => el.addEventListener('click', function () {
   const newValue = this.dataset.value;
 
   // Selection New Select
   document.querySelectorAll('.selection p span').innerHTML = this.querySelector('p').innerHTML;
-  document.querySelector('.selection').addEventListener('click', function () {
-    this.classList.toggle('open');
-    if (this.classList.contains('open') === true) { openSelect(); } else { closeSelect(); }
-  });
+  // document.querySelector('.selection').addEventListener('click', function () {
+  //   this.classList.toggle('open');
+  //   if (this.classList.contains('open') === true) { openSelect(); } else { closeSelect(); }
+  // });
 
   // Selection Old Select
   document.querySelector('.old-select option[selected]').removeAttribute('selected');
   document.querySelector(`.old-select option[value="${newValue}"]`).setAttribute('selected', '');
+
+  // change textContent
+  document.querySelector('.selection.open p span').textContent = this.textContent;
+
+  // hide from list selected textContent
+  this.style.display = 'none';
+  let x = document.querySelectorAll('.new-option');
+  let z = [...x].filter((elt) => elt.dataset.value !== newValue);
+  z.forEach((elt) => elt.style.display = 'block');
 }));

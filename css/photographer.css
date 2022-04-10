@@ -134,26 +134,16 @@ select {
     display: none;
 } */
 
-
-
-
-
-
-/* Old-Select */
-
 .old-select {
     position: absolute;
     top: -9999px;
     left: -9999px;
 }
 
-/* New-Select */
-
 .new-select {
     width: 170px;
     height: 70px;
     margin: auto;
-
     margin-top: 50px;
     text-align: center;
     color: #fff;
@@ -161,96 +151,39 @@ select {
     border-radius: 5px;
     line-height: 50px;
     position: relative;
-
     margin-bottom: 40px;
     margin: 40px 100px;
-
     font-size: 20px;
     font-weight: bold;
 }
 
 .new-select .selection:active {
-    transform: rotateX(42deg);
-    -o-transform: rotateX(42deg);
-    -ms-transform: rotateX(42deg);
-    -moz-transform: rotateX(42deg);
-    -webkit-transform: rotateX(42deg);
-    transform-style: preserve-3d;
-    -o-transform-style: preserve-3d;
-    -ms-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
-    transform-origin: top;
-    -o-transform-origin: top;
-    -ms-transform-origin: top;
-    -moz-transform-origin: top;
-    -webkit-transform-origin: top;
-    transition: transform 200ms ease-in-out;
-    -o-transition: -o-transform 200ms ease-in-out;
-    -ms-transition: -ms-transform 200ms ease-in-out;
-    -moz-transition: -moz-transform 200ms ease-in-out;
-    -webkit-transition: -webkit-transform 200ms ease-in-out;
-
     background-color: #901C1C;
-
 }
 
 .new-select .selection {
     width: 100%;
     height: 100%;
     background-color: #fff;
-    /* box-shadow: 0 1px 1px hsl(0, 67%, 50%); */
-
     cursor: pointer;
     position: relative;
     z-index: 20;
-    /* Doit être supérieur au nombre d'option */
-
-    /* transform: rotateX(0deg);
-    -o-transform: rotateX(0deg);
-    -ms-transform: rotateX(0deg);
-    -moz-transform: rotateX(0deg);
-    -webkit-transform: rotateX(0deg);
-    transform-style: preserve-3d;
-    -o-transform-style: preserve-3d;
-    -ms-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
-    transform-origin: top;
-    -o-transform-origin: top;
-    -ms-transform-origin: top;
-    -moz-transform-origin: top;
-    -webkit-transform-origin: top;
-    transition: transform 200ms ease-in-out;
-    -o-transition: -o-transform 200ms ease-in-out;
-    -ms-transition: -ms-transform 200ms ease-in-out;
-    -moz-transition: -moz-transform 200ms ease-in-out;
-    -webkit-transition: -webkit-transform 200ms ease-in-out; */
-
     background-color: #901C1C;
     border-radius: 5px;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .new-select .selection.open {
-
     border-radius: 5px 5px 0 0;
 }
 
 .new-select .selection p {
     width: calc(100% - 60px);
     position: relative;
-
-    /* transition: all 200ms ease-in-out;
-    -o-transition: all 200ms ease-in-out;
-    -ms-transition: all 200ms ease-in-out;
-    -moz-transition: all 200ms ease-in-out;
-    -webkit-transition: all 200ms ease-in-out; */
     margin: 0 0 0 10px;
-
+    text-align: left;
 }
 
 .new-select .selection:hover p,
@@ -258,33 +191,18 @@ select {
     color: #fff;
 }
 
-/* .new-select .selection i {
-    display: block;
-    width: 1px;
-    position: absolute;
-    right: -1px;
-    top: 15%;
-    bottom: 15%;
-    border: none;
-    background-color: #fff;
-} */
-
 .new-select .selection>span {
     display: block;
     width: 16px;
     height: 10px;
     border-style: solid;
     border-width: 14px 8px 0 8px;
-    /* Height: 14px / Width: 16px */
-    /* border-color: #fff transparent transparent transparent; */
     content: url(../assets/icons/arrow.svg);
-
     position: absolute;
     top: 16px;
     right: 10px;
-
     background: transparent;
-color: #901C1C;
+    color: #901C1C;
 }
 
 .new-select .selection.open>span {
@@ -294,14 +212,12 @@ color: #901C1C;
     border-style: solid;
     border-width: 0 8px 14px 8px;
     content: url(../assets/icons/arrow.svg);
-
     position: absolute;
     top: 16px;
-right: 10px;
-transform: rotate(180deg);
-
+    right: 10px;
+    transform: rotate(180deg);
     background: transparent;
-color: #901C1C;
+    color: #901C1C;
 }
 
 .new-option {
@@ -311,24 +227,12 @@ color: #901C1C;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     position: relative;
     margin-top: 1px;
-
-    /* position: absolute; */
     left: 0;
     right: 0;
-
     top: 0;
-
-    /* transition: all 300ms ease-in-out;
-    -o-transition: all 300ms ease-in-out;
-    -ms-transition: all 300ms ease-in-out;
-    -moz-transition: all 300ms ease-in-out;
-    -webkit-transition: all 300ms ease-in-out; */
-
     background-color: #901C1C;
     border-radius: 5px;
 }
-
-
 
 .new-option p {
     width: calc(100% - 60px);
@@ -336,7 +240,6 @@ color: #901C1C;
     text-align: left;
     padding-left: 16px;
 }
-
 
 .new-option.reveal:hover {
     background-color: #444;
@@ -362,7 +265,7 @@ color: #901C1C;
     background-color: #fff;
     z-index: 20;
     left: 50%;
-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 
 .new-option.reveal:last-of-type:after {
@@ -371,7 +274,9 @@ transform: translateX(-50%);
     width: 0;
     height: 0;
 }
-
+.hiddenItem {
+    display: none;
+}
 /*=============================================
 =                  portfolio                  =
 =============================================*/
