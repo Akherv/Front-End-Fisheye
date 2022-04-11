@@ -9,13 +9,13 @@ a {
     text-decoration: none;
 }
 
-a:focus-visible {
+a:focus-visible, img:focus-visible, div:focus-visible{
     outline: none;
-    border: 1px solid #D3573C;
+    border: 2px solid #ee6041;
 }
 
 dialog:focus-visible {
-    border: 1px solid #D3573C;
+    border: 2px solid #ee6041;;
 }
 
 header {
@@ -79,7 +79,6 @@ h1 {
     color: #757575;
 }
 
-
 /*=============================================
 =                    RWD                     =
 =============================================*/
@@ -89,7 +88,6 @@ h1 {
     .photographer_section {
         grid-template-columns: repeat(2, 1fr);
     }
-
 
     @media screen and (max-width:830px) {
 

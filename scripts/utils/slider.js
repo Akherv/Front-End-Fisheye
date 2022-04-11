@@ -1,7 +1,8 @@
 function displaySlider() {
-  // const body = document.querySelector("body")
+  const body = document.querySelector('body');
   const main = document.querySelector('main');
   const mediasPortfolio = document.querySelectorAll('.portfolio .media');
+  const portfolioMediaContainer = document.querySelectorAll('.portfolio_mediaContainer');
   const sliderModal = document.querySelector('#slider_modal');
   const sliderCloseBtn = document.querySelector('#slider_modal .closeBtn');
   const prevBtn = document.querySelector('#prevBtn');
@@ -46,8 +47,16 @@ function displaySlider() {
   function closeSliderModal() {
     removeSliderDOM();
     main.style.display = 'block';
+    body.setAttribute('aria-hidden', 'false');
     sliderModal.style.display = 'none';
+    sliderModal.setAttribute('aria-hidden', 'true');
   }
+
+  window.addEventListener('keydown', (event) => {
+    if ((event.key || event.code) === 'Escape') {
+      closeSliderModal();
+    }
+  }, true);
 
   // add the media btn navigation functionality
   function MediaNavigation(index) {
@@ -79,6 +88,17 @@ function displaySlider() {
         increaseSlideIndex();
       }
     }, true);
+
+    prevBtn.addEventListener('keydown', (event) => {
+      if ((event.key || event.code) === 'Enter') {
+        decreaseSlideIndex();
+      }
+    }, true);
+    nextBtn.addEventListener('keydown', (event) => {
+      if ((event.key || event.code) === 'Enter') {
+        increaseSlideIndex();
+      }
+    }, true);
   }
 
   // Check the currentIndex of the ta& display the slider modal
@@ -87,12 +107,34 @@ function displaySlider() {
     createMediaDOM(currentIndex);
     MediaNavigation(currentIndex);
     sliderModal.style.display = 'block';
+    sliderModal.setAttribute('aria-hidden', 'false');
     main.style.display = 'none';
+    body.setAttribute('aria-hidden', 'true');
   }
 
   mediasPortfolio.forEach((media, idx) => media.addEventListener('click', (e) => {
     displaySliderModal(e, idx);
   }));
+  // mediasPortfolio.forEach((media, idx) => media.addEventListener('keydown', (event) => {
+  //   if ((event.key || event.code) === 'Enter') {
+  //     displaySliderModal(event, idx);
+  //   }
+  // }));
+
+  portfolioMediaContainer.forEach((media, idx) => {
+    const currentMediaChild = media.children[0];
+    currentMediaChild.addEventListener('keydown', (event) => {
+      if ((event.key || event.code) === 'Enter') {
+        displaySliderModal(event, idx);
+      }
+    });
+  });
+
   sliderCloseBtn.addEventListener('click', closeSliderModal);
+  sliderCloseBtn.addEventListener('keydown', (event) => {
+    if ((event.key || event.code) === 'Enter') {
+      closeSliderModal();
+    }
+  }, true);
 }
 export default displaySlider;

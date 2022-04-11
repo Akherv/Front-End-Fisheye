@@ -28,7 +28,6 @@
     color: #525252;
 }
 
-
 .contact_button {
     font-size: 20px;
     font-weight: bold;
@@ -65,24 +64,6 @@
     padding: 0 4%;
 }
 
-/* select {
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    width: 100%;
-    padding: 10px 20px;
-    background: #000;
-    color: #fff;
-    border: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-select::-ms-expand {
-    display: none;
-} */
-
 .select-wrapper {
     display: inline-block;
     position: relative;
@@ -101,10 +82,6 @@ select::-ms-expand {
     z-index: 2
 }
 
-/* select:focus {
-    outline: 0;
-} */
-
 #filter {
     background-color: #901C1C;
     color: #fff;
@@ -117,33 +94,17 @@ select::-ms-expand {
 
 }
 
-/* select>option {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    position: absolute;
-    padding: 30px;
-    height: 69px;
-}
-
-select {
-    width: 100%;
-}
-
-.select2-results__options li:nth-child(n+6) {
-    display: none;
-} */
-
 .old-select {
     position: absolute;
     top: -9999px;
     left: -9999px;
 }
 
+.new-select-wrapper {  margin: 40px 100px ; padding: 0 6%; display: flex; justify-content: flex-start;}
 .new-select {
     width: 170px;
     height: 70px;
-    margin: auto;
+    /* margin: auto; */
     margin-top: 50px;
     text-align: center;
     color: #fff;
@@ -152,9 +113,16 @@ select {
     line-height: 50px;
     position: relative;
     margin-bottom: 40px;
-    margin: 40px 100px;
+    /* margin: 40px calc(100px + 4%); */
     font-size: 20px;
     font-weight: bold;
+}
+
+.new-select-label {
+    position: absolute;
+    left: -55%;
+    top: -10px;
+    color: #000;
 }
 
 .new-select .selection:active {
@@ -182,7 +150,7 @@ select {
 .new-select .selection p {
     width: calc(100% - 60px);
     position: relative;
-    margin: 0 0 0 10px;
+    margin: 0 0 0 16px;
     text-align: left;
 }
 
@@ -242,7 +210,7 @@ select {
 }
 
 .new-option.reveal:hover {
-    background-color: #444;
+    background-color: #DB8876;
     color: #f5f5f5;
 }
 
@@ -251,14 +219,13 @@ select {
     border-radius: 0;
 }
 
-
 .new-option.reveal:last-of-type {
     border-bottom: none;
     border-radius: 0 0 5px 5px;
 }
 
 .new-option.reveal::after {
-    content:"";
+    content: "";
     position: absolute;
     width: 90%;
     height: 1px;
@@ -269,14 +236,16 @@ select {
 }
 
 .new-option.reveal:last-of-type:after {
-    content:"";
+    content: "";
     position: absolute;
     width: 0;
     height: 0;
 }
+
 .hiddenItem {
     display: none;
 }
+
 /*=============================================
 =                  portfolio                  =
 =============================================*/
@@ -294,7 +263,7 @@ select {
     height: 350px;
     width: 350px;
     padding: 0 20px;
-    margin-bottom: 40px;
+    padding-bottom: 40px;
 }
 
 .portfolioMediaContent {
@@ -328,14 +297,12 @@ select {
     margin-left: 10px;
 }
 
-
 .portfolio_picture,
 .portfolio_video {
     height: 300px;
     width: 350px;
     object-fit: cover;
 }
-
 
 /*=============================================
 =             contact modal                  =
@@ -352,7 +319,6 @@ select {
     transform: translate(-50%, -50%);
     z-index: 20;
 }
-
 
 .modal {
     border-radius: 5px;
@@ -418,6 +384,11 @@ form textarea {
     width: 100%;
     border: none;
     border-radius: 5px;
+}
+
+input,textarea
+{
+    font-size:24px;
 }
 
 .contact_button:hover {
@@ -563,8 +534,9 @@ form textarea {
 
 #mediaTitle {
     position: absolute;
-    bottom: 0;
+    bottom: -10px;
     left: 20px;
+    color: #901C1C;
 }
 
 /*=============================================
@@ -589,6 +561,9 @@ form textarea {
     align-items: center;
 }
 
+.informationDiv_imgHeart {
+    margin-left: 5px;
+}
 
 
 /*=============================================
@@ -604,7 +579,7 @@ form textarea {
 }
 
 .heart.active {
-    filter: brightness(2);
+    content: url(../assets/icons/heart-chestnut.svg);
 }
 
 /*=============================================
@@ -659,13 +634,14 @@ form textarea {
         position: absolute;
     }
 
-    form input {
-        height: 5em;
+    form div{
+        margin-bottom: 80px;
     }
 
     form label {
         font-size: 2em;
     }
+    .new-select-wrapper {  padding: 0 4%;}
 
     @media screen and (max-width:830px) {
 
@@ -767,7 +743,7 @@ form textarea {
         }
 
         #mediaTitle {
-            bottom: -20px;
+            bottom: -30px;
             left: 0;
         }
 

@@ -1,5 +1,5 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-param-reassign */
-/* eslint-disable no-unused-vars */
 /* eslint-disable func-names */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable import/extensions */
@@ -140,13 +140,13 @@ async function initPhotographerPage() {
   }
   displayPortfolio(photographerMedias, photographerName);
 
-  function initContactModal() {
+  function initContactModal(name) {
     const modalHeader = document.querySelector('#modalHeader');
     const span = document.createElement('span');
-    span.innerHTML = `<br>${photographerName}`;
+    span.innerHTML = `<br>${name}`;
     modalHeader.appendChild(span);
   }
-  initContactModal(photographerName);
+  initContactModal(photographerName, photographerId);
 
   function initCounter(medias) {
     const likesMedia = document.querySelectorAll('.portfolioMediaContent .heart');
@@ -165,7 +165,7 @@ async function initPhotographerPage() {
     refreshGlobalLikesCounter();
 
     function likeCheck() {
-      likesMedia.forEach((media, idx) => media.addEventListener('click', () => {
+      function likesChangeState(media, idx) {
         const localIdx = medias[idx].id;
         const arrItems = JSON.parse(localStorage.getItem('photographersMedias'));
         const currentItem = arrItems.filter((el) => el.id === localIdx);
@@ -193,6 +193,20 @@ async function initPhotographerPage() {
           localStorage.setItem('photographersMedias', JSON.stringify(arrItems));
 
           refreshGlobalLikesCounter();
+        }
+      }
+      likesMedia.forEach((media, idx) => media.addEventListener('click', () => { likesChangeState(media, idx); }));
+      // accessibility
+      likesMedia.forEach((media, idx) => media.addEventListener('keydown', (event) => {
+        if ((event.key || event.code) === 'Enter') {
+          likesChangeState(media, idx);
+        }
+      }));
+      const portfolioMediaContent = document.querySelectorAll('.portfolioMediaContent');
+      // accessibility
+      portfolioMediaContent.forEach((media, idx) => media.addEventListener('keydown', (event) => {
+        if ((event.key || event.code) === 'Enter') {
+          likesChangeState(media, idx);
         }
       }));
     }
@@ -222,15 +236,26 @@ async function initPhotographerPage() {
     filterBtn.forEach((el) => el.addEventListener('click', () => {
       sortMedia(el);
     }));
+    // accessibility
+    filterBtn.forEach((el) => el.addEventListener('keydown', (event) => {
+      if ((event.key || event.code) === 'Enter') {
+        sortMedia(el);
+      }
+      if ((event.key || event.code) === 'Escape') {
+        const portfolioFocus = document.querySelectorAll('.media');
+        el.parentElement.classList.remove('open');
+        closeSelect();
+        portfolioFocus[0].focus();
+      }
+    }, true));
   }
-
   checkStateFilterBtn();
 
   displaySlider(photographerMedias);
 }
 initPhotographerPage();
-// /////////////////////////
 
+// select filter re-created for styling purpose
 function openSelect() {
   document.querySelectorAll('.new-select .new-option').forEach((el) => {
     el.classList.add('reveal');
@@ -238,8 +263,8 @@ function openSelect() {
     el.style.position = 'unset';
     el.parentElement.overflow = 'visible';
 
-    let x = document.querySelector('.selection.open p span').textContent
-    if(el.textContent === x) {
+    const x = document.querySelector('.selection.open p span').textContent;
+    if (el.textContent === x) {
       el.style.display = 'none';
     }
   });
@@ -264,16 +289,30 @@ if (document.querySelector('.old-select option[selected]').length === 1) {
 document.querySelectorAll('.old-select option').forEach((el) => {
   const newValue = el.value;
   const newHTML = el.innerHTML;
-  document.querySelector('.new-select').innerHTML += `<div class="new-option" data-value="${newValue}"><p>${newHTML}</p></div>`;
+  document.querySelector('.new-select').innerHTML += `<div class="new-option" data-value="${newValue}" role="listbox" tabindex="0"><p>${newHTML}</p></div>`;
 });
 
 closeSelect();
 
 // Ouverture / Fermeture
-document.querySelector('.selection').addEventListener('click', function () {
+const selection = document.querySelector('.selection');
+selection.addEventListener('click', function () {
   this.classList.toggle('open');
   if (this.classList.contains('open') === true) { openSelect(); } else { closeSelect(); }
 });
+
+selection.addEventListener('keydown', (event) => {
+  if ((event.key || event.code) === 'Enter') {
+    selection.classList.toggle('open');
+    if (selection.classList.contains('open') === true) { openSelect(); } else { closeSelect(); }
+  }
+  if ((event.key || event.code) === 'Escape') {
+    const portfolioFocus = document.querySelectorAll('.media');
+    selection.classList.remove('open');
+    closeSelect();
+    portfolioFocus[0].focus();
+  }
+}, true);
 
 // close filter on click outside
 const ignoreClickOnMeElement = document.querySelector('.new-select');
@@ -291,10 +330,6 @@ document.querySelectorAll('.new-option').forEach((el) => el.addEventListener('cl
 
   // Selection New Select
   document.querySelectorAll('.selection p span').innerHTML = this.querySelector('p').innerHTML;
-  // document.querySelector('.selection').addEventListener('click', function () {
-  //   this.classList.toggle('open');
-  //   if (this.classList.contains('open') === true) { openSelect(); } else { closeSelect(); }
-  // });
 
   // Selection Old Select
   document.querySelector('.old-select option[selected]').removeAttribute('selected');
@@ -305,7 +340,18 @@ document.querySelectorAll('.new-option').forEach((el) => el.addEventListener('cl
 
   // hide from list selected textContent
   this.style.display = 'none';
-  let x = document.querySelectorAll('.new-option');
-  let z = [...x].filter((elt) => elt.dataset.value !== newValue);
+  const x = document.querySelectorAll('.new-option');
+  const z = [...x].filter((elt) => elt.dataset.value !== newValue);
   z.forEach((elt) => elt.style.display = 'block');
+
+  // style case : last element Date
+  // if(this)
 }));
+
+// accessibility exit photographer page
+const header = document.querySelector('header');
+header.addEventListener('keydown', (event) => {
+  if ((event.key || event.code) === 'Enter') {
+    header.children[0].focus();
+  }
+}, true);

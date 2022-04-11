@@ -13,9 +13,9 @@
 </head>
 
 <body>
-  <header>
-    <a href="index.html" aria-labelledby="homepage">
-      <img src="assets/images/logo.png" id="homepage" class="logo" alt="Fisheye Home page"/>
+  <header tabindex="0">
+    <a href="index.html" aria-labelledby="homepage" tabindex="0">
+      <img src="assets/images/logo.png" id="homepage" class="logo" alt="Fisheye Home page" />
     </a>
   </header>
   <main id="main">
@@ -25,78 +25,66 @@
       </div>
       <button class="contact_button" aria-label="Contact Me">Contactez-moi</button>
     </div>
-    <!-- <div id="filterContainer">
+    <select class="old-select">
       <label for="filter">Trier par</label>
-      <select name="filter" id="filter">
-          <option value="popularite">popularite</option>
-          <option value="date">date</option>
-          <option value="title">titre</option>
-        </select>
-    </div> -->
-
- <!-- Bouton Select de base -->
-<select class="old-select">
-  <label for="filter">Trier par</label>
-  <option value="popularite" selected>Popularité</option>
-  <option value="date">Date</option>
-  <option value="title">Titre</option>
-</select>
-
-<!-- Bouton Select reconstruit -->
-<div class="new-select">
-  <div class="selection">
-      <p>
+      <option value="popularite" selected>Popularité</option>
+      <option value="date">Date</option>
+      <option value="title">Titre</option>
+    </select>
+    <div class="new-select-wrapper">
+      <div class="new-select">
+        <p class="new-select-label">Trier par</p>
+        <div class="selection" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="false">
+          <p>
+            <span></span>
+          </p>
           <span></span>
-      </p>
-      <span></span>
-  </div>
-</div>
-
-
-
-
-
-
-
+        </div>
+      </div>
+    </div>
     <div class="informationdiv">
       <span class="informationLikes"></span>
     </div>
   </main>
-  <div id="contact_modal">
+  <div id="contact_modal" aria-hidden="true">
     <div class="modal" role="dialog" tabindex="0" aria-labelledby="modalHeader">
       <header>
         <h2 id="modalHeader">Contactez-moi</h2>
-        <img class="closeBtn" src="assets/icons/close.svg" role="button" tabindex="0" aria-label="Close Contact form" alt=""/>
+        <img class="closeBtn" src="assets/icons/close.svg" role="button" tabindex="0" aria-label="Close Contact form"
+          alt="" />
       </header>
-      <form>
+      <form action="./index.html" method="get">
         <div>
           <label for="First name">Prénom</label>
-          <input type="text" name="First name" id="First name">
+          <input type="text" name="First name" id="First name" class="formData" minlength="2" required>
           <label for="Last name">Nom</label>
-          <input type="text" name="Last name" id="Last name">
+          <input type="text" name="Last name" id="Last name" class="formData" minlength="2" required>
           <label for="Email">Email</label>
-          <input type="email" name="Email" id="Email">
+          <input type="email" name="Email" id="Email" class="formData" required>
           <label for="Your message">Votre message</label>
-          <textarea name="Your message" id="Your message" cols="30" rows="10"></textarea>
+          <textarea name="Your message" id="Your message" class="formData" cols="30" rows="5" required></textarea>
         </div>
         <button class="contact_button" aria-label="send">Envoyer</button>
       </form>
     </div>
   </div>
-  <div id="slider_modal">
+  <div id="slider_modal" aria-hidden="true">
     <div class="modal">
       <div class="content" role="dialog" tabindex="0" aria-label="image closeup view">
-        <img class="closeBtn" src="assets/icons/closeSlider.svg" role="button" tabindex="0" aria-label="Close dialog" alt=""/>
+        <img class="closeBtn" src="assets/icons/closeSlider.svg" role="button" tabindex="0" aria-label="Close dialog"
+          alt="" />
         <div id="prevBtn" class="sliderBtn" role="button" tabindex="0" aria-label="previous image"></div>
-        <div id="mediaContainer"><div id="mediaTitle"></div></div>
+        <div id="mediaContainer">
+          <div id="mediaTitle"></div>
+        </div>
         <div id="nextBtn" class="sliderBtn" role="button" tabindex="0" aria-label="next image"></div>
       </div>
     </div>
   </div>
   <script type="module" src="scripts/factories/media-factory.js"></script>
+  <script type="module" src="scripts/utils/contactForm.js"></script>
   <script type="module" src="scripts/utils/slider.js"></script>
   <script type="module" src="scripts/pages/photographer.js"></script>
-  <script type="module" src="scripts/utils/contactForm.js"></script>
 </body>
 
 </html>
