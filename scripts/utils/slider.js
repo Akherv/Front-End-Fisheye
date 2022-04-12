@@ -1,5 +1,6 @@
 function displaySlider() {
   const body = document.querySelector('body');
+  const header = document.querySelector('header');
   const main = document.querySelector('main');
   const mediasPortfolio = document.querySelectorAll('.portfolio .media');
   const portfolioMediaContainer = document.querySelectorAll('.portfolio_mediaContainer');
@@ -44,19 +45,15 @@ function displaySlider() {
   }
 
   // Fire the removeSliderDOM function & Close the slider modal
-  function closeSliderModal() {
+  function closeSliderModal(idx) {
     removeSliderDOM();
     main.style.display = 'block';
     body.setAttribute('aria-hidden', 'false');
+    header.setAttribute('tabindex', '0');
     sliderModal.style.display = 'none';
     sliderModal.setAttribute('aria-hidden', 'true');
+    mediasPortfolio[idx].focus();
   }
-
-  window.addEventListener('keydown', (event) => {
-    if ((event.key || event.code) === 'Escape') {
-      closeSliderModal();
-    }
-  }, true);
 
   // add the media btn navigation functionality
   function MediaNavigation(index) {
@@ -99,6 +96,12 @@ function displaySlider() {
         increaseSlideIndex();
       }
     }, true);
+
+    window.addEventListener('keydown', (event) => {
+      if ((event.key || event.code) === 'Escape') {
+        closeSliderModal(currentIndex);
+      }
+    }, true);
   }
 
   // Check the currentIndex of the ta& display the slider modal
@@ -110,6 +113,7 @@ function displaySlider() {
     sliderModal.setAttribute('aria-hidden', 'false');
     main.style.display = 'none';
     body.setAttribute('aria-hidden', 'true');
+    header.setAttribute('tabindex', '-1');
   }
 
   mediasPortfolio.forEach((media, idx) => media.addEventListener('click', (e) => {

@@ -100,7 +100,13 @@
     left: -9999px;
 }
 
-.new-select-wrapper {  margin: 40px 100px ; padding: 0 6%; display: flex; justify-content: flex-start;}
+.new-select-wrapper {
+    margin: 40px 100px;
+    padding: 0 6%;
+    display: flex;
+    justify-content: flex-start;
+}
+
 .new-select {
     width: 170px;
     height: 70px;
@@ -145,7 +151,23 @@
 
 .new-select .selection.open {
     border-radius: 5px 5px 0 0;
+    position: relative;
+    background-color: transparent;
 }
+
+.new-select .selection.open::before {
+    content: "";
+    position: absolute;
+    width: 90%;
+    height: 1px;
+    background-color: #fff;
+    z-index: 20;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    box-shadow: 0 70px 0 0 #fff;
+}
+
 
 .new-select .selection p {
     width: calc(100% - 60px);
@@ -207,6 +229,10 @@
     margin: -1px;
     text-align: left;
     padding-left: 16px;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .new-option.reveal:hover {
@@ -219,12 +245,16 @@
     border-radius: 0;
 }
 
+.new-option:focus {
+    background-color: blue;
+}
+
 .new-option.reveal:last-of-type {
     border-bottom: none;
     border-radius: 0 0 5px 5px;
 }
 
-.new-option.reveal::after {
+/* .new-option.reveal::before {
     content: "";
     position: absolute;
     width: 90%;
@@ -233,13 +263,10 @@
     z-index: 20;
     left: 50%;
     transform: translateX(-50%);
-}
+} */
 
-.new-option.reveal:last-of-type:after {
-    content: "";
-    position: absolute;
+.hideCurrentOption {
     width: 0;
-    height: 0;
 }
 
 .hiddenItem {
@@ -386,9 +413,9 @@ form textarea {
     border-radius: 5px;
 }
 
-input,textarea
-{
-    font-size:24px;
+input,
+textarea {
+    font-size: 24px;
 }
 
 .contact_button:hover {
@@ -634,14 +661,17 @@ input,textarea
         position: absolute;
     }
 
-    form div{
+    form div {
         margin-bottom: 80px;
     }
 
     form label {
         font-size: 2em;
     }
-    .new-select-wrapper {  padding: 0 4%;}
+
+    .new-select-wrapper {
+        padding: 0 4%;
+    }
 
     @media screen and (max-width:830px) {
 

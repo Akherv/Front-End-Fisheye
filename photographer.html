@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <header tabindex="0">
+  <header>
     <a href="index.html" aria-labelledby="homepage" tabindex="0">
       <img src="assets/images/logo.png" id="homepage" class="logo" alt="Fisheye Home page" />
     </a>
@@ -25,7 +25,7 @@
       </div>
       <button class="contact_button" aria-label="Contact Me">Contactez-moi</button>
     </div>
-    <select class="old-select">
+    <select class="old-select" aria-hidden="true" tabindex="-1">
       <label for="filter">Trier par</label>
       <option value="popularite" selected>Popularité</option>
       <option value="date">Date</option>
@@ -34,11 +34,11 @@
     <div class="new-select-wrapper">
       <div class="new-select">
         <p class="new-select-label">Trier par</p>
-        <div class="selection" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="false">
+        <div class="selection" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="false" >
           <p>
             <span></span>
           </p>
-          <span></span>
+          <span aria-hidden="true"></span>
         </div>
       </div>
     </div>

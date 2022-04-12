@@ -36,12 +36,13 @@ function mediaFactory(media, name) {
       const imageMedia = document.createElement('img');
 
       mediaContainer.classList.add('portfolio_mediaContainer');
-      mediaContainer.setAttribute('tabindex', '0');
+      // mediaContainer.setAttribute('tabindex', '0');
       imageMedia.setAttribute('src', mediaLink);
       imageMedia.setAttribute('alt', title);
       imageMedia.classList.add('media', 'portfolio_picture');
       imageMedia.setAttribute('tabindex', '0');
-      imageMedia.setAttribute('aria-role', 'button');
+      imageMedia.setAttribute('role', 'button');
+      // imageMedia.setAttribute('aria-pressed', 'false');
       imageMedia.setAttribute('aria-label', 'ouvrir modal');
       imageMedia.setAttribute('aria-haspopup', 'dialog');
 
@@ -50,7 +51,7 @@ function mediaFactory(media, name) {
 
       const portfolioMediaContent = document.createElement('div');
       portfolioMediaContent.classList.add('portfolioMediaContent');
-      portfolioMediaContent.setAttribute('tabindex', '0');
+      // portfolioMediaContent.setAttribute('tabindex', '0');
       const p = document.createElement('p');
       const span1 = document.createElement('span');
       span1.classList.add('likesNumber');
@@ -69,8 +70,9 @@ function mediaFactory(media, name) {
         img.classList.add('heart');
       }
       img.setAttribute('tabindex', '0');
-      img.setAttribute('aria-role', 'button');
-      img.setAttribute('aria-label', 'like bouton');
+      img.setAttribute('role', 'button');
+      img.setAttribute('aria-checked', 'false');
+      img.setAttribute('aria-label', 'like');
 
       img.classList.add('heart');
 
@@ -89,13 +91,14 @@ function mediaFactory(media, name) {
       const source = document.createElement('source');
 
       mediaContainer.classList.add('portfolio_mediaContainer');
-      mediaContainer.setAttribute('tabindex', '0');
+      // mediaContainer.setAttribute('tabindex', '0');
       videoMedia.classList.add('media', 'portfolio_video');
       videoMedia.setAttribute('poster', mediaLinkPoster.posterLink);
       videoMedia.setAttribute('preload', 'none');
       videoMedia.setAttribute('data-title', media.title);
-      videoMedia.setAttribute('tabindex', '0');
-      videoMedia.setAttribute('aria-role', 'button');
+      // videoMedia.setAttribute('tabindex', '0');
+      videoMedia.setAttribute('role', 'button');
+      // videoMedia.setAttribute('aria-pressed', 'false');
       videoMedia.setAttribute('aria-label', 'ouvrir modal');
       videoMedia.setAttribute('aria-haspopup', 'dialog');
       source.setAttribute('src', mediaLinkPoster.videoLink);
@@ -106,7 +109,7 @@ function mediaFactory(media, name) {
 
       const portfolioMediaContent = document.createElement('div');
       portfolioMediaContent.classList.add('portfolioMediaContent');
-      portfolioMediaContent.setAttribute('tabindex', '0');
+      // portfolioMediaContent.setAttribute('tabindex', '0');
       const p = document.createElement('p');
       const span1 = document.createElement('span');
       const span2 = document.createElement('span');
@@ -124,8 +127,9 @@ function mediaFactory(media, name) {
         img.classList.add('heart');
       }
       img.setAttribute('tabindex', '0');
-      img.setAttribute('aria-role', 'button');
-      img.setAttribute('aria-label', 'like bouton');
+      img.setAttribute('role', 'button');
+      img.setAttribute('aria-checked', 'false');
+      img.setAttribute('aria-label', 'like');
 
       span2.appendChild(img);
       p.appendChild(span1);

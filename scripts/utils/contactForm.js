@@ -19,9 +19,9 @@ function displayContactModal() {
     body.setAttribute('tabindex', '-1');
     main.setAttribute('aria-hidden', 'true');
     main.setAttribute('tabindex', '-1');
-    likesBtn.forEach((el) => el.setAttribute('tabindex', '-1'));
-    mediasPortfolioBtn.forEach((el) => el.setAttribute('tabindex', '-1'));
-    contactModal.focus();
+    [...likesBtn].forEach((el) => el.setAttribute('tabindex', '-1'));
+    [...mediasPortfolioBtn].forEach((el) => el.setAttribute('tabindex', '-1'));
+    form['First name'].focus();
   }
 
   function closeContactModal() {
@@ -37,7 +37,7 @@ function displayContactModal() {
     main.setAttribute('tabindex', '0');
     likesBtn.forEach((el) => el.setAttribute('tabindex', '0'));
     mediasPortfolioBtn.forEach((el) => el.setAttribute('tabindex', '0'));
-    main.focus();
+    document.querySelector('.selection').focus();
   }
 
   contactModalBtn.addEventListener('click', openContactModal);
