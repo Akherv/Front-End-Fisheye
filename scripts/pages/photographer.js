@@ -175,6 +175,7 @@ async function initPhotographerPage() {
         const { likes } = currentItem[0];
 
         if (dataState === 'true') {
+          console.log('1');
           media.classList.remove('active');
           media.setAttribute('data-state', false);
           media.setAttribute('data-count', `${likes - 1}`);
@@ -185,6 +186,7 @@ async function initPhotographerPage() {
 
           refreshGlobalLikesCounter();
         } else {
+          console.log('2');
           media.classList.add('active');
           media.setAttribute('data-state', true);
           media.setAttribute('data-count', `${likes + 1}`);
@@ -199,15 +201,7 @@ async function initPhotographerPage() {
       likesMedia.forEach((media, idx) => media.addEventListener('click', () => { likesChangeState(media, idx); }));
 
       // accessibility
-      // likesMedia.forEach((media, idx) => media.addEventListener('keydown', (event) => {
-      //   if ((event.key || event.code) === 'Enter') {
-      //     likesChangeState(media, idx);
-      //   }
-      // }));
-
-      const portfolioMediaContent = document.querySelectorAll('.portfolioMediaContent');
-      // accessibility
-      portfolioMediaContent.forEach((media, idx) => media.addEventListener('keydown', (event) => {
+      likesMedia.forEach((media, idx) => media.addEventListener('keydown', (event) => {
         if ((event.key || event.code) === 'Enter') {
           likesChangeState(media, idx);
         }
@@ -271,222 +265,195 @@ async function initPhotographerPage() {
 initPhotographerPage();
 
 // select filter re-created for styling purpose
-function openSelect() {
-  const mediasPortfolioBtn = document.querySelectorAll('.media');
-  const x = document.querySelector('.selection.open p span').textContent;
-  document.querySelector('.selection.open p span').style.display = 'none';
+function customSelect() {
+  function openSelect() {
+    const mediasPortfolioBtn = document.querySelectorAll('.media');
+    const x = document.querySelector('.selection.open p span').textContent;
+    document.querySelector('.selection.open p span').style.display = 'none';
 
-  document.querySelectorAll('.new-select .new-option').forEach((el) => {
-    el.classList.add('reveal');
-    el.style.position = 'unset';
-    el.parentElement.overflow = 'visible';
-    mediasPortfolioBtn.forEach((elt) => elt.setAttribute('tabindex', '-1'));
+    document.querySelectorAll('.new-select .new-option').forEach((el) => {
+      el.classList.add('reveal');
+      el.style.position = 'unset';
+      el.parentElement.overflow = 'visible';
+      mediasPortfolioBtn.forEach((elt) => elt.setAttribute('tabindex', '-1'));
 
-    if ((el.textContent).toLowerCase() === x.toLowerCase()) {
-      el.style.position = 'absolute';
-      el.style.top = '0';
-      // const elBefore = document.querySelector('::before');
-      el.setAttribute('tabindex', '-1');
-      if ((el.nextElementSibling != null) && (el.nextElementSibling.style.display !== 'none')) {
-        el.nextElementSibling.setAttribute('tabindex', '0');
-        el.nextElementSibling.focus();
-      } else {
-        const firstEl = document.querySelectorAll('.new-option')[0];
-        firstEl.setAttribute('tabindex', 0);
-        el.setAttribute('aria-selected', 'true');
-        firstEl.focus();
+      if ((el.textContent).toLowerCase() === x.toLowerCase()) {
+        el.style.position = 'absolute';
+        el.style.top = '0';
+        // const elBefore = document.querySelector('::before');
+        el.setAttribute('tabindex', '-1');
+        if ((el.nextElementSibling != null) && (el.nextElementSibling.style.display !== 'none')) {
+          // el.nextElementSibling.setAttribute('tabindex', '0');
+          el.nextElementSibling.focus();
+        } else {
+          const firstEl = document.querySelectorAll('.new-option')[0];
+          // firstEl.setAttribute('tabindex', 0);
+          el.setAttribute('aria-selected', 'true');
+          firstEl.focus();
+        }
       }
+    });
+  }
+
+  function closeSelect(elt) {
+    const mediasPortfolioBtn = document.querySelectorAll('.media');
+    document.querySelector('.selection p span').style.display = 'block';
+
+    if (elt) {
+      document.querySelector('.selection p span').innerHTML = elt.textContent;
+      document.querySelector('.new-option').setAttribute('tabindex', '-1');
+    }
+    document.querySelectorAll('.new-select .new-option').forEach((el) => {
+      el.previousElementSibling.classList.remove('open');
+      el.classList.remove('reveal');
+      el.style.position = 'absolute';
+      el.parentElement.overflow = '-moz-hidden-unscrollable';
+      el.parentElement.setAttribute('aria-expanded', 'false');
+      el.setAttribute('tabindex', '-1');
+      document.querySelector('.new-option').setAttribute('tabindex', '-1');
+      // mediasPortfolioBtn.forEach((element) => element.setAttribute('tabindex', '0'));
+    });
+  }
+
+  // Initialisation
+  if (document.querySelector('.old-select option[selected]').length === 1) {
+    document.querySelector('.selection p span').innerHTML = document.querySelector('.old-select option[selected]').innerHTML;
+  } else {
+    document.querySelector('.selection p span').innerHTML = document.querySelector('.old-select option:first-child').innerHTML;
+  }
+
+  document.querySelectorAll('.old-select option').forEach((el) => {
+    const newValue = el.value;
+    const newHTML = el.innerHTML;
+    document.querySelector('.new-select').innerHTML += `<div class="new-option" data-value="${newValue}" role="listbox" aria-selected="false" tabindex="-1"><p>${newHTML}</p></div>`;
+    if (newValue === 'popularite') {
+      document.querySelector(`.new-option[data-value="${newValue}"]`).setAttribute('aria-selected', 'true');
     }
   });
-  // const z = [...document.querySelectorAll('.new-option')].filter((el) => el.textContent === x);
-  // z[0].nextElementSibling.setAttribute('tabindex', '0');
-  // console.log(z[0].nextElementSibling)
-  // z.focus();
-}
 
-function closeSelect(elt) {
-  const mediasPortfolioBtn = document.querySelectorAll('.media');
-  document.querySelector('.selection p span').style.display = 'block';
-
-  if (elt) {
-    console.log(elt);
-    document.querySelector('.selection p span').innerHTML = elt.textContent;
-    document.querySelector('.new-option[aria-selected="true"]').setAttribute('tabindex', '-1');
-  }
-
-  document.querySelectorAll('.new-select .new-option').forEach((el) => {
-    el.previousElementSibling.classList.remove('open');
-    el.classList.remove('reveal');
-    el.style.position = 'absolute';
-    el.parentElement.overflow = '-moz-hidden-unscrollable';
-    el.parentElement.setAttribute('aria-expanded', 'false');
-    mediasPortfolioBtn.forEach((element) => element.setAttribute('tabindex', '0'));
-  });
-}
-
-// Initialisation
-if (document.querySelector('.old-select option[selected]').length === 1) {
-  document.querySelector('.selection p span').innerHTML = document.querySelector('.old-select option[selected]').innerHTML;
-} else {
-  document.querySelector('.selection p span').innerHTML = document.querySelector('.old-select option:first-child').innerHTML;
-}
-
-document.querySelectorAll('.old-select option').forEach((el) => {
-  const newValue = el.value;
-  const newHTML = el.innerHTML;
-  document.querySelector('.new-select').innerHTML += `<div class="new-option" data-value="${newValue}" role="listbox" aria-selected="false" tabindex="-1"><p>${newHTML}</p></div>`;
-  if (newValue === 'popularite') {
-    document.querySelector(`.new-option[data-value="${newValue}"]`).setAttribute('aria-selected', 'true');
-  }
-});
-
-closeSelect();
-
-// Ouverture / Fermeture
-const selection = document.querySelector('.selection');
-selection.addEventListener('click', function () {
-  this.classList.toggle('open');
-  if (this.classList.contains('open') === true) {
-    openSelect();
-    selection.setAttribute('aria-expanded', 'true');
-  } else { closeSelect(); selection.setAttribute('aria-expanded', 'false'); }
-});
-
-selection.addEventListener('keydown', (event) => {
-  if ((event.key || event.code) === 'Enter') {
-    selection.classList.toggle('open');
-    if (selection.classList.contains('open') === true) { openSelect(); selection.setAttribute('aria-expanded', 'true'); } else { closeSelect(); selection.setAttribute('aria-expanded', 'false'); }
-  }
-  if ((event.key || event.code) === 'Escape') {
-    const portfolioFocus = document.querySelectorAll('.media');
-    closeSelect();
-    selection.classList.remove('open');
-    portfolioFocus[0].focus();
-  }
-}, true);
-
-// close filter on click outside
-const ignoreClickOnMeElement = document.querySelector('.new-select');
-
-document.addEventListener('click', (e) => {
-  const isClickInsideElement = ignoreClickOnMeElement.contains(e.target);
-  if (!isClickInsideElement) {
-    closeSelect();
-  }
-});
-
-// Selection
-document.querySelectorAll('.new-option').forEach((el) => el.addEventListener('click', function () {
-  const newValue = this.dataset.value;
-
-  // Selection New Select
-  document.querySelectorAll('.selection p span').innerHTML = this.querySelector('p').innerHTML;
-  document.querySelector('.new-option[aria-selected="true"]').setAttribute('tabindex', '-1');
-  document.querySelector('.new-option[aria-selected="true"]').setAttribute('aria-selected', 'false');
-  document.querySelector(`.new-option[data-value="${newValue}"]`).setAttribute('aria-selected', 'true');
-
-  // Selection Old Select
-  document.querySelector('.old-select option[selected]').removeAttribute('selected');
-  document.querySelector(`.old-select option[value="${newValue}"]`).setAttribute('selected', '');
-
-  // change textContent
-  document.querySelector('.selection.open p span').textContent = this.textContent;
-  this.setAttribute('aria-selected', 'true');
-  el.setAttribute('tabindex', '0');
-
-  // hide from list selected textContent
-  // this.style.display = 'none';
-  this.style.position = 'absolute';
-  this.style.top = '0';
-  const x = document.querySelectorAll('.new-option');
-  const z = [...x].filter((elt) => elt.dataset.value !== newValue);
-  z.forEach((elt) => {
-    // elt.style.display = 'block';
-    elt.style.position = 'static';
-  });
   closeSelect();
 
-  // style case : last element Date
-  // if(this)
-}));
+  // Ouverture / Fermeture
+  const selection = document.querySelector('.selection');
+  selection.addEventListener('click', function () {
+    this.classList.toggle('open');
+    if (this.classList.contains('open') === true) {
+      openSelect();
+      selection.setAttribute('aria-expanded', 'true');
+    } else { closeSelect(); selection.setAttribute('aria-expanded', 'false'); }
+  });
 
-document.querySelectorAll('.new-option').forEach((el) => el.addEventListener('keydown', (e) => {
-  if (e.keyCode === 9) {
-    e.preventDefault();
-    el.setAttribute('tabindex', -1);
+  selection.addEventListener('keydown', (event) => {
+    if ((event.key || event.code) === 'Enter') {
+      selection.classList.toggle('open');
+      if (selection.classList.contains('open') === true) { openSelect(); selection.setAttribute('aria-expanded', 'true'); } else { closeSelect(); selection.setAttribute('aria-expanded', 'false'); }
+    }
+    if ((event.key || event.code) === 'Escape') {
+      const portfolioFocus = document.querySelectorAll('.media');
+      closeSelect();
+      selection.classList.remove('open');
+      portfolioFocus[0].focus();
+    }
+    if ((event.key || event.code) === 'tab') {
+      if (e.shiftKey) {
+        e.preventDefault();
+        const contactModalBtn = document.querySelector('.photograph-header .contact_button');
+        contactModalBtn.focus();
+      }
+    }
+  }, true);
+
+  // close filter on click outside
+  const ignoreClickOnMeElement = document.querySelector('.new-select');
+
+  document.addEventListener('click', (e) => {
+    const isClickInsideElement = ignoreClickOnMeElement.contains(e.target);
+    if (!isClickInsideElement) {
+      closeSelect();
+    }
+  });
+
+  // Selection
+  document.querySelectorAll('.new-option').forEach((el) => el.addEventListener('click', function () {
+    const newValue = this.dataset.value;
+
+    // Selection New Select
+    document.querySelectorAll('.selection p span').innerHTML = this.querySelector('p').innerHTML;
     document.querySelector('.new-option[aria-selected="true"]').setAttribute('tabindex', '-1');
     document.querySelector('.new-option[aria-selected="true"]').setAttribute('aria-selected', 'false');
+    document.querySelector(`.new-option[data-value="${newValue}"]`).setAttribute('aria-selected', 'true');
 
-    if ((el.nextElementSibling != null) && (el.nextElementSibling.style.display !== 'none')) {
-      const nextEl = el.nextElementSibling;
-      nextEl.setAttribute('tabindex', 0);
-      el.setAttribute('aria-selected', 'true');
-      nextEl.focus();
-    } else {
-      const firstEl = document.querySelectorAll('.new-option')[0];
-      firstEl.setAttribute('tabindex', 0);
-      el.setAttribute('aria-selected', 'true');
-      firstEl.focus();
-    }
+    // Selection Old Select
+    document.querySelector('.old-select option[selected]').removeAttribute('selected');
+    document.querySelector(`.old-select option[value="${newValue}"]`).setAttribute('selected', '');
 
-    if (e.shiftKey) {
+    // change textContent
+    document.querySelector('.selection.open p span').textContent = this.textContent;
+    this.setAttribute('aria-selected', 'true');
+    // el.setAttribute('tabindex', '0');
+
+    // hide from list selected textContent
+    // this.style.display = 'none';
+    this.style.position = 'absolute';
+    this.style.top = '0';
+    const x = document.querySelectorAll('.new-option');
+    const z = [...x].filter((elt) => elt.dataset.value !== newValue);
+    z.forEach((elt) => {
+      // elt.style.display = 'block';
+      elt.style.position = 'static';
+    });
+    closeSelect();
+
+    // style case : last element Date
+    // if(this)
+  }));
+
+  document.querySelectorAll('.new-option').forEach((el) => el.addEventListener('keydown', (e) => {
+    if (e.keyCode === 9) {
       e.preventDefault();
       el.setAttribute('tabindex', -1);
       document.querySelector('.new-option[aria-selected="true"]').setAttribute('tabindex', '-1');
       document.querySelector('.new-option[aria-selected="true"]').setAttribute('aria-selected', 'false');
-      if (el.previousElementSibling.classList.contains('selection')) {
-        const lastEl = document.querySelectorAll('.new-option')[2];
-        lastEl.setAttribute('tabindex', 0);
+
+      if ((el.nextElementSibling != null) && (el.nextElementSibling.style.display !== 'none')) {
+        const nextEl = el.nextElementSibling;
+        // nextEl.setAttribute('tabindex', 0);
         el.setAttribute('aria-selected', 'true');
-        lastEl.focus();
+        nextEl.focus();
       } else {
-        const prevEl = el.previousElementSibling;
-        prevEl.setAttribute('tabindex', 0);
+        const firstEl = document.querySelectorAll('.new-option')[0];
+        // firstEl.setAttribute('tabindex', 0);
         el.setAttribute('aria-selected', 'true');
-        prevEl.focus();
+        firstEl.focus();
+      }
+
+      if (e.shiftKey) {
+        e.preventDefault();
+        el.setAttribute('tabindex', -1);
+        document.querySelector('.new-option[aria-selected="true"]').setAttribute('tabindex', '-1');
+        document.querySelector('.new-option[aria-selected="true"]').setAttribute('aria-selected', 'false');
+        if (el.previousElementSibling.classList.contains('selection')) {
+          const lastEl = document.querySelectorAll('.new-option')[2];
+          // lastEl.setAttribute('tabindex', 0);
+          el.setAttribute('aria-selected', 'true');
+          lastEl.focus();
+        } else {
+          const prevEl = el.previousElementSibling;
+          // prevEl.setAttribute('tabindex', 0);
+          el.setAttribute('aria-selected', 'true');
+          prevEl.focus();
+        }
       }
     }
-  }
-}));
+  }));
+}
+
+customSelect();
 
 // accessibility exit photographer page
-
-const header = document.querySelector('header');
-header.addEventListener('keydown', (event) => {
-  if ((event.key || event.code) === 'Enter') {
-    header.children[0].focus();
-  }
-}, true);
-
-// const btns = document.querySelectorAll('.new-option');
-// btns.forEach((btn, index) => {
-// // set first button tabindex to 0
-// // and set every other button tabindex to -1
-//   if (index === 0) {
-//     btn.setAttribute('tabindex', 0);
-//   } else {
-//     btn.setAttribute('tabindex', -1);
+// const header = document.querySelector('header');
+// header.addEventListener('keydown', (event) => {
+//   if ((event.key || event.code) === 'Enter') {
+//     header.children[0].focus();
 //   }
-
-//   // add an event listener when tab key is pressed
-//   btn.addEventListener('keydown', (e) => {
-//     if (e.keyCode == 9) {
-//       // prevent the default behaviour
-//       e.preventDefault();
-//       // set current button tabindex to 0
-//       btn.setAttribute('tabindex', -1);
-//       // if not last button keep setting tabindex to 0
-//       if (btn.previousElementSibling != null) {
-//         const nextEl = btn.previousElementSibling;
-//         nextEl.setAttribute('tabindex', 0);
-//         nextEl.focus();
-//       } else {
-//       // when we get to last element set first element to tabindex 0
-//       // and call focus method on it.
-//       // note the .lastElementChild the last element becomes our first
-//       // that's because of the direction we changed
-//         const firstEl = document.querySelector('.new-option')[0]; firstEl.setAttribute('tabindex', 0); firstEl.focus();
-//       }
-//     }
-//   });
-// });
+// }, true);

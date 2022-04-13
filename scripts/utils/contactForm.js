@@ -1,12 +1,17 @@
 function displayContactModal() {
   const body = document.querySelector('body');
   const main = document.querySelector('main');
+  const header = document.querySelector('header a');
+  const selection = document.querySelector('.selection');
   const contactModalBtn = document.querySelector('.photograph-header .contact_button');
   const contactModal = document.getElementById('contact_modal');
   const contactModalCloseBtn = document.querySelector('#contact_modal .closeBtn');
+  const contactModalSendBtn = document.querySelector('#contact_modal .contact_button');
   const form = document.querySelector('form');
   const fields = document.querySelectorAll('input');
   const textarea = form['Your message'];
+
+  // contactModalCloseBtn.focus();
 
   function openContactModal() {
     const mediasPortfolioBtn = document.querySelectorAll('.media');
@@ -17,11 +22,22 @@ function displayContactModal() {
     body.style.overflow = 'hidden';
     body.setAttribute('aria-hidden', 'true');
     body.setAttribute('tabindex', '-1');
+    header.setAttribute('aria-hidden', 'true');
+    header.setAttribute('tabindex', '-1');
     main.setAttribute('aria-hidden', 'true');
     main.setAttribute('tabindex', '-1');
+    selection.setAttribute('aria-hidden', 'true');
     [...likesBtn].forEach((el) => el.setAttribute('tabindex', '-1'));
     [...mediasPortfolioBtn].forEach((el) => el.setAttribute('tabindex', '-1'));
-    form['First name'].focus();
+    [...likesBtn].forEach((el) => {
+      console.log(el.getAttribute('tabindex'));
+    });
+    [...mediasPortfolioBtn].forEach((el) => {
+      console.log(el.getAttribute('tabindex'));
+    });
+    // console.log([...mediasPortfolioBtn].forEach((el) => el.getAttribute('tabindex')));
+    // form['First name'].focus();
+    selection.setAttribute('tabindex', '-1');
   }
 
   function closeContactModal() {
@@ -29,15 +45,15 @@ function displayContactModal() {
     const likesBtn = document.querySelectorAll('.heart');
     contactModal.style.display = 'none';
     contactModal.setAttribute('aria-hidden', 'true');
-    contactModal.setAttribute('tabindex', '0');
+    // contactModal.setAttribute('tabindex', '0');
     body.style.overflow = 'scroll';
-    body.setAttribute('aria-hidden', 'false');
-    body.setAttribute('tabindex', '0');
-    main.setAttribute('aria-hidden', 'false');
-    main.setAttribute('tabindex', '0');
-    likesBtn.forEach((el) => el.setAttribute('tabindex', '0'));
-    mediasPortfolioBtn.forEach((el) => el.setAttribute('tabindex', '0'));
-    document.querySelector('.selection').focus();
+    // body.setAttribute('aria-hidden', 'false');
+    // body.setAttribute('tabindex', '0');
+    // main.setAttribute('aria-hidden', 'false');
+    // main.setAttribute('tabindex', '0');
+    // likesBtn.forEach((el) => el.setAttribute('tabindex', '0'));
+    // mediasPortfolioBtn.forEach((el) => el.setAttribute('tabindex', '0'));
+    // contactModalBtn.focus();
   }
 
   contactModalBtn.addEventListener('click', openContactModal);
@@ -46,6 +62,16 @@ function displayContactModal() {
   window.addEventListener('keydown', (event) => {
     if ((event.key || event.code) === 'Escape') {
       closeContactModal();
+    }
+  }, true);
+
+  contactModalSendBtn.addEventListener('keydown', (event) => {
+    if ((event.key || event.code) === 'Enter') {
+      closeContactModal();
+    }
+    if (event.keyCode === 9) {
+      event.preventDefault;
+      // contactModalCloseBtn.focus();
     }
   }, true);
 

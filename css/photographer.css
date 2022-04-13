@@ -606,7 +606,8 @@ textarea {
 }
 
 .heart.active {
-    content: url(../assets/icons/heart-chestnut.svg);
+    /* content: url(../assets/icons/heart-chestnut.svg); */
+    filter: brightness(2);
 }
 
 /*=============================================
