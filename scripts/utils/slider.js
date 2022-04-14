@@ -1,8 +1,9 @@
 function displaySlider() {
   const body = document.querySelector('body');
-  const header = document.querySelector('header');
-  const main = document.querySelector('main');
+  const main = document.querySelector('#main');
+  const landmarks = document.querySelectorAll('#header a, #main .contact_button, .selection');
   const mediasPortfolio = document.querySelectorAll('.portfolio .media');
+  const likesBtn = document.querySelectorAll('.heart');
   const portfolioMediaContainer = document.querySelectorAll('.portfolio_mediaContainer');
   const sliderModal = document.querySelector('#slider_modal');
   const sliderCloseBtn = document.querySelector('#slider_modal .closeBtn');
@@ -47,11 +48,24 @@ function displaySlider() {
   // Fire the removeSliderDOM function & Close the slider modal
   function closeSliderModal(idx) {
     removeSliderDOM();
-    main.style.display = 'block';
-    body.setAttribute('aria-hidden', 'false');
-    header.setAttribute('tabindex', '0');
+
     sliderModal.style.display = 'none';
-    sliderModal.setAttribute('aria-hidden', 'true');
+    sliderCloseBtn.setAttribute('tabindex', '-1');
+    sliderModal.removeAttribute('aria-modal');
+    sliderModal.setAttribute('hidden', '');
+
+    body.style.overflow = 'auto';
+
+    landmarks.forEach((el) => {
+      el.setAttribute('tabindex', '0');
+      el.removeAttribute('aria-hidden');
+      el.removeAttribute('inert');
+    });
+    likesBtn.forEach((el) => el.setAttribute('tabindex', '0'));
+    mediasPortfolio.forEach((el) => el.setAttribute('tabindex', '0'));
+
+    main.style.display = 'block';
+
     mediasPortfolio[idx].focus();
   }
 
@@ -107,23 +121,33 @@ function displaySlider() {
   // Check the currentIndex of the ta& display the slider modal
   function displaySliderModal(e, idx) {
     const currentIndex = idx;
+
     createMediaDOM(currentIndex);
     MediaNavigation(currentIndex);
+
     sliderModal.style.display = 'block';
-    sliderModal.setAttribute('aria-hidden', 'false');
+    sliderCloseBtn.setAttribute('tabindex', '0');
+    sliderModal.setAttribute('aria-modal', 'true');
+    sliderModal.removeAttribute('hidden');
+
+    body.style.overflow = 'hidden';
+
+    landmarks.forEach((el) => {
+      el.setAttribute('tabindex', '-1');
+      el.setAttribute('aria-hidden', 'true');
+      el.setAttribute('inert', '');
+    });
+    likesBtn.forEach((el) => el.setAttribute('tabindex', '-1'));
+    mediasPortfolio.forEach((el) => el.setAttribute('tabindex', '-1'));
+
     main.style.display = 'none';
-    body.setAttribute('aria-hidden', 'true');
-    header.setAttribute('tabindex', '-1');
+
+    sliderCloseBtn.focus();
   }
 
   mediasPortfolio.forEach((media, idx) => media.addEventListener('click', (e) => {
     displaySliderModal(e, idx);
   }));
-  // mediasPortfolio.forEach((media, idx) => media.addEventListener('keydown', (event) => {
-  //   if ((event.key || event.code) === 'Enter') {
-  //     displaySliderModal(event, idx);
-  //   }
-  // }));
 
   portfolioMediaContainer.forEach((media, idx) => {
     const currentMediaChild = media.children[0];

@@ -335,8 +335,20 @@
 =             contact modal                  =
 =============================================*/
 
+[role="dialog"] div[role=document] {
+    /*  Need this because of a VoiceOver bug  */
+    display: inline;
+}
+
+[role="dialog"][hidden] {
+    visibility: hidden;
+}
+
+[role="dialog"][hidden] {
+    visibility: visible;
+}
+
 #contact_modal {
-    display: none;
     background-color: rgba(255, 255, 255, 0.8);
     height: 100vh;
     width: 100vw;
@@ -378,6 +390,8 @@
     font-size: 64px;
     font-weight: normal;
     text-align: left;
+    display: flex;
+    flex-direction: column;
 }
 
 form {
@@ -417,6 +431,31 @@ input,
 textarea {
     font-size: 24px;
 }
+
+.formData[data-error]::after {
+    content: attr(data-error);
+    font-size: 1em;
+    color: #901C1C;
+    display: block;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    line-height: 1;
+    opacity: 0;
+    transition: 0.3s;
+  }
+  
+  .formData[data-error-visible="true"]::after {
+    opacity: 1;
+  }
+  
+  .formData[data-error-visible="true"] .text-control {
+    border: 2px solid #901C1C;
+  }
+  
+  input.error, textarea.error{
+    border: 4px solid #901C1C;
+  }
+  
 
 .contact_button:hover {
     background-color: rgb(144, 28, 28, 0.8);

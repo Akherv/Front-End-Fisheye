@@ -1,59 +1,53 @@
+/* eslint-disable no-console */
 function displayContactModal() {
   const body = document.querySelector('body');
-  const main = document.querySelector('main');
-  const header = document.querySelector('header a');
-  const selection = document.querySelector('.selection');
-  const contactModalBtn = document.querySelector('.photograph-header .contact_button');
+  const landmarks = document.querySelectorAll('#header a, #main .contact_button, .selection');
+  const mediasPortfolio = document.querySelectorAll('.media');
+  const likesBtn = document.querySelectorAll('.heart');
+  const contactModalBtn = document.querySelector('.contact_button.bio');
   const contactModal = document.getElementById('contact_modal');
+  const contactModalHeader = document.querySelector('#modalHeader');
   const contactModalCloseBtn = document.querySelector('#contact_modal .closeBtn');
   const contactModalSendBtn = document.querySelector('#contact_modal .contact_button');
   const form = document.querySelector('form');
-  const fields = document.querySelectorAll('input');
-  const textarea = form['Your message'];
-
-  // contactModalCloseBtn.focus();
+  const fields = document.querySelectorAll('.fields');
 
   function openContactModal() {
-    const mediasPortfolioBtn = document.querySelectorAll('.media');
-    const likesBtn = document.querySelectorAll('.heart');
-    contactModal.style.display = 'block';
-    contactModal.setAttribute('aria-hidden', 'false');
-    contactModal.setAttribute('tabindex', '0');
+    // contactModal.style.display = 'block';
+    contactModalCloseBtn.setAttribute('tabindex', '0');
+    contactModal.setAttribute('aria-modal', 'true');
+    contactModal.removeAttribute('hidden');
+
     body.style.overflow = 'hidden';
-    body.setAttribute('aria-hidden', 'true');
-    body.setAttribute('tabindex', '-1');
-    header.setAttribute('aria-hidden', 'true');
-    header.setAttribute('tabindex', '-1');
-    main.setAttribute('aria-hidden', 'true');
-    main.setAttribute('tabindex', '-1');
-    selection.setAttribute('aria-hidden', 'true');
-    [...likesBtn].forEach((el) => el.setAttribute('tabindex', '-1'));
-    [...mediasPortfolioBtn].forEach((el) => el.setAttribute('tabindex', '-1'));
-    [...likesBtn].forEach((el) => {
-      console.log(el.getAttribute('tabindex'));
+
+    landmarks.forEach((el) => {
+      el.setAttribute('tabindex', '-1');
+      el.setAttribute('aria-hidden', 'true');
+      el.setAttribute('inert', '');
     });
-    [...mediasPortfolioBtn].forEach((el) => {
-      console.log(el.getAttribute('tabindex'));
-    });
-    // console.log([...mediasPortfolioBtn].forEach((el) => el.getAttribute('tabindex')));
-    // form['First name'].focus();
-    selection.setAttribute('tabindex', '-1');
+    likesBtn.forEach((el) => el.setAttribute('tabindex', '-1'));
+    mediasPortfolio.forEach((el) => el.setAttribute('tabindex', '-1'));
+
+    contactModalHeader.focus();
   }
 
   function closeContactModal() {
-    const mediasPortfolioBtn = document.querySelectorAll('.media');
-    const likesBtn = document.querySelectorAll('.heart');
-    contactModal.style.display = 'none';
-    contactModal.setAttribute('aria-hidden', 'true');
-    // contactModal.setAttribute('tabindex', '0');
-    body.style.overflow = 'scroll';
-    // body.setAttribute('aria-hidden', 'false');
-    // body.setAttribute('tabindex', '0');
-    // main.setAttribute('aria-hidden', 'false');
-    // main.setAttribute('tabindex', '0');
-    // likesBtn.forEach((el) => el.setAttribute('tabindex', '0'));
-    // mediasPortfolioBtn.forEach((el) => el.setAttribute('tabindex', '0'));
-    // contactModalBtn.focus();
+    // contactModal.style.display = 'none';
+    contactModalCloseBtn.setAttribute('tabindex', '-1');
+    contactModal.removeAttribute('aria-modal');
+    contactModal.setAttribute('hidden', '');
+
+    body.style.overflow = 'auto';
+
+    landmarks.forEach((el) => {
+      el.setAttribute('tabindex', '0');
+      el.removeAttribute('aria-hidden');
+      el.removeAttribute('inert');
+    });
+    likesBtn.forEach((el) => el.setAttribute('tabindex', '0'));
+    mediasPortfolio.forEach((el) => el.setAttribute('tabindex', '0'));
+
+    contactModalBtn.focus();
   }
 
   contactModalBtn.addEventListener('click', openContactModal);
@@ -64,75 +58,109 @@ function displayContactModal() {
       closeContactModal();
     }
   }, true);
-
   contactModalSendBtn.addEventListener('keydown', (event) => {
     if ((event.key || event.code) === 'Enter') {
       closeContactModal();
     }
-    if (event.keyCode === 9) {
-      event.preventDefault;
-      // contactModalCloseBtn.focus();
-    }
   }, true);
-
   contactModalCloseBtn.addEventListener('keydown', (event) => {
     if ((event.key || event.code) === 'Enter') {
       closeContactModal();
     }
   }, true);
 
+  function validation() {
   // Global validation state
-  let fieldsIsValid = false;
-  const valuesArr = [];
+    let fieldsIsValid = false;
+    let valuesArr = [];
 
-  function checkfieldsIsValid() {
-    let counter = 0;
+    function checkfieldsIsValid() {
+      let counter = 0;
 
-    const textareaConditionIsValid = textarea.value.trim() !== '';
+      function checkConditionValidity(el) {
+        let condition;
+        let message;
 
-    class Obj {
-      constructor(name, value) {
-        this.name = name;
-        this.value = value;
+        // Pattern
+        const namePattern = /[a-zA-Z]{2,}/; // name must contains only letters and at least 2 characters
+        // eslint-disable-next-line no-useless-escape
+        const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // email must begin with a word or numeric character (one or more time), can be followed by punctuation & another word or numeric character, then must contains an @ symbol, followed by word or numeric character and finish with a top level domain of 2 or 3 characters. (ex:a0.aaa@aaaa.com)
+
+        switch (el.name) {
+          case 'Firstname':
+            condition = el.value.trim() !== '' && el.value.trim().length >= 2 && namePattern.test(el.value.trim());
+            message = 'Le prénom doit contenir au moins 2 lettres';
+            break;
+          case 'Lastname':
+            condition = el.value.trim() !== '' && el.value.trim().length >= 2 && namePattern.test(el.value.trim());
+            message = 'Le nom doit contenir au moins 2 lettres';
+            break;
+          case 'Email':
+            condition = el.value.trim() !== '' && emailPattern.test(el.value.trim());
+            message = 'L\'email doit être correct';
+            break;
+          case 'Yourmessage':
+            condition = el.value.trim() !== '';
+            message = 'Le message ne doit pas être vide';
+            break;
+          default:
+            condition = el.value.trim() !== '';
+            message = 'erreur';
+            break;
+        }
+
+        class Obj {
+          constructor(name, value) {
+            this.name = name;
+            this.value = value;
+          }
+        }
+
+        if (condition) {
+          counter += 1;
+          const newObj = new Obj(el.name, el.value);
+          valuesArr.push(newObj);
+          el.parentElement.removeAttribute('data-error');
+          el.parentElement.removeAttribute('data-error-visible');
+          el.classList.remove('error');
+        } else {
+          el.parentElement.setAttribute('data-error', message);
+          el.parentElement.setAttribute('data-error-visible', 'true');
+          el.classList.add('error');
+        }
       }
-    }
 
-    fields.forEach((el) => {
-      if (el.checkValidity()) {
-        counter += 1;
-        const newObj = new Obj(el.name, el.value);
-        valuesArr.push(newObj);
+      fields.forEach((el) => {
+        checkConditionValidity(el);
+      });
+
+      // Final global check
+      if (counter === 4) {
+        fieldsIsValid = true;
+        return valuesArr;
       }
-    });
-    if (textareaConditionIsValid) {
-      counter += 1;
-      const newObj = new Obj(textarea.name, textarea.value);
-      valuesArr.push(newObj);
+      fieldsIsValid = false;
+      valuesArr = [];
+      return 0;
     }
 
-    // Final global check
-    if (counter === 4) {
-      fieldsIsValid = true;
-      return valuesArr;
+    function validateOnSubmit(e) {
+      e.preventDefault();
+      checkfieldsIsValid();
+
+      if (fieldsIsValid === false) {
+        checkfieldsIsValid();
+        return false;
+      }
+      console.log(valuesArr);
+      closeContactModal();
+      this.reset();
+      return true;
     }
-    fieldsIsValid = false;
-    return 0;
+
+    // Validation on Submit
+    form.addEventListener('submit', validateOnSubmit);
   }
-
-  function validateOnSubmit(e) {
-    e.preventDefault();
-    checkfieldsIsValid();
-
-    if (fieldsIsValid === false) {
-      return false;
-    }
-    console.log(valuesArr);
-    closeContactModal();
-    this.reset();
-    return true;
-  }
-
-  // Validation on Submit
-  form.addEventListener('submit', validateOnSubmit);
+  validation();
 }
-export default displayContactModal();
+export default displayContactModal;

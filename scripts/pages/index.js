@@ -45,15 +45,6 @@ async function displayPhotographers(photographers) {
     const userCardDOM = photographerModel.getUserCardDOM();
     photographersSection.appendChild(userCardDOM);
   });
-
-  const photographerBtn = document.querySelectorAll('.photographer_section > article');
-
-  // accessibility enter photographer page
-//   photographerBtn.forEach((el) => el.addEventListener('keydown', (event) => {
-//     if ((event.key || event.code) === 'Enter') {
-//       el.children[0].focus();
-//     }
-//   }, true));
 }
 
 // display photographers datas

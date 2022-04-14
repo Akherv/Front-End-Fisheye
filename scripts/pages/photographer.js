@@ -9,6 +9,7 @@
 /* eslint-disable no-console */
 import mediaFactory from '../factories/media-factory.js';
 import displaySlider from '../utils/slider.js';
+import displayContactModal from '../utils/contactForm.js';
 
 async function initPhotographerPage() {
   let filterState = 'popularite';
@@ -141,14 +142,6 @@ async function initPhotographerPage() {
   }
   displayPortfolio(photographerMedias, photographerName);
 
-  function initContactModal(name) {
-    const modalHeader = document.querySelector('#modalHeader');
-    const span = document.createElement('span');
-    span.innerHTML = `<br>${name}`;
-    modalHeader.appendChild(span);
-  }
-  initContactModal(photographerName, photographerId);
-
   function initCounter(medias) {
     const likesMedia = document.querySelectorAll('.portfolioMediaContent .heart');
     const likesNumbers = document.querySelectorAll('.likesNumber');
@@ -260,6 +253,16 @@ async function initPhotographerPage() {
   }
   checkStateFilterBtn();
 
+  function initContactModal(name) {
+    const modalHeader = document.querySelector('#modalHeader');
+    const span = document.createElement('span');
+    span.innerHTML = name;
+    modalHeader.appendChild(span);
+  }
+  initContactModal(photographerName, photographerId);
+
+  displayContactModal();
+
   displaySlider(photographerMedias);
 }
 initPhotographerPage();
@@ -296,7 +299,7 @@ function customSelect() {
   }
 
   function closeSelect(elt) {
-    const mediasPortfolioBtn = document.querySelectorAll('.media');
+    // const mediasPortfolioBtn = document.querySelectorAll('.media');
     document.querySelector('.selection p span').style.display = 'block';
 
     if (elt) {
@@ -449,11 +452,3 @@ function customSelect() {
 }
 
 customSelect();
-
-// accessibility exit photographer page
-// const header = document.querySelector('header');
-// header.addEventListener('keydown', (event) => {
-//   if ((event.key || event.code) === 'Enter') {
-//     header.children[0].focus();
-//   }
-// }, true);
