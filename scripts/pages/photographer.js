@@ -1,11 +1,6 @@
-/* eslint-disable no-use-before-define */
-/* eslint-disable no-undef */
-/* eslint-disable no-param-reassign */
-/* eslint-disable func-names */
-/* eslint-disable no-restricted-syntax */
+/* eslint-disable max-len */
 /* eslint-disable import/extensions */
 /* eslint-disable no-return-assign */
-/* eslint-disable max-len */
 /* eslint-disable no-console */
 import mediaFactory from '../factories/media-factory.js';
 import displaySlider from '../utils/slider.js';
@@ -152,9 +147,9 @@ async function initPhotographerPage() {
     // change sum variable
     function refreshGlobalLikesCounter() {
       let sum = 0;
-      const arrItemsUpdated = JSON.parse(localStorage.getItem('photographersMedias'));
-      const currentsItemUpdated = arrItemsUpdated.filter((el) => el.photographerId === +photographerId);
-      currentsItemUpdated.forEach((media) => sum += media.likes);
+      const arrElUpdated = JSON.parse(localStorage.getItem('photographersMedias'));
+      const currentsElUpdated = arrElUpdated.filter((el) => el.photographerId === +photographerId);
+      currentsElUpdated.forEach((media) => sum += media.likes);
       informationLikesNumber.textContent = `${sum}`;
       return sum;
     }
@@ -244,12 +239,12 @@ async function initPhotographerPage() {
         el.setAttribute('aria-selected', 'true');
         el.parentElement.classList.remove('open');
         el.parentElement.setAttribute('aria-expanded', 'false');
-        closeSelect();
+        // closeSelect();
       }
       if ((event.key || event.code) === 'Escape') {
         el.parentElement.classList.remove('open');
         el.parentElement.setAttribute('aria-expanded', 'false');
-        closeSelect();
+        // closeSelect();
       }
     }, true));
   }
@@ -269,16 +264,15 @@ async function initPhotographerPage() {
 }
 initPhotographerPage();
 
-// select filter re-created for styling purpose
+// filter re-created for styling purpose
 function customSelect() {
-  // DOM
+  // DOM selection
   const oldSelectedOption = document.querySelector('.old-select option[selected]');
   const oldSelectedOptionDefault = document.querySelector('.old-select option:first-child');
   const oldOptions = document.querySelectorAll('.old-select option');
   const listboxContainer = document.querySelector('.new-select');
   const listboxLabel = document.querySelector('.selection p span');
 
-  // const newOptions;
   // Initialisation
   function createNewDOMSelect() {
     if (oldSelectedOption.length === 1) {
@@ -290,7 +284,7 @@ function customSelect() {
     oldOptions.forEach((el) => {
       const newValue = el.value;
       const newHTML = el.innerHTML;
-      listboxContainer.innerHTML += `<div id="${el.value}" class="new-option" data-value="${newValue}" role="option" aria-labelledby="${el.value}" aria-selected="false" tabindex="-1"><p>${newHTML}</p></div>`;
+      listboxContainer.innerHTML += `<div class="new-option" data-value="${newValue}" role="option" aria-labelledby="${el.value}" aria-selected="false" tabindex="-1"><p id="${el.value}">${newHTML}</p></div>`;
       if (newValue === 'popularite') {
         document.querySelector(`.new-option[data-value="${newValue}"]`).setAttribute('aria-selected', 'true');
       }
@@ -298,90 +292,79 @@ function customSelect() {
   }
   createNewDOMSelect();
 
+  // DOM selection for element who need to wait for initialisation
   const listbox = document.querySelector('.selection');
   const newOptions = document.querySelectorAll('.new-option');
 
   function openSelect() {
-    const listboxLabelOpen = document.querySelector('.selection.open p span');
-    const listboxLabelOpenContent = listboxLabelOpen.textContent;
-    // if (listbox.classList.contains('open')) {
-    //   listboxLabel.style.display = 'none';
-    // }
-
+    // handle change on container
+    listboxContainer.classList.add('open');
+    listbox.setAttribute('aria-expanded', 'true');
+    const listboxLabelOpenContent = document.querySelector('.selection.open p span').textContent;
+    // handle change on options
     newOptions.forEach((el) => {
-      el.classList.add('reveal');
-      el.setAttribute('aria-label', el.id);
-      el.style.position = 'unset';
-      el.parentElement.overflow = 'visible';
-      el.parentElement.classList.add('selection-open');
-
+      // if the current option is selected hide from list
       if ((el.textContent).toLowerCase() === listboxLabelOpenContent.toLowerCase()) {
-        el.style.position = 'absolute';
-        el.style.top = '0';
-        el.style.visibility = 'hidden';
+        el.classList.add('hideCurrentOption');
         el.setAttribute('tabindex', '-1');
         if ((el.nextElementSibling != null) && (el.nextElementSibling.style.display !== 'none')) {
+          // Move focus to the sibling
           el.nextElementSibling.focus();
         } else {
-          const firstEl = newOptions[0];
           el.setAttribute('aria-selected', 'true');
-          firstEl.focus();
         }
+      } else { // reveal others options
+        el.classList.remove('hideCurrentOption');
+        el.classList.add('reveal');
       }
     });
   }
 
-  function closeSelect(selectedOption) {
-    if (selectedOption) {
-      listboxLabel.innerHTML = selectedOption.textContent;
-      newOptions.setAttribute('tabindex', '-1');
-    }
+  function closeSelect() {
+    // handle change on container
+    listboxContainer.classList.remove('open');
+    listbox.classList.remove('open');
+    listbox.setAttribute('aria-expanded', 'false');
+    // handle change on options
     newOptions.forEach((el) => {
-      el.previousElementSibling.classList.remove('open');
       el.classList.remove('reveal');
-      el.style.position = 'absolute';
-      el.style.visibility = '';
-      el.parentElement.overflow = '-moz-hidden-unscrollable';
-      el.parentElement.classList.remove('selection-open');
+      el.classList.remove('hideCurrentOption');
       el.setAttribute('tabindex', '-1');
-      // document.querySelector('.new-option').setAttribute('tabindex', '-1');
-      document.querySelector('.selection').focus();
     });
+    // Move focus to the listbox container
+    document.querySelector('.selection').focus();
   }
   closeSelect();
 
-  // listeners
-
-  listbox.addEventListener('click', function () {
-    this.classList.toggle('open');
-    if (this.classList.contains('open') === true) {
+  // handle Open / Close filter
+  function toggleOpen() {
+    listbox.classList.toggle('open');
+    if (listbox.classList.contains('open')) {
       openSelect();
-      listbox.setAttribute('aria-expanded', 'true');
     } else {
       closeSelect();
-      listbox.setAttribute('aria-expanded', 'false');
-      listboxLabel.style.display = 'block';
     }
-  });
+  }
 
+  // open filter on Click
+  listbox.addEventListener('click', toggleOpen);
+
+  // open filter on Keyboard Enter
   listbox.addEventListener('keydown', (e) => {
     if ((e.key || e.code) === 'Enter') {
-      listbox.classList.toggle('open');
-      if (listbox.classList.contains('open') === true) {
-        openSelect();
-        listbox.setAttribute('aria-expanded', 'true');
-      } else {
-        closeSelect();
-        listbox.setAttribute('aria-expanded', 'false');
-      }
-    }
-    if ((e.key || e.code) === 'Escape') {
-      closeSelect();
-      listbox.classList.remove('open');
+      toggleOpen();
     }
   }, true);
 
-  // close filter on click outside
+  // close filter on Keyboard Escape
+  newOptions.forEach((el) => el.addEventListener('keydown', (e) => {
+    if ((e.key || e.code) === 'Escape') {
+      console.log('ok');
+      closeSelect();
+    }
+  }, true));
+
+  // close filter on Click outside
   document.addEventListener('click', (e) => {
     const isClickInsideElement = listboxContainer.contains(e.target);
     if (!isClickInsideElement) {
@@ -389,69 +372,75 @@ function customSelect() {
     }
   });
 
-  // Selection
-  document.querySelectorAll('.new-option').forEach((el) => el.addEventListener('click', function () {
+  // handle options change inside the filter
+  function handleChangeOptions(el) {
     const newValue = this.dataset.value;
+    const listboxLabelOpen = document.querySelector('.selection.open p span');
 
     // Selection New Select
-    document.querySelectorAll('.selection p span').innerHTML = this.querySelector('p').innerHTML;
+    listboxLabelOpen.innerHTML = this.querySelector('p').innerHTML;
     document.querySelector('.new-option[aria-selected="true"]').setAttribute('tabindex', '-1');
     document.querySelector('.new-option[aria-selected="true"]').setAttribute('aria-selected', 'false');
     document.querySelector(`.new-option[data-value="${newValue}"]`).setAttribute('aria-selected', 'true');
 
     // Selection Old Select
-    document.querySelector('.old-select option[selected]').removeAttribute('selected');
+    oldSelectedOption.removeAttribute('selected');
     document.querySelector(`.old-select option[value="${newValue}"]`).setAttribute('selected', '');
 
     // change textContent
-    document.querySelector('.selection.open p span').textContent = this.textContent;
     this.setAttribute('aria-selected', 'true');
+    this.setAttribute('tabindex', '0');
 
     // hide from list selected textContent
-    //  this.style.display = 'none';
-    this.style.position = 'absolute';
-    this.style.top = '0';
-    const x = document.querySelectorAll('.new-option');
-    const z = [...x].filter((elt) => elt.dataset.value !== newValue);
-    z.forEach((elt) => {
-      // elt.style.display = 'block';
-      elt.style.position = 'static';
+    this.classList.remove('reveal');
+    this.classList.add('hideCurrentOption');
+    const optionsNotSelected = [...newOptions].filter((elt) => elt.dataset.value !== newValue);
+    optionsNotSelected.forEach((elt) => {
+      elt.classList.remove('hideCurrentOption');
+      elt.classList.add('reveal');
+      elt.setAttribute('tabindex', '-1');
     });
+
     closeSelect();
-  }));
+  }
 
+  // fire handle option change on Click
+  document.querySelectorAll('.new-option').forEach((el) => el.addEventListener('click', handleChangeOptions));
+
+  // fire handle option change on Keyboard
   document.querySelectorAll('.new-option').forEach((el) => el.addEventListener('keydown', (e) => {
-    if (e.keyCode === 9) {
+    if ((e.key || e.code) === 'Enter') {
       e.preventDefault();
-      el.setAttribute('tabindex', -1);
-      document.querySelector('.new-option[aria-selected="true"]').setAttribute('tabindex', '-1');
-      document.querySelector('.new-option[aria-selected="true"]').setAttribute('aria-selected', 'false');
+      handleChangeOptions(el);
+      // el.setAttribute('tabindex', -1);
+      // document.querySelector('.new-option[aria-selected="true"]').setAttribute('tabindex', '-1');
+      // document.querySelector('.new-option[aria-selected="true"]').setAttribute('aria-selected', 'false');
 
-      if ((el.nextElementSibling != null) && (el.nextElementSibling.style.display !== 'none')) {
-        const nextEl = el.nextElementSibling;
-        el.setAttribute('aria-selected', 'true');
-        nextEl.focus();
-      } else {
-        const firstEl = document.querySelectorAll('.new-option')[0];
-        el.setAttribute('aria-selected', 'true');
-        firstEl.focus();
-      }
+      // if ((el.nextElementSibling != null) && (el.nextElementSibling.style.display !== 'none')) {
+      //   const nextEl = el.nextElementSibling;
+      //   el.setAttribute('aria-selected', 'true');
+      //   nextEl.focus();
+      // } else {
+      //   const firstEl = document.querySelectorAll('.new-option')[0];
+      //   el.setAttribute('aria-selected', 'true');
+      //   firstEl.focus();
+      // }
 
-      if (e.shiftKey) {
-        e.preventDefault();
-        el.setAttribute('tabindex', -1);
-        document.querySelector('.new-option[aria-selected="true"]').setAttribute('tabindex', '-1');
-        document.querySelector('.new-option[aria-selected="true"]').setAttribute('aria-selected', 'false');
-        if (el.previousElementSibling.classList.contains('selection')) {
-          const lastEl = document.querySelectorAll('.new-option')[2];
-          el.setAttribute('aria-selected', 'true');
-          lastEl.focus();
-        } else {
-          const prevEl = el.previousElementSibling;
-          el.setAttribute('aria-selected', 'true');
-          prevEl.focus();
-        }
-      }
+      // if (e.shiftKey) {
+      //   e.preventDefault();
+      //   el.setAttribute('tabindex', -1);
+      //   document.querySelector('.new-option[aria-selected="true"]').setAttribute('tabindex', '-1');
+      //   document.querySelector('.new-option[aria-selected="true"]').setAttribute('aria-selected', 'false');
+      //   if (el.previousElementSibling.classList.contains('selection')) {
+      //     const lastEl = document.querySelectorAll('.new-option')[2];
+      //     el.setAttribute('aria-selected', 'true');
+      //     lastEl.focus();
+      //   } else {
+      //     const prevEl = el.previousElementSibling;
+      //     el.setAttribute('aria-selected', 'true');
+      //     prevEl.focus();
+      //   }
+      // }
     }
   }));
 }

@@ -128,7 +128,7 @@
     z-index: 10;
 }
 
-.new-select.selection-open::after {
+.new-select.open::after {
     position: absolute;
     content: "";
     height: 70px;
@@ -141,7 +141,7 @@
     overflow: hidden;
     }
 
-.new-select.selection-open::after {
+.new-select.open::after {
 position: absolute;
 content: "";
 height: 210px;
@@ -173,6 +173,11 @@ box-shadow: 2px 2px 10px #525252;
     color: #000;
 }
 
+.new-select .selection.open:hover {
+    outline: none;
+    color: #fff;
+}
+
 .new-select .selection {
     width: 100%;
     height: 100%;
@@ -185,12 +190,13 @@ box-shadow: 2px 2px 10px #525252;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    overflow: -moz-hidden-unscrollable;
 }
 
 .new-select .selection.open {
-    /* border-radius: 5px 5px 0 0; */
     position: relative;
     background-color: transparent;
+    overflow: visible;
 }
 
 .new-select .selection.open::before {
@@ -255,6 +261,7 @@ box-shadow: 2px 2px 10px #525252;
     top: 0;
     background-color: #901C1C;
     border-radius: 5px;
+    position: absolute;
 }
 
 .new-option p {
@@ -278,25 +285,21 @@ box-shadow: 2px 2px 10px #525252;
 }
 
 .new-option.reveal {
-    border-bottom: none;
-    /* border-radius: 0; */
-}
-.new-option.reveal {
-    border-bottom: none;
-    /* border-radius: 0; */
+    position: unset;
 }
 
 .new-option.reveal:last-of-type {
-    border-bottom: none;
-     border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px;
 }
 
 .hideCurrentOption {
-    width: 0;
+    position: absolute;
+    top: 0;
+    visibility: hidden;
 }
 
-.hiddenItem {
-    display: none;
+.visible {
+position: static;
 }
 
 /*=============================================
