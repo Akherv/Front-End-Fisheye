@@ -60,10 +60,12 @@ async function initPhotographerPage() {
     if (state === 'popularite') {
       portfolio.sort((a, b) => b.likes - a.likes);
       return portfolio;
-    } if (state === 'date') {
+    }
+    if (state === 'date') {
       portfolio.sort((a, b) => new Date(a.date) - new Date(b.date));
       return portfolio;
-    } if (state === 'title') {
+    }
+    if (state === 'title') {
       portfolio.sort(
         (a, b) => {
           if (a.title < b.title) {
@@ -165,25 +167,27 @@ async function initPhotographerPage() {
         const currentItem = arrItems.filter((el) => el.id === localIdx);
 
         const dataState = media.getAttribute('data-state');
-        const { likes } = currentItem[0];
+        const {
+          likes,
+        } = currentItem[0];
 
         if (dataState === 'true') {
-          console.log('1');
           media.classList.remove('active');
           media.setAttribute('data-state', false);
           media.setAttribute('data-count', `${likes - 1}`);
           likesNumbers[idx].textContent = likes - 1;
+          likesNumbers[idx].setAttribute('aria-pressed', 'false');
           currentItem[0].likes -= 1;
           currentItem[0].state = false;
           localStorage.setItem('photographersMedias', JSON.stringify(arrItems));
 
           refreshGlobalLikesCounter();
         } else {
-          console.log('2');
           media.classList.add('active');
           media.setAttribute('data-state', true);
           media.setAttribute('data-count', `${likes + 1}`);
           likesNumbers[idx].textContent = likes + 1;
+          likesNumbers[idx].setAttribute('aria-pressed', 'true');
           currentItem[0].likes += 1;
           currentItem[0].state = true;
           localStorage.setItem('photographersMedias', JSON.stringify(arrItems));
@@ -191,7 +195,9 @@ async function initPhotographerPage() {
           refreshGlobalLikesCounter();
         }
       }
-      likesMedia.forEach((media, idx) => media.addEventListener('click', () => { likesChangeState(media, idx); }));
+      likesMedia.forEach((media, idx) => media.addEventListener('click', () => {
+        likesChangeState(media, idx);
+      }));
 
       // accessibility
       likesMedia.forEach((media, idx) => media.addEventListener('keydown', (event) => {
@@ -235,19 +241,15 @@ async function initPhotographerPage() {
             elt.setAttribute('aria-selected', 'false');
           }
         });
-        const portfolioFocus = document.querySelectorAll('.media');
         el.setAttribute('aria-selected', 'true');
         el.parentElement.classList.remove('open');
         el.parentElement.setAttribute('aria-expanded', 'false');
-        closeSelect(el);
-        portfolioFocus[0].focus();
+        closeSelect();
       }
       if ((event.key || event.code) === 'Escape') {
-        const portfolioFocus = document.querySelectorAll('.media');
         el.parentElement.classList.remove('open');
         el.parentElement.setAttribute('aria-expanded', 'false');
         closeSelect();
-        portfolioFocus[0].focus();
       }
     }, true));
   }
@@ -269,28 +271,59 @@ initPhotographerPage();
 
 // select filter re-created for styling purpose
 function customSelect() {
-  function openSelect() {
-    const mediasPortfolioBtn = document.querySelectorAll('.media');
-    const x = document.querySelector('.selection.open p span').textContent;
-    document.querySelector('.selection.open p span').style.display = 'none';
+  // DOM
+  const oldSelectedOption = document.querySelector('.old-select option[selected]');
+  const oldSelectedOptionDefault = document.querySelector('.old-select option:first-child');
+  const oldOptions = document.querySelectorAll('.old-select option');
+  const listboxContainer = document.querySelector('.new-select');
+  const listboxLabel = document.querySelector('.selection p span');
 
-    document.querySelectorAll('.new-select .new-option').forEach((el) => {
+  // const newOptions;
+  // Initialisation
+  function createNewDOMSelect() {
+    if (oldSelectedOption.length === 1) {
+      listboxLabel.innerHTML = oldSelectedOption.innerHTML;
+    } else {
+      listboxLabel.innerHTML = oldSelectedOptionDefault.innerHTML;
+    }
+
+    oldOptions.forEach((el) => {
+      const newValue = el.value;
+      const newHTML = el.innerHTML;
+      listboxContainer.innerHTML += `<div id="${el.value}" class="new-option" data-value="${newValue}" role="option" aria-labelledby="${el.value}" aria-selected="false" tabindex="-1"><p>${newHTML}</p></div>`;
+      if (newValue === 'popularite') {
+        document.querySelector(`.new-option[data-value="${newValue}"]`).setAttribute('aria-selected', 'true');
+      }
+    });
+  }
+  createNewDOMSelect();
+
+  const listbox = document.querySelector('.selection');
+  const newOptions = document.querySelectorAll('.new-option');
+
+  function openSelect() {
+    const listboxLabelOpen = document.querySelector('.selection.open p span');
+    const listboxLabelOpenContent = listboxLabelOpen.textContent;
+    // if (listbox.classList.contains('open')) {
+    //   listboxLabel.style.display = 'none';
+    // }
+
+    newOptions.forEach((el) => {
       el.classList.add('reveal');
+      el.setAttribute('aria-label', el.id);
       el.style.position = 'unset';
       el.parentElement.overflow = 'visible';
-      mediasPortfolioBtn.forEach((elt) => elt.setAttribute('tabindex', '-1'));
+      el.parentElement.classList.add('selection-open');
 
-      if ((el.textContent).toLowerCase() === x.toLowerCase()) {
+      if ((el.textContent).toLowerCase() === listboxLabelOpenContent.toLowerCase()) {
         el.style.position = 'absolute';
         el.style.top = '0';
-        // const elBefore = document.querySelector('::before');
+        el.style.visibility = 'hidden';
         el.setAttribute('tabindex', '-1');
         if ((el.nextElementSibling != null) && (el.nextElementSibling.style.display !== 'none')) {
-          // el.nextElementSibling.setAttribute('tabindex', '0');
           el.nextElementSibling.focus();
         } else {
-          const firstEl = document.querySelectorAll('.new-option')[0];
-          // firstEl.setAttribute('tabindex', 0);
+          const firstEl = newOptions[0];
           el.setAttribute('aria-selected', 'true');
           firstEl.focus();
         }
@@ -298,79 +331,59 @@ function customSelect() {
     });
   }
 
-  function closeSelect(elt) {
-    // const mediasPortfolioBtn = document.querySelectorAll('.media');
-    document.querySelector('.selection p span').style.display = 'block';
-
-    if (elt) {
-      document.querySelector('.selection p span').innerHTML = elt.textContent;
-      document.querySelector('.new-option').setAttribute('tabindex', '-1');
+  function closeSelect(selectedOption) {
+    if (selectedOption) {
+      listboxLabel.innerHTML = selectedOption.textContent;
+      newOptions.setAttribute('tabindex', '-1');
     }
-    document.querySelectorAll('.new-select .new-option').forEach((el) => {
+    newOptions.forEach((el) => {
       el.previousElementSibling.classList.remove('open');
       el.classList.remove('reveal');
       el.style.position = 'absolute';
+      el.style.visibility = '';
       el.parentElement.overflow = '-moz-hidden-unscrollable';
-      el.parentElement.setAttribute('aria-expanded', 'false');
+      el.parentElement.classList.remove('selection-open');
       el.setAttribute('tabindex', '-1');
-      document.querySelector('.new-option').setAttribute('tabindex', '-1');
-      // mediasPortfolioBtn.forEach((element) => element.setAttribute('tabindex', '0'));
+      // document.querySelector('.new-option').setAttribute('tabindex', '-1');
+      document.querySelector('.selection').focus();
     });
   }
-
-  // Initialisation
-  if (document.querySelector('.old-select option[selected]').length === 1) {
-    document.querySelector('.selection p span').innerHTML = document.querySelector('.old-select option[selected]').innerHTML;
-  } else {
-    document.querySelector('.selection p span').innerHTML = document.querySelector('.old-select option:first-child').innerHTML;
-  }
-
-  document.querySelectorAll('.old-select option').forEach((el) => {
-    const newValue = el.value;
-    const newHTML = el.innerHTML;
-    document.querySelector('.new-select').innerHTML += `<div class="new-option" data-value="${newValue}" role="listbox" aria-selected="false" tabindex="-1"><p>${newHTML}</p></div>`;
-    if (newValue === 'popularite') {
-      document.querySelector(`.new-option[data-value="${newValue}"]`).setAttribute('aria-selected', 'true');
-    }
-  });
-
   closeSelect();
 
-  // Ouverture / Fermeture
-  const selection = document.querySelector('.selection');
-  selection.addEventListener('click', function () {
+  // listeners
+
+  listbox.addEventListener('click', function () {
     this.classList.toggle('open');
     if (this.classList.contains('open') === true) {
       openSelect();
-      selection.setAttribute('aria-expanded', 'true');
-    } else { closeSelect(); selection.setAttribute('aria-expanded', 'false'); }
+      listbox.setAttribute('aria-expanded', 'true');
+    } else {
+      closeSelect();
+      listbox.setAttribute('aria-expanded', 'false');
+      listboxLabel.style.display = 'block';
+    }
   });
 
-  selection.addEventListener('keydown', (event) => {
-    if ((event.key || event.code) === 'Enter') {
-      selection.classList.toggle('open');
-      if (selection.classList.contains('open') === true) { openSelect(); selection.setAttribute('aria-expanded', 'true'); } else { closeSelect(); selection.setAttribute('aria-expanded', 'false'); }
-    }
-    if ((event.key || event.code) === 'Escape') {
-      const portfolioFocus = document.querySelectorAll('.media');
-      closeSelect();
-      selection.classList.remove('open');
-      portfolioFocus[0].focus();
-    }
-    if ((event.key || event.code) === 'tab') {
-      if (e.shiftKey) {
-        e.preventDefault();
-        const contactModalBtn = document.querySelector('.photograph-header .contact_button');
-        contactModalBtn.focus();
+  listbox.addEventListener('keydown', (e) => {
+    if ((e.key || e.code) === 'Enter') {
+      listbox.classList.toggle('open');
+      if (listbox.classList.contains('open') === true) {
+        openSelect();
+        listbox.setAttribute('aria-expanded', 'true');
+      } else {
+        closeSelect();
+        listbox.setAttribute('aria-expanded', 'false');
       }
+    }
+    if ((e.key || e.code) === 'Escape') {
+      closeSelect();
+      listbox.classList.remove('open');
     }
   }, true);
 
   // close filter on click outside
-  const ignoreClickOnMeElement = document.querySelector('.new-select');
-
   document.addEventListener('click', (e) => {
-    const isClickInsideElement = ignoreClickOnMeElement.contains(e.target);
+    const isClickInsideElement = listboxContainer.contains(e.target);
     if (!isClickInsideElement) {
       closeSelect();
     }
@@ -393,10 +406,9 @@ function customSelect() {
     // change textContent
     document.querySelector('.selection.open p span').textContent = this.textContent;
     this.setAttribute('aria-selected', 'true');
-    // el.setAttribute('tabindex', '0');
 
     // hide from list selected textContent
-    // this.style.display = 'none';
+    //  this.style.display = 'none';
     this.style.position = 'absolute';
     this.style.top = '0';
     const x = document.querySelectorAll('.new-option');
@@ -406,9 +418,6 @@ function customSelect() {
       elt.style.position = 'static';
     });
     closeSelect();
-
-    // style case : last element Date
-    // if(this)
   }));
 
   document.querySelectorAll('.new-option').forEach((el) => el.addEventListener('keydown', (e) => {
@@ -420,12 +429,10 @@ function customSelect() {
 
       if ((el.nextElementSibling != null) && (el.nextElementSibling.style.display !== 'none')) {
         const nextEl = el.nextElementSibling;
-        // nextEl.setAttribute('tabindex', 0);
         el.setAttribute('aria-selected', 'true');
         nextEl.focus();
       } else {
         const firstEl = document.querySelectorAll('.new-option')[0];
-        // firstEl.setAttribute('tabindex', 0);
         el.setAttribute('aria-selected', 'true');
         firstEl.focus();
       }
@@ -437,12 +444,10 @@ function customSelect() {
         document.querySelector('.new-option[aria-selected="true"]').setAttribute('aria-selected', 'false');
         if (el.previousElementSibling.classList.contains('selection')) {
           const lastEl = document.querySelectorAll('.new-option')[2];
-          // lastEl.setAttribute('tabindex', 0);
           el.setAttribute('aria-selected', 'true');
           lastEl.focus();
         } else {
           const prevEl = el.previousElementSibling;
-          // prevEl.setAttribute('tabindex', 0);
           el.setAttribute('aria-selected', 'true');
           prevEl.focus();
         }
@@ -450,5 +455,4 @@ function customSelect() {
     }
   }));
 }
-
 customSelect();

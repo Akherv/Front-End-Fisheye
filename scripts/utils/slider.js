@@ -1,9 +1,8 @@
 function displaySlider() {
   const body = document.querySelector('body');
   const main = document.querySelector('#main');
-  const landmarks = document.querySelectorAll('#header a, #main .contact_button, .selection');
+  const landmarks = document.querySelectorAll('#header a, #main .contact_button, .selection, .new-option, .media, .heart');
   const mediasPortfolio = document.querySelectorAll('.portfolio .media');
-  const likesBtn = document.querySelectorAll('.heart');
   const portfolioMediaContainer = document.querySelectorAll('.portfolio_mediaContainer');
   const sliderModal = document.querySelector('#slider_modal');
   const sliderCloseBtn = document.querySelector('#slider_modal .closeBtn');
@@ -14,26 +13,42 @@ function displaySlider() {
   // create by cloning portofolio datas
   function createMediaDOM(currentIndex) {
     const media = mediasPortfolio[currentIndex];
-    const mediaChilds = media.children;
+    // const mediaChilds = media.children;
     const mediaTitle = document.querySelector('#mediaTitle');
-    const mediaFullsize = (media.src).split('-medium.jpg').join('');
+    const mediaFullsize = (media.src).split('-small.jpg').join('');
+    const mediavideo = (media.src).split('-small.jpg').join('');
 
     // if video
-    if (mediaChilds.length >= 1) {
-      const childClone = media.children[0].cloneNode();
-      const parentClone = media.cloneNode();
-      parentClone.classList.remove('portfolio_video');
-      parentClone.classList.add('mediaModal');
-      parentClone.setAttribute('controls', '');
-      parentClone.setAttribute('preload', 'auto');
-      parentClone.appendChild(childClone);
-      mediaContainer.appendChild(parentClone);
-      mediaTitle.textContent = media.dataset.title;
+    if (media.classList.contains('portfolio_video')) {
+      const videoMedia = document.createElement('video');
+      const source = document.createElement('source');
+
+      // const childClone = media.children[0].cloneNode();
+      // const parentClone = media.cloneNode();
+      // parentClone.classList.remove('portfolio_video');
+      // parentClone.classList.add('mediaModal');
+      // parentClone.setAttribute('controls', '');
+      // parentClone.appendChild(childClone);
+      // mediaContainer.appendChild(parentClone);
+      // mediaTitle.textContent = media.dataset.title;
+
+      videoMedia.classList.add('media', 'portfolio_video');
+      videoMedia.setAttribute('poster', media.src);
+      videoMedia.classList.add('mediaModal');
+      videoMedia.setAttribute('controls', '');
+      videoMedia.setAttribute('preload', 'none');
+      videoMedia.setAttribute('tabindex', '0');
+      source.setAttribute('src', `${mediavideo}.mp4`);
+      source.setAttribute('type', 'video/mp4');
+      source.setAttribute('tabindex', '0');
+      videoMedia.appendChild(source);
+      mediaContainer.appendChild(videoMedia);
+      mediaTitle.textContent = media.alt;
     } else { // if img
       const mediaClone = media.cloneNode();
       mediaClone.classList.remove('portfolio_picture');
       mediaClone.classList.add('mediaModal');
-      mediaClone.setAttribute('src', `${mediaFullsize}.jpg`);
+      mediaClone.setAttribute('src', `${mediaFullsize}-medium.jpg`);
       mediaContainer.appendChild(mediaClone);
       mediaTitle.textContent = media.alt;
     }
@@ -46,7 +61,7 @@ function displaySlider() {
   }
 
   // Fire the removeSliderDOM function & Close the slider modal
-  function closeSliderModal(idx) {
+  function closeSliderModal() {
     removeSliderDOM();
 
     sliderModal.style.display = 'none';
@@ -61,12 +76,11 @@ function displaySlider() {
       el.removeAttribute('aria-hidden');
       el.removeAttribute('inert');
     });
-    likesBtn.forEach((el) => el.setAttribute('tabindex', '0'));
-    mediasPortfolio.forEach((el) => el.setAttribute('tabindex', '0'));
 
     main.style.display = 'block';
 
-    mediasPortfolio[idx].focus();
+    // console.log(mediasPortfolio, idx);
+    // if (idx) { mediasPortfolio[idx].focus(); }
   }
 
   // add the media btn navigation functionality
@@ -137,8 +151,6 @@ function displaySlider() {
       el.setAttribute('aria-hidden', 'true');
       el.setAttribute('inert', '');
     });
-    likesBtn.forEach((el) => el.setAttribute('tabindex', '-1'));
-    mediasPortfolio.forEach((el) => el.setAttribute('tabindex', '-1'));
 
     main.style.display = 'none';
 
@@ -157,7 +169,8 @@ function displaySlider() {
       }
     });
   });
-
+  // likesMedia.forEach((media, idx) =>
+  // media.addEventListener('click', () => { likesChangeState(media, idx); }));
   sliderCloseBtn.addEventListener('click', closeSliderModal);
   sliderCloseBtn.addEventListener('keydown', (event) => {
     if ((event.key || event.code) === 'Enter') {

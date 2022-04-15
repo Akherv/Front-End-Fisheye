@@ -13,11 +13,11 @@ function mediaFactory(media, name) {
 
   function getMediaLink() {
     if (image) {
-      const imageMedium = image.split('.jpg').slice(0, 1).join();
-      return `assets/photographers/${photographerName}/${imageMedium}-medium.jpg`;
+      const imageSmall = image.split('.jpg').slice(0, 1).join();
+      return `assets/photographers/${photographerName}/${imageSmall}-small.jpg`;
     } if (video) {
       const link = video.split('.mp4').slice(0, 1).join();
-      const posterLink = `assets/photographers/${photographerName}/${link}.jpg`;
+      const posterLink = `assets/photographers/${photographerName}/${link}-small.jpg`;
       const videoLink = `assets/photographers/${photographerName}/${video}`;
       return {
         videoLink,
@@ -71,7 +71,7 @@ function mediaFactory(media, name) {
       }
       img.setAttribute('tabindex', '0');
       img.setAttribute('role', 'button');
-      img.setAttribute('aria-checked', 'false');
+      img.setAttribute('aria-pressed', 'false');
       img.setAttribute('aria-label', 'like');
 
       img.classList.add('heart');
@@ -87,22 +87,33 @@ function mediaFactory(media, name) {
       return mediaContainer;
     } if (video) {
       const mediaContainer = document.createElement('article');
-      const videoMedia = document.createElement('video');
-      const source = document.createElement('source');
+      const imageVideoMedia = document.createElement('img');
+      // const videoMedia = document.createElement('video');
+      // const source = document.createElement('source');
 
       mediaContainer.classList.add('portfolio_mediaContainer');
       // mediaContainer.setAttribute('tabindex', '0');
-      videoMedia.classList.add('media', 'portfolio_video');
-      videoMedia.setAttribute('poster', mediaLinkPoster.posterLink);
-      videoMedia.setAttribute('preload', 'none');
-      videoMedia.setAttribute('data-title', media.title);
+
+      imageVideoMedia.setAttribute('src', mediaLinkPoster.posterLink);
+      imageVideoMedia.setAttribute('alt', title);
+      imageVideoMedia.classList.add('media', 'portfolio_video');
+      imageVideoMedia.setAttribute('tabindex', '0');
+      imageVideoMedia.setAttribute('role', 'button');
+      // imageVideoMedia.setAttribute('aria-pressed', 'false');
+      imageVideoMedia.setAttribute('aria-label', 'ouvrir modal');
+      imageVideoMedia.setAttribute('aria-haspopup', 'dialog');
+
+      // videoMedia.classList.add('media', 'portfolio_video');
+      // videoMedia.setAttribute('poster', mediaLinkPoster.posterLink);
+      // videoMedia.setAttribute('preload', 'none');
+      // videoMedia.setAttribute('data-title', media.title);
       // videoMedia.setAttribute('tabindex', '0');
-      videoMedia.setAttribute('role', 'button');
-      // videoMedia.setAttribute('aria-pressed', 'false');
-      videoMedia.setAttribute('aria-label', 'ouvrir modal');
-      videoMedia.setAttribute('aria-haspopup', 'dialog');
-      source.setAttribute('src', mediaLinkPoster.videoLink);
-      source.setAttribute('type', 'video/mp4');
+      // videoMedia.setAttribute('role', 'button');
+      // videoMedia.setAttribute('aria-label', 'ouvrir modal');
+      // videoMedia.setAttribute('aria-haspopup', 'dialog');
+      // source.setAttribute('src', mediaLinkPoster.videoLink);
+      // source.setAttribute('type', 'video/mp4');
+      // source.setAttribute('tabindex', '0');
 
       const h2 = document.createElement('h2');
       h2.textContent = title;
@@ -128,7 +139,7 @@ function mediaFactory(media, name) {
       }
       img.setAttribute('tabindex', '0');
       img.setAttribute('role', 'button');
-      img.setAttribute('aria-checked', 'false');
+      img.setAttribute('aria-pressed', 'false');
       img.setAttribute('aria-label', 'like');
 
       span2.appendChild(img);
@@ -136,8 +147,10 @@ function mediaFactory(media, name) {
       p.appendChild(span2);
       portfolioMediaContent.appendChild(h2);
       portfolioMediaContent.appendChild(p);
-      videoMedia.appendChild(source);
-      mediaContainer.appendChild(videoMedia);
+      // videoMedia.appendChild(source);
+      // mediaContainer.appendChild(videoMedia);
+      mediaContainer.appendChild(imageVideoMedia);
+
       mediaContainer.appendChild(portfolioMediaContent);
 
       return mediaContainer;

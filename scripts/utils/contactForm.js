@@ -1,9 +1,7 @@
 /* eslint-disable no-console */
 function displayContactModal() {
   const body = document.querySelector('body');
-  const landmarks = document.querySelectorAll('#header a, #main .contact_button, .selection');
-  const mediasPortfolio = document.querySelectorAll('.media');
-  const likesBtn = document.querySelectorAll('.heart');
+  const landmarks = document.querySelectorAll('#header a, #main .contact_button, .selection, .new-option, .media, .heart');
   const contactModalBtn = document.querySelector('.contact_button.bio');
   const contactModal = document.getElementById('contact_modal');
   const contactModalHeader = document.querySelector('#modalHeader');
@@ -13,7 +11,6 @@ function displayContactModal() {
   const fields = document.querySelectorAll('.fields');
 
   function openContactModal() {
-    // contactModal.style.display = 'block';
     contactModalCloseBtn.setAttribute('tabindex', '0');
     contactModal.setAttribute('aria-modal', 'true');
     contactModal.removeAttribute('hidden');
@@ -25,14 +22,11 @@ function displayContactModal() {
       el.setAttribute('aria-hidden', 'true');
       el.setAttribute('inert', '');
     });
-    likesBtn.forEach((el) => el.setAttribute('tabindex', '-1'));
-    mediasPortfolio.forEach((el) => el.setAttribute('tabindex', '-1'));
 
     contactModalHeader.focus();
   }
 
   function closeContactModal() {
-    // contactModal.style.display = 'none';
     contactModalCloseBtn.setAttribute('tabindex', '-1');
     contactModal.removeAttribute('aria-modal');
     contactModal.setAttribute('hidden', '');
@@ -44,8 +38,6 @@ function displayContactModal() {
       el.removeAttribute('aria-hidden');
       el.removeAttribute('inert');
     });
-    likesBtn.forEach((el) => el.setAttribute('tabindex', '0'));
-    mediasPortfolio.forEach((el) => el.setAttribute('tabindex', '0'));
 
     contactModalBtn.focus();
   }
@@ -160,6 +152,11 @@ function displayContactModal() {
 
     // Validation on Submit
     form.addEventListener('submit', validateOnSubmit);
+    form.addEventListener('keydown', (event) => {
+      if ((event.key || event.code) === 'Enter') {
+        checkfieldsIsValid();
+      }
+    }, true);
   }
   validation();
 }

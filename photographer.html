@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
+  <meta name="description" content="Fisheye, page de présentation de la biographie et du portfolio du photographe/vidéaste">
   <link href="https://fonts.googleapis.com/css?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet" type="text/css" />
   <link rel="icon" type="image/png" href="#">
@@ -32,14 +32,15 @@
       <option value="title">Titre</option>
     </select>
     <div class="new-select-wrapper">
-      <div class="new-select">
-        <p class="new-select-label">Trier par</p>
-        <div class="selection" role="button" aria-haspopup="listbox" aria-expanded="false" tabindex="0">
-          <p>
-            <span></span>
+      <div class="new-select" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="new-select-label">
+        <p id="new-select-label" class="new-select-label">Trier par</p>
+        <div class="selection" role="listbox" aria-labelledby="selection" tabindex="0" aria-owns="popularite date title">
+          <p aria-hidden="true">
+            <span id="selection"></span>
           </p>
           <span aria-hidden="true"></span>
         </div>
+
       </div>
     </div>
     <div class="informationdiv">
@@ -57,19 +58,19 @@
         <div role="region">
           <div class="formData">
           <label for="Firstname">Prénom</label>
-          <input type="text" name="Firstname" id="Firstname" class="fields"aria-required="true">
+          <input type="text" name="Firstname" id="Firstname" class="fields" aria-describedby="Le prénom doit contenir au moins 2 lettres" aria-required="true">
           </div>
           <div class="formData">
           <label for="Lastname">Nom</label>
-          <input type="text" name="Lastname" id="Lastname" class="fields" aria-required="true">
+          <input type="text" name="Lastname" id="Lastname" class="fields" aria-describedby="Le nom doit contenir au moins 2 lettres" aria-required="true">
           </div>
           <div class="formData">
           <label for="Email">Email</label>
-          <input type="email" name="Email" id="Email" class="fields" aria-required="true">
+          <input type="email" name="Email" id="Email" class="fields" aria-describedby="L\'email doit être correct" aria-required="true">
           </div>
           <div class="formData">
           <label for="Yourmessage">Votre message</label>
-          <textarea name="Yourmessage" id="Yourmessage" class="fields" cols="30" rows="5" aria-required="true"></textarea>
+          <textarea name="Yourmessage" id="Yourmessage" class="fields" cols="30" rows="5" aria-describedby="Le message ne doit pas être vide" aria-required="true"></textarea>
           </div>
         </div>
         <button class="contact_button" aria-label="Envoyer">Envoyer</button>

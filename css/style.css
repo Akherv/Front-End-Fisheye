@@ -11,13 +11,19 @@ a {
 
 a:focus-visible,
 img:focus-visible,
-div:focus-visible,
+video:focus-visible,
+.sliderBtn:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
-dialog:focus-visible{
+dialog:focus-visible {
     outline: none;
     border: 4px solid #ee6041;
 }
+
+a:hover {
+    color: #ee6041;
+}
+
 
 header {
     display: flex;
@@ -27,6 +33,10 @@ header {
     height: 90px;
 }
 
+header a {
+    margin-left: 100px;
+}
+
 h1 {
     color: #901C1C;
     margin-right: 100px;
@@ -34,7 +44,6 @@ h1 {
 
 .logo {
     height: 50px;
-    margin-left: 100px;
 }
 
 .photographer_section {
@@ -96,6 +105,10 @@ h1 {
 
         header {
             flex-direction: column;
+        }
+
+        header a {
+            margin-left: 0;
         }
 
         h1 {
