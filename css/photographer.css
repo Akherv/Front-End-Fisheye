@@ -42,9 +42,8 @@
     margin: 0 30px;
 }
 
-.contact_button:hover,
-.contact_button:focus-visible
- {
+.contact_button.bio:hover,
+.contact_button.bio:focus-visible {
     outline: none;
     background-color: #DB8876;
     color: #000;
@@ -61,6 +60,7 @@
 /*=============================================
 =                    filter                 =
 =============================================*/
+
 #filterContainer {
     margin-bottom: 40px;
     margin: 40px 100px;
@@ -94,7 +94,6 @@
     position: relative;
     font-size: 18px;
     font-weight: bold;
-
 }
 
 .old-select {
@@ -113,16 +112,13 @@
 .new-select {
     width: 170px;
     height: 70px;
-    /* margin: auto; */
     margin-top: 50px;
     text-align: center;
     color: #fff;
-    /* background-color: #901C1C; */
     border-radius: 5px;
     line-height: 50px;
     position: relative;
     margin-bottom: 40px;
-    /* margin: 40px calc(100px + 4%); */
     font-size: 20px;
     font-weight: bold;
     z-index: 10;
@@ -139,20 +135,20 @@
     border-radius: 5px;
     z-index: -1;
     overflow: hidden;
-    }
+}
 
 .new-select.open::after {
-position: absolute;
-content: "";
-height: 210px;
-top: 0;
-width: 100%;
-left: 0;
-background-color: #901C1C;
-border-radius: 5px;
-z-index: -1;
-overflow: hidden;
-box-shadow: 2px 2px 10px #525252;
+    position: absolute;
+    content: "";
+    height: 210px;
+    top: 0;
+    width: 100%;
+    left: 0;
+    background-color: #901C1C;
+    border-radius: 5px;
+    z-index: -1;
+    overflow: hidden;
+    box-shadow: 2px 2px 10px #525252;
 }
 
 .new-select-label {
@@ -211,7 +207,6 @@ box-shadow: 2px 2px 10px #525252;
     transform: translateX(-50%);
     box-shadow: 0 70px 0 0 #fff;
 }
-
 
 .new-select .selection p {
     width: calc(100% - 60px);
@@ -276,10 +271,9 @@ box-shadow: 2px 2px 10px #525252;
 }
 
 .new-option.reveal:hover,
-.new-option.reveal:focus-visible
- {
+.new-option.reveal:focus-visible {
     outline: none;
-    background-color:  #DB8876;
+    background-color: #DB8876;
     color: #000;
     border-radius: 0;
 }
@@ -299,7 +293,7 @@ box-shadow: 2px 2px 10px #525252;
 }
 
 .visible {
-position: static;
+    position: static;
 }
 
 /*=============================================
@@ -365,7 +359,6 @@ position: static;
 =============================================*/
 
 [role="dialog"] div[role=document] {
-    /*  Need this because of a VoiceOver bug  */
     display: inline;
 }
 
@@ -375,6 +368,10 @@ position: static;
 
 [role="dialog"][hidden] {
     visibility: visible;
+}
+
+.hidden {
+    visibility: hidden;
 }
 
 #contact_modal {
@@ -488,6 +485,10 @@ textarea.error {
 
 .formData {
     margin: 0;
+}
+
+form .contact_button:hover {
+    transform: scale(0.98);
 }
 
 
@@ -661,7 +662,6 @@ textarea.error {
     margin-left: 5px;
 }
 
-
 /*=============================================
 =                    Element                 =
 =============================================*/
@@ -675,7 +675,6 @@ textarea.error {
 }
 
 .heart.active {
-    /* content: url(../assets/icons/heart-chestnut.svg); */
     filter: brightness(2);
 }
 
@@ -738,7 +737,6 @@ textarea.error {
             margin-bottom: 5px;
         }
 
-
         /* informations */
 
         .informationdiv {
@@ -748,6 +746,7 @@ textarea.error {
         }
 
         /* portfolio */
+
         .portfolio {
             display: flex;
             flex-direction: column;
@@ -769,8 +768,8 @@ textarea.error {
             width: 100%;
         }
 
-
         /* slider */
+        
         #slider_modal .content {
             flex-direction: column;
             height: 100vh;

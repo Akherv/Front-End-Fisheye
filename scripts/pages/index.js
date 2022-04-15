@@ -1,5 +1,3 @@
-/* eslint-disable import/extensions */
-/* eslint-disable no-console */
 import photographerFactory from '../factories/photographer-factory.js';
 
 async function getPhotographers() {
@@ -19,7 +17,7 @@ async function getPhotographers() {
     const response = await fetch(url, myInit);
     const datas = await response.json();
     console.log(datas);
-
+    // then save data to the local storage
     if (!localStorage.getItem('photographersBio') && !localStorage.getItem('photographersMedias')) {
       localStorage.setItem('photographersBio', JSON.stringify(datas.photographers));
       localStorage.setItem('photographersMedias', JSON.stringify(datas.media));

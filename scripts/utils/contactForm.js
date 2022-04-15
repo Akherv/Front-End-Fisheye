@@ -1,5 +1,5 @@
-/* eslint-disable no-console */
 function displayContactModal() {
+  // DOM selection
   const body = document.querySelector('body');
   const landmarks = document.querySelectorAll('#header a, #main .contact_button, .selection, .new-option, .media, .heart');
   const contactModalBtn = document.querySelector('.contact_button.bio');
@@ -11,10 +11,7 @@ function displayContactModal() {
   const fields = document.querySelectorAll('.fields');
 
   function openContactModal() {
-    contactModalCloseBtn.setAttribute('tabindex', '0');
-    contactModal.setAttribute('aria-modal', 'true');
-    contactModal.removeAttribute('hidden');
-
+    // Hide background elements
     body.style.overflow = 'hidden';
 
     landmarks.forEach((el) => {
@@ -22,28 +19,35 @@ function displayContactModal() {
       el.setAttribute('aria-hidden', 'true');
       el.setAttribute('inert', '');
     });
-
-    contactModalHeader.focus();
+    // Reveal modal
+    contactModalCloseBtn.setAttribute('tabindex', '0');
+    contactModal.setAttribute('aria-modal', 'true');
+    contactModal.removeAttribute('hidden');
+    contactModal.classList.remove('hidden');
+    // Move focus
+    // contactModalHeader.focus();
   }
 
   function closeContactModal() {
-    contactModalCloseBtn.setAttribute('tabindex', '-1');
-    contactModal.removeAttribute('aria-modal');
-    contactModal.setAttribute('hidden', '');
-
+    // Reveal background elements
     body.style.overflow = 'auto';
-
     landmarks.forEach((el) => {
       el.setAttribute('tabindex', '0');
       el.removeAttribute('aria-hidden');
       el.removeAttribute('inert');
     });
-
+    // hide modal
+    contactModalCloseBtn.setAttribute('tabindex', '-1');
+    contactModal.removeAttribute('aria-modal');
+    contactModal.setAttribute('hidden', '');
+    contactModal.classList.add('hidden');
+    // Move focus
+    contactModalBtn.setAttribute('tabindex', '0');
     contactModalBtn.focus();
   }
-
   contactModalBtn.addEventListener('click', openContactModal);
   contactModalCloseBtn.addEventListener('click', closeContactModal);
+
   // accessibility
   window.addEventListener('keydown', (event) => {
     if ((event.key || event.code) === 'Escape') {
@@ -61,6 +65,7 @@ function displayContactModal() {
     }
   }, true);
 
+  // form validation logic on submit
   function validation() {
   // Global validation state
     let fieldsIsValid = false;
@@ -68,7 +73,7 @@ function displayContactModal() {
 
     function checkfieldsIsValid() {
       let counter = 0;
-
+      // handle conditions & fire error messages
       function checkConditionValidity(el) {
         let condition;
         let message;
@@ -100,14 +105,14 @@ function displayContactModal() {
             message = 'erreur';
             break;
         }
-
+        // create obj instances for a better display of form input datas on console
         class Obj {
           constructor(name, value) {
             this.name = name;
             this.value = value;
           }
         }
-
+        // manage counter & error message for each elements
         if (condition) {
           counter += 1;
           const newObj = new Obj(el.name, el.value);
@@ -121,7 +126,6 @@ function displayContactModal() {
           el.classList.add('error');
         }
       }
-
       fields.forEach((el) => {
         checkConditionValidity(el);
       });
@@ -135,7 +139,8 @@ function displayContactModal() {
       valuesArr = [];
       return 0;
     }
-
+    // handle the validation on submit for checking input validity
+    // then if all good datas are sent & form is reset
     function validateOnSubmit(e) {
       e.preventDefault();
       checkfieldsIsValid();
@@ -150,7 +155,7 @@ function displayContactModal() {
       return true;
     }
 
-    // Validation on Submit
+    // Listeners
     form.addEventListener('submit', validateOnSubmit);
     form.addEventListener('keydown', (event) => {
       if ((event.key || event.code) === 'Enter') {

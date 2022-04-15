@@ -13,7 +13,6 @@ function displaySlider() {
   // create by cloning portofolio datas
   function createMediaDOM(currentIndex) {
     const media = mediasPortfolio[currentIndex];
-    // const mediaChilds = media.children;
     const mediaTitle = document.querySelector('#mediaTitle');
     const mediaFullsize = (media.src).split('-small.jpg').join('');
     const mediavideo = (media.src).split('-small.jpg').join('');
@@ -23,21 +22,14 @@ function displaySlider() {
       const videoMedia = document.createElement('video');
       const source = document.createElement('source');
 
-      // const childClone = media.children[0].cloneNode();
-      // const parentClone = media.cloneNode();
-      // parentClone.classList.remove('portfolio_video');
-      // parentClone.classList.add('mediaModal');
-      // parentClone.setAttribute('controls', '');
-      // parentClone.appendChild(childClone);
-      // mediaContainer.appendChild(parentClone);
-      // mediaTitle.textContent = media.dataset.title;
-
       videoMedia.classList.add('media', 'portfolio_video');
       videoMedia.setAttribute('poster', media.src);
       videoMedia.classList.add('mediaModal');
       videoMedia.setAttribute('controls', '');
       videoMedia.setAttribute('preload', 'none');
       videoMedia.setAttribute('tabindex', '0');
+      videoMedia.removeAttribute('aria-label', media.alt);
+      videoMedia.dataset.id = currentIndex;
       source.setAttribute('src', `${mediavideo}.mp4`);
       source.setAttribute('type', 'video/mp4');
       source.setAttribute('tabindex', '0');
@@ -49,6 +41,8 @@ function displaySlider() {
       mediaClone.classList.remove('portfolio_picture');
       mediaClone.classList.add('mediaModal');
       mediaClone.setAttribute('src', `${mediaFullsize}-medium.jpg`);
+      mediaClone.removeAttribute('aria-label');
+      mediaClone.dataset.id = currentIndex;
       mediaContainer.appendChild(mediaClone);
       mediaTitle.textContent = media.alt;
     }
@@ -78,9 +72,8 @@ function displaySlider() {
     });
 
     main.style.display = 'block';
-
-    // console.log(mediasPortfolio, idx);
-    // if (idx) { mediasPortfolio[idx].focus(); }
+    const mediaCurrentID = sliderModal.dataset.id;
+    mediasPortfolio[mediaCurrentID].focus();
   }
 
   // add the media btn navigation functionality
@@ -143,6 +136,7 @@ function displaySlider() {
     sliderCloseBtn.setAttribute('tabindex', '0');
     sliderModal.setAttribute('aria-modal', 'true');
     sliderModal.removeAttribute('hidden');
+    sliderModal.dataset.id = currentIndex;
 
     body.style.overflow = 'hidden';
 
@@ -157,6 +151,7 @@ function displaySlider() {
     sliderCloseBtn.focus();
   }
 
+  // listeners
   mediasPortfolio.forEach((media, idx) => media.addEventListener('click', (e) => {
     displaySliderModal(e, idx);
   }));
@@ -169,8 +164,7 @@ function displaySlider() {
       }
     });
   });
-  // likesMedia.forEach((media, idx) =>
-  // media.addEventListener('click', () => { likesChangeState(media, idx); }));
+
   sliderCloseBtn.addEventListener('click', closeSliderModal);
   sliderCloseBtn.addEventListener('keydown', (event) => {
     if ((event.key || event.code) === 'Enter') {
