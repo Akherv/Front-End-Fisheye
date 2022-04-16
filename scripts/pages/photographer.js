@@ -122,10 +122,11 @@ async function initPhotographerPage() {
     // handle local likes variable & fire the global refresh function at the end
     function likeCheck() {
       function likesChangeState(media, idx) {
-        const localIdx = medias[idx].id;
+        const x = document.querySelectorAll('.portfolio_mediaContainer');
+        const localIdx = x[idx].firstChild.dataset.id;
         const arrItems = JSON.parse(localStorage.getItem('photographersMedias'));
-        const currentItem = arrItems.filter((el) => el.id === localIdx);
-
+        const currentItem = arrItems.filter((el) => el.id === +localIdx);
+        
         const dataState = media.getAttribute('data-state');
         const {
           likes,

@@ -1,5 +1,6 @@
 function mediaFactory(media, name) {
   const {
+    id,
     title,
     image,
     likes,
@@ -43,6 +44,7 @@ function mediaFactory(media, name) {
       imageMedia.setAttribute('role', 'button');
       imageMedia.setAttribute('aria-label', 'ouvrir modal');
       imageMedia.setAttribute('aria-haspopup', 'dialog');
+      imageMedia.dataset.id = id;
     }
     if (video) {
       imageVideoMedia.setAttribute('src', mediaLinkPoster.posterLink);
@@ -52,6 +54,7 @@ function mediaFactory(media, name) {
       imageVideoMedia.setAttribute('role', 'button');
       imageVideoMedia.setAttribute('aria-label', 'ouvrir modal');
       imageVideoMedia.setAttribute('aria-haspopup', 'dialog');
+      imageVideoMedia.dataset.id = id;
     }
 
     const h2 = document.createElement('h2');
@@ -62,6 +65,7 @@ function mediaFactory(media, name) {
     const p = document.createElement('p');
     const span1 = document.createElement('span');
     span1.classList.add('likesNumber');
+    span1.dataset.id = id;
 
     const span2 = document.createElement('span');
     const img = document.createElement('img');

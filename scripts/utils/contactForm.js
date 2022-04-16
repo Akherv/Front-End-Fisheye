@@ -10,7 +10,7 @@ function displayContactModal() {
   const form = document.querySelector('form');
   const fields = document.querySelectorAll('.fields');
 
-  function openContactModal() {
+  function openContactModal(e) {
     // Hide background elements
     body.style.overflow = 'hidden';
 
@@ -23,11 +23,14 @@ function displayContactModal() {
     contactModalCloseBtn.setAttribute('tabindex', '0');
     contactModal.setAttribute('aria-modal', 'true');
     contactModal.removeAttribute('hidden');
-    contactModal.classList.remove('hidden');
     // Move focus
-    // contactModalHeader.focus();
+    contactModalHeader.focus();
   }
-
+  contactModalBtn.addEventListener('mousedown', (e) => openContactModal(e));
+  contactModalBtn.addEventListener('keydown', (event) => {
+    if ((event.key || event.code) === 'Enter') {
+      openContactModal();
+  }});
   function closeContactModal() {
     // Reveal background elements
     body.style.overflow = 'auto';
@@ -40,12 +43,10 @@ function displayContactModal() {
     contactModalCloseBtn.setAttribute('tabindex', '-1');
     contactModal.removeAttribute('aria-modal');
     contactModal.setAttribute('hidden', '');
-    contactModal.classList.add('hidden');
     // Move focus
     contactModalBtn.setAttribute('tabindex', '0');
     contactModalBtn.focus();
   }
-  contactModalBtn.addEventListener('click', openContactModal);
   contactModalCloseBtn.addEventListener('click', closeContactModal);
 
   // accessibility
@@ -54,16 +55,11 @@ function displayContactModal() {
       closeContactModal();
     }
   }, true);
-  contactModalSendBtn.addEventListener('keydown', (event) => {
-    if ((event.key || event.code) === 'Enter') {
-      closeContactModal();
-    }
-  }, true);
+  
   contactModalCloseBtn.addEventListener('keydown', (event) => {
     if ((event.key || event.code) === 'Enter') {
       closeContactModal();
-    }
-  }, true);
+  }});
 
   // form validation logic on submit
   function validation() {
@@ -157,11 +153,16 @@ function displayContactModal() {
 
     // Listeners
     form.addEventListener('submit', validateOnSubmit);
-    form.addEventListener('keydown', (event) => {
-      if ((event.key || event.code) === 'Enter') {
-        checkfieldsIsValid();
-      }
-    }, true);
+    // contactModalSendBtn.addEventListener('keydown', (event) => {
+    //   if ((event.key || event.code) === 'Enter') {
+    //     checkfieldsIsValid();
+    //   }
+    // }, true);
+    // form.addEventListener('keydown', (event) => {
+    //   if ((event.key || event.code) === 'Enter') {
+    //     checkfieldsIsValid();
+    //   }
+    // }, true);
   }
   validation();
 }
