@@ -23,54 +23,57 @@
       <div class="photograph-header__presentation">
         <div class="presentationTextDiv"></div>
       </div>
-      <button class="contact_button bio" aria-label="Contact Me">Contactez-moi</button>
+      <button type="button" class="contact_button bio" aria-label="Contact Me" tabindex="0">Contactez-moi</button>
     </div>
     <select class="old-select" aria-hidden="true" tabindex="-1">
-      <label for="filter">Trier par</label>
-      <option value="popularite" selected>Popularité</option>
-      <option value="date">Date</option>
-      <option value="title">Titre</option>
+      <label for="filter" aria-hidden="true">Trier par</label>
+      <option value="popularite" selected aria-hidden="true">Popularité</option>
+      <option value="date" aria-hidden="true">Date</option>
+      <option value="title" aria-hidden="true">Titre</option>
     </select>
-    <div class="new-select-wrapper">
-      <div class="new-select" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="new-select-label">
-        <p id="new-select-label" class="new-select-label">Trier par</p>
-        <div class="selection" role="listbox" aria-labelledby="selection" tabindex="0" aria-owns="popularite date title">
+    <div class="new-select-wrapper" aria-label="">
+      <span id="new-select-label" class="new-select-label" aria-hidden="true">Trier par</span>
+      <div role="button" class="new-select" aria-haspopup="listbox" aria-expanded="false" aria-label="Trier par" tabindex="-1">
+        <div class="selection" role="listbox" aria-labelledby="selection" tabindex="0" aria-activedescendant="">
           <p aria-hidden="true">
             <span id="selection"></span>
           </p>
           <span aria-hidden="true"></span>
         </div>
-
       </div>
     </div>
     <div class="informationdiv">
       <span class="informationLikes"></span>
     </div>
   </main>
-  <div id="contact_modal" role="dialog" aria-labelledby="modalHeader" tabindex="-1" hidden>
+  <div id="contact_modal" role="dialog" aria-labelledby="modalHeader" aria-describedby="modalHeader" tabindex="-1" hidden>
     <div class="modal" role="document">
       <header>
         <h2 id="modalHeader" tabindex="-1">Contactez-moi</h2>
         <img class="closeBtn" src="assets/icons/close.svg" role="button" aria-label="Close Contact form"
-          alt="" />
+          alt=""/>
       </header>
-      <form action="./index.html" method="get">
+      <form action="./index.html" method="get" >
         <div role="region">
           <div class="formData">
           <label for="Firstname">Prénom</label>
-          <input type="text" name="Firstname" id="Firstname" class="fields" aria-describedby="Le prénom doit contenir au moins 2 lettres" aria-required="true">
+          <input type="text" name="Firstname" id="Firstname" class="fields" aria-labelledby="Firstname" aria-describedby="Le prénom doit contenir au moins 2 lettres" aria-required="true" autocomplete="true">
+          <span id="FirstnameHelp" class="hiddenElement">Le prénom doit contenir au moins 2 lettres</span>
           </div>
           <div class="formData">
           <label for="Lastname">Nom</label>
-          <input type="text" name="Lastname" id="Lastname" class="fields" aria-describedby="Le nom doit contenir au moins 2 lettres" aria-required="true">
+          <input type="text" name="Lastname" id="Lastname" class="fields" aria-labelledby="Lastname" aria-describedby="LastnameHelp" aria-required="true" autocomplete="true">
+          <span id="LastnameHelp" class="hiddenElement">Le nom doit contenir au moins 2 lettres</span>
           </div>
           <div class="formData">
           <label for="Email">Email</label>
-          <input type="email" name="Email" id="Email" class="fields" aria-describedby="L\'email doit être correct" aria-required="true">
+          <input type="email" name="Email" id="Email" class="fields" aria-labelledby="Email" aria-describedby="EmailHelp" aria-required="true" autocomplete="true">
+          <span id="EmailHelp" class="hiddenElement">L'email doit être correct</span>
           </div>
           <div class="formData">
           <label for="Yourmessage">Votre message</label>
-          <textarea name="Yourmessage" id="Yourmessage" class="fields" cols="30" rows="5" aria-describedby="Le message ne doit pas être vide" aria-required="true"></textarea>
+          <textarea name="Yourmessage" id="Yourmessage" class="fields" cols="30" rows="5" aria-labelledby="Yourmessage" aria-describedby="MessageHelp" aria-required="true"></textarea>
+          <span id="MessageHelp" class="hiddenElement">Le message ne doit pas être vide</span>
           </div>
         </div>
         <button class="contact_button" aria-label="Envoyer">Envoyer</button>

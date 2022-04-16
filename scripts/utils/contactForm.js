@@ -1,12 +1,16 @@
 function displayContactModal() {
   // DOM selection
   const body = document.querySelector('body');
-  const landmarks = document.querySelectorAll('#header a, #main .contact_button, .selection, .new-option, .media, .heart');
+  const landmarks = document.querySelectorAll('header, #header a, #main .contact_button, .selection, .new-option, .media, .heart');
   const contactModalBtn = document.querySelector('.contact_button.bio');
-  const contactModal = document.getElementById('contact_modal');
-  const contactModalHeader = document.querySelector('#modalHeader');
+  const contactModal = document.querySelector('#contact_modal');
   const contactModalCloseBtn = document.querySelector('#contact_modal .closeBtn');
-  const contactModalSendBtn = document.querySelector('#contact_modal .contact_button');
+  // selection to keep focus inside modal
+  const  focusableElements =
+    'img[role="button"], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
+  const firstFocusableElement = contactModal.querySelectorAll(focusableElements)[0];
+  const focusableContent = contactModal.querySelectorAll(focusableElements);
+  const lastFocusableElement = focusableContent[focusableContent.length - 1];
   const form = document.querySelector('form');
   const fields = document.querySelectorAll('.fields');
 
@@ -24,11 +28,11 @@ function displayContactModal() {
     contactModal.setAttribute('aria-modal', 'true');
     contactModal.removeAttribute('hidden');
     // Move focus
-    contactModalHeader.focus();
+    contactModalCloseBtn.focus();
   }
   contactModalBtn.addEventListener('mousedown', (e) => openContactModal(e));
   contactModalBtn.addEventListener('keydown', (event) => {
-    if ((event.key || event.code) === 'Enter') {
+    if ((event.key || event.code) === ('Enter' || 13)) {
       openContactModal();
   }});
   function closeContactModal() {
@@ -51,15 +55,39 @@ function displayContactModal() {
 
   // accessibility
   window.addEventListener('keydown', (event) => {
-    if ((event.key || event.code) === 'Escape') {
+    if ((event.key || event.code) === ('Escape' || 27)) {
       closeContactModal();
     }
   }, true);
   
   contactModalCloseBtn.addEventListener('keydown', (event) => {
-    if ((event.key || event.code) === 'Enter') {
+    if ((event.key || event.code) === ('Enter' || 13)) {
       closeContactModal();
   }});
+
+  // keep focus inside the modal
+  document.addEventListener('keydown', function(e) {
+    let isTabPressed = e.key === 'Tab' || e.code === 9;
+  
+    if (!isTabPressed) {
+      return;
+    }
+  
+    if (e.shiftKey) {
+      if (document.activeElement === firstFocusableElement) {
+        lastFocusableElement.focus(); 
+        e.preventDefault();
+      }
+    } else {
+      if (document.activeElement === lastFocusableElement) {
+        firstFocusableElement.focus(); 
+        e.preventDefault();
+      }
+    }
+  });
+  
+  // firstFocusableElement.focus();  
+  
 
   // form validation logic on submit
   function validation() {
@@ -116,10 +144,12 @@ function displayContactModal() {
           el.parentElement.removeAttribute('data-error');
           el.parentElement.removeAttribute('data-error-visible');
           el.classList.remove('error');
+          el.setAttribute('aria-invalid', 'false');
         } else {
           el.parentElement.setAttribute('data-error', message);
           el.parentElement.setAttribute('data-error-visible', 'true');
           el.classList.add('error');
+          el.setAttribute('aria-invalid', 'true');
         }
       }
       fields.forEach((el) => {
@@ -153,16 +183,6 @@ function displayContactModal() {
 
     // Listeners
     form.addEventListener('submit', validateOnSubmit);
-    // contactModalSendBtn.addEventListener('keydown', (event) => {
-    //   if ((event.key || event.code) === 'Enter') {
-    //     checkfieldsIsValid();
-    //   }
-    // }, true);
-    // form.addEventListener('keydown', (event) => {
-    //   if ((event.key || event.code) === 'Enter') {
-    //     checkfieldsIsValid();
-    //   }
-    // }, true);
   }
   validation();
 }

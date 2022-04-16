@@ -6,6 +6,12 @@ function customSelect() {
   const listboxWrapper = document.querySelector('.new-select-wrapper');
   const listboxContainer = document.querySelector('.new-select');
   const listboxLabel = document.querySelector('.selection p span');
+    // selection to keep focus inside modal
+  const  focusableElements =
+    '.new-option[aria-selected="true"], [tabindex]:not([tabindex="0"])';
+  const firstFocusableElement = document.querySelector(".selection").querySelectorAll(focusableElements)[0];
+  const focusableContent = document.querySelector(".selection").querySelectorAll(focusableElements);
+  const lastFocusableElement = focusableContent[focusableContent.length - 1];
 
   // Initialisation
   function createNewDOMSelect() {
@@ -21,6 +27,7 @@ function customSelect() {
       listboxContainer.innerHTML += `<div class="new-option" data-value="${newValue}" role="option" aria-labelledby="${el.value}" aria-selected="false" tabindex="-1"><p id="${el.value}">${newHTML}</p></div>`;
       if (newValue === 'popularite') {
         document.querySelector(`.new-option[data-value="${newValue}"]`).setAttribute('aria-selected', 'true');
+        document.querySelector(".selection").setAttribute('aria-activedescendant', `${newValue}`);
       }
     });
   }
@@ -113,7 +120,7 @@ function customSelect() {
   }, true));
 
   // close filter on Click outside
-  listboxWrapper.addEventListener('click', (e) => {
+  document.addEventListener('click', (e) => {
     const isClickInsideElement = listboxContainer.contains(e.target);
     if (!isClickInsideElement) {
       closeSelect();
@@ -127,6 +134,7 @@ function customSelect() {
       el = this;
     }
     const newValue = el.dataset.value;
+    const listboxOpen = document.querySelector('.selection.open');
     const listboxLabelOpen = document.querySelector('.selection.open p span');
 
     // Selection New Select
@@ -141,7 +149,7 @@ function customSelect() {
     // change textContent
     el.setAttribute('aria-selected', 'true');
     el.setAttribute('tabindex', '0');
-
+    listboxOpen.setAttribute('aria-activedescendant',`${newValue}`);
     // hide from list selected textContent
     el.classList.remove('reveal');
     el.classList.add('hideCurrentOption');
@@ -165,7 +173,7 @@ function customSelect() {
 
     if ((e.key || e.code) === 'Tab') {
       e.preventDefault();
-      el.setAttribute('tabindex', 0);
+      // el.setAttribute('tabindex', 0);
       const availableOptions = [...newOptions].filter((option) => !option.classList.contains('hideCurrentOption'));
 
       const focusOption = availableOptions[0] === document.activeElement
@@ -173,5 +181,27 @@ function customSelect() {
       focusOption.focus();
     }
   }));
+
+   // keep focus inside the slider modal
+   document.addEventListener('keydown', function(e) {
+    let isTabPressed = e.key === 'Tab' || e.code === 9;
+  
+    if (!isTabPressed) {
+      return;
+    }
+  
+    if (e.shiftKey) {
+      if (document.activeElement === firstFocusableElement) {
+        lastFocusableElement.focus(); 
+        e.preventDefault();
+      }
+    } else {
+      if (document.activeElement === lastFocusableElement) {
+        firstFocusableElement.focus(); 
+        e.preventDefault();
+      }
+    }
+  });
+
 }
 export default customSelect;

@@ -42,7 +42,7 @@ function mediaFactory(media, name) {
       imageMedia.classList.add('media', 'portfolio_picture');
       imageMedia.setAttribute('tabindex', '0');
       imageMedia.setAttribute('role', 'button');
-      imageMedia.setAttribute('aria-label', 'ouvrir modal');
+      imageMedia.setAttribute('aria-label', `ouvrir image ${title}`);
       imageMedia.setAttribute('aria-haspopup', 'dialog');
       imageMedia.dataset.id = id;
     }
@@ -52,7 +52,7 @@ function mediaFactory(media, name) {
       imageVideoMedia.classList.add('media', 'portfolio_video');
       imageVideoMedia.setAttribute('tabindex', '0');
       imageVideoMedia.setAttribute('role', 'button');
-      imageVideoMedia.setAttribute('aria-label', 'ouvrir modal');
+      imageVideoMedia.setAttribute('aria-label', `ouvrir video ${title}`);
       imageVideoMedia.setAttribute('aria-haspopup', 'dialog');
       imageVideoMedia.dataset.id = id;
     }
@@ -81,7 +81,7 @@ function mediaFactory(media, name) {
       img.classList.add('heart');
     }
     img.setAttribute('tabindex', '0');
-    img.setAttribute('role', 'button');
+    img.setAttribute('role', 'checkbox');
     img.setAttribute('aria-pressed', 'false');
     img.setAttribute('aria-label', 'like');
 

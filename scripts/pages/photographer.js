@@ -126,7 +126,7 @@ async function initPhotographerPage() {
         const localIdx = x[idx].firstChild.dataset.id;
         const arrItems = JSON.parse(localStorage.getItem('photographersMedias'));
         const currentItem = arrItems.filter((el) => el.id === +localIdx);
-        
+
         const dataState = media.getAttribute('data-state');
         const {
           likes,
@@ -136,8 +136,8 @@ async function initPhotographerPage() {
           media.classList.remove('active');
           media.setAttribute('data-state', false);
           media.setAttribute('data-count', `${likes - 1}`);
+          media.setAttribute('aria-checked', false);
           likesNumbers[idx].textContent = likes - 1;
-          likesNumbers[idx].setAttribute('aria-pressed', 'false');
           currentItem[0].likes -= 1;
           currentItem[0].state = false;
           localStorage.setItem('photographersMedias', JSON.stringify(arrItems));
@@ -147,8 +147,8 @@ async function initPhotographerPage() {
           media.classList.add('active');
           media.setAttribute('data-state', true);
           media.setAttribute('data-count', `${likes + 1}`);
+          media.setAttribute('aria-checked', true);
           likesNumbers[idx].textContent = likes + 1;
-          likesNumbers[idx].setAttribute('aria-pressed', 'true');
           currentItem[0].likes += 1;
           currentItem[0].state = true;
           localStorage.setItem('photographersMedias', JSON.stringify(arrItems));
@@ -162,8 +162,9 @@ async function initPhotographerPage() {
 
       // accessibility
       likesMedia.forEach((media, idx) => media.addEventListener('keydown', (event) => {
-        if ((event.key || event.code) === 'Enter') {
+        if ((event.key || event.code) === ('Enter' || 13)) {
           likesChangeState(media, idx);
+          media.focus();
         }
       }));
     }
@@ -195,7 +196,7 @@ async function initPhotographerPage() {
     }));
     // accessibility
     filterBtn.forEach((el) => el.addEventListener('keydown', (event) => {
-      if ((event.key || event.code) === 'Enter') {
+      if ((event.key || event.code) === ('Enter' || 13)) {
         sortMedia(el);
         [...el.parentElement.children].forEach((elt) => {
           if (elt.getAttribute('aria-selected') === 'true') {
@@ -206,7 +207,7 @@ async function initPhotographerPage() {
         el.parentElement.classList.remove('open');
         el.parentElement.setAttribute('aria-expanded', 'false');
       }
-      if ((event.key || event.code) === 'Escape') {
+      if ((event.key || event.code) === ('Escape' || 27)) {
         el.parentElement.classList.remove('open');
         el.parentElement.setAttribute('aria-expanded', 'false');
       }

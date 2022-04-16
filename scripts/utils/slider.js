@@ -9,6 +9,12 @@ function displaySlider() {
   const prevBtn = document.querySelector('#prevBtn');
   const mediaContainer = document.querySelector('#mediaContainer');
   const nextBtn = document.querySelector('#nextBtn');
+  // selection to keep focus inside modal
+  const  focusableElements =
+    'img[role="button"], img, video, [tabindex]:not([tabindex="-1"])';
+  const firstFocusableElement = sliderModal.querySelectorAll(focusableElements)[0];
+  const focusableContent = sliderModal.querySelectorAll(focusableElements);
+  const lastFocusableElement = focusableContent[focusableContent.length - 1];
 
   // create by cloning portofolio datas
   function createMediaDOM(currentIndex) {
@@ -28,7 +34,9 @@ function displaySlider() {
       videoMedia.setAttribute('controls', '');
       videoMedia.setAttribute('preload', 'none');
       videoMedia.setAttribute('tabindex', '0');
-      videoMedia.removeAttribute('aria-label', media.alt);
+      videoMedia.removeAttribute('role');
+      videoMedia.setAttribute('aria-label', media.alt);
+      videoMedia.removeAttribute('aria-haspopup');
       videoMedia.dataset.id = currentIndex;
       source.setAttribute('src', `${mediavideo}.mp4`);
       source.setAttribute('type', 'video/mp4');
@@ -41,7 +49,9 @@ function displaySlider() {
       mediaClone.classList.remove('portfolio_picture');
       mediaClone.classList.add('mediaModal');
       mediaClone.setAttribute('src', `${mediaFullsize}-medium.jpg`);
-      mediaClone.removeAttribute('aria-label');
+      mediaClone.removeAttribute('role');
+      mediaClone.setAttribute('aria-label', media.alt);
+      mediaClone.removeAttribute('aria-haspopup');
       mediaClone.dataset.id = currentIndex;
       mediaContainer.appendChild(mediaClone);
       mediaTitle.textContent = media.alt;
@@ -99,27 +109,27 @@ function displaySlider() {
     nextBtn.addEventListener('click', increaseSlideIndex);
 
     window.addEventListener('keydown', (event) => {
-      if ((event.key || event.code) === 'ArrowLeft') {
+      if ((event.key || event.code) === ('ArrowLeft' || 37)) {
         decreaseSlideIndex();
       }
-      if ((event.key || event.code) === 'ArrowRight') {
+      if ((event.key || event.code) === ('ArrowRight' || 39)) {
         increaseSlideIndex();
       }
     }, true);
 
     prevBtn.addEventListener('keydown', (event) => {
-      if ((event.key || event.code) === 'Enter') {
+      if ((event.key || event.code) === ('Enter' || 13)) {
         decreaseSlideIndex();
       }
     }, true);
     nextBtn.addEventListener('keydown', (event) => {
-      if ((event.key || event.code) === 'Enter') {
+      if ((event.key || event.code) === ('Enter' || 13)) {
         increaseSlideIndex();
       }
     }, true);
 
     window.addEventListener('keydown', (event) => {
-      if ((event.key || event.code) === 'Escape') {
+      if ((event.key || event.code) === ('Escape' || 27)) {
         closeSliderModal(currentIndex);
       }
     }, true);
@@ -159,7 +169,7 @@ function displaySlider() {
   portfolioMediaContainer.forEach((media, idx) => {
     const currentMediaChild = media.children[0];
     currentMediaChild.addEventListener('keydown', (event) => {
-      if ((event.key || event.code) === 'Enter') {
+      if ((event.key || event.code) === ('Enter' || 13)) {
         displaySliderModal(event, idx);
       }
     });
@@ -167,9 +177,30 @@ function displaySlider() {
 
   sliderCloseBtn.addEventListener('click', closeSliderModal);
   sliderCloseBtn.addEventListener('keydown', (event) => {
-    if ((event.key || event.code) === 'Enter') {
+    if ((event.key || event.code) === ('Enter' || 13)) {
       closeSliderModal();
     }
   }, true);
+
+    // keep focus inside the slider modal
+    document.addEventListener('keydown', function(e) {
+      let isTabPressed = e.key === 'Tab' || e.code === 9;
+    
+      if (!isTabPressed) {
+        return;
+      }
+    
+      if (e.shiftKey) {
+        if (document.activeElement === firstFocusableElement) {
+          lastFocusableElement.focus(); 
+          e.preventDefault();
+        }
+      } else {
+        if (document.activeElement === lastFocusableElement) {
+          firstFocusableElement.focus(); 
+          e.preventDefault();
+        }
+      }
+    });
 }
 export default displaySlider;
