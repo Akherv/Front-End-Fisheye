@@ -1,7 +1,7 @@
 function displayContactModal() {
   // DOM selection
   const body = document.querySelector('body');
-  const landmarks = document.querySelectorAll('header, #header a, #main .contact_button, .selection, .new-option, .media, .heart');
+  const landmarks = document.querySelectorAll('.header, #header a, #main .contact_button, .selection, .new-option, .media, .heart');
   const contactModalBtn = document.querySelector('.photograph-header_contact_button');
   const contactModal = document.querySelector('#contact_modal');
   const contactModalCloseBtn = document.querySelector('#contact_modal .closeBtn');
@@ -39,7 +39,11 @@ function displayContactModal() {
     // Reveal background elements
     body.style.overflow = 'auto';
     landmarks.forEach((el) => {
-      el.setAttribute('tabindex', '0');
+      if (el.classList.contains('header')) {
+        el.removeAttribute('tabindex');
+      } else {
+        el.setAttribute('tabindex', '0');
+      }
       el.removeAttribute('aria-hidden');
       el.removeAttribute('inert');
     });

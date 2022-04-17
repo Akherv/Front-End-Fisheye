@@ -1,7 +1,7 @@
 function displaySlider() {
   const body = document.querySelector('body');
   const main = document.querySelector('#main');
-  const landmarks = document.querySelectorAll('#header a, #main .contact_button, .selection, .new-option, .media, .heart');
+  const landmarks = document.querySelectorAll('.header, #header a, #main .contact_button, .selection, .new-option, .media, .heart');
   const mediasPortfolio = document.querySelectorAll('.portfolio .media');
   const mediaContent = document.querySelector('#slider_modal .content');
   const portfolioMediaContainer = document.querySelectorAll('.portfolio_media-container');
@@ -53,6 +53,7 @@ function displaySlider() {
       mediaClone.setAttribute('src', `${mediaFullsize}-medium.jpg`);
       mediaClone.removeAttribute('role');
       mediaClone.setAttribute('aria-label', media.alt);
+      mediaClone.setAttribute('tabindex', '-1');
       mediaClone.removeAttribute('aria-haspopup');
       mediaClone.dataset.id = currentIndex;
       mediaContainer.insertBefore(mediaClone, mediaTitle);
@@ -79,7 +80,12 @@ function displaySlider() {
     body.style.overflow = 'auto';
 
     landmarks.forEach((el) => {
-      el.setAttribute('tabindex', '0');
+      console.log(el.classList)
+      if (el.classList.contains('header')) {
+        el.removeAttribute('tabindex');
+      } else {
+        el.setAttribute('tabindex', '0');
+      }
       el.removeAttribute('aria-hidden');
       el.removeAttribute('inert');
     });

@@ -122,7 +122,6 @@
     text-align: center;
     color: #fff;
     border-radius: 5px;
-    /* line-height: 50px; */
     line-height: 68px;
     position: relative;
     font-size: 1.25em;
@@ -168,11 +167,12 @@
 .new-select .selection:active {
     background-color: #901C1C;
 }
+
 .new-select:focus-visible,
 .new-select .selection:focus-visible {
     outline: none;
+    border: 4px solid #D3573C;
     background-color: #DB8876;
-    color: #000;
 }
 
 .selection:focus {

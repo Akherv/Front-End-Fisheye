@@ -81,7 +81,7 @@ function customSelect() {
 
   // handle Open / Close filter
   function toggleOpen() {
-    const landmarks = document.querySelectorAll('#header a, .contact_button, .media, .heart');
+    const landmarks = document.querySelectorAll('.header, #header a, .contact_button, .media, .heart');
     listbox.classList.toggle('open');
     // remove focus behind
     landmarks.forEach((el) => {
@@ -95,7 +95,12 @@ function customSelect() {
       closeSelect();
       // reveal focus behind
       landmarks.forEach((el) => {
-        el.setAttribute('tabindex', '0');
+        if (el.classList.contains('header')) {
+          console.log(el)
+          el.removeAttribute('tabindex');
+        } else {
+          el.setAttribute('tabindex', '0');
+        }
         el.removeAttribute('aria-hidden');
         el.removeAttribute('inert');
       });
