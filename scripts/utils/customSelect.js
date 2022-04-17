@@ -103,10 +103,10 @@ function customSelect() {
   }
 
   // open filter on Click
-  listboxContainer.addEventListener('click', toggleOpen);
+  listbox.addEventListener('click', toggleOpen);
 
   // open filter on Keyboard Enter
-  listboxContainer.addEventListener('keydown', (e) => {
+  listbox.addEventListener('keydown', (e) => {
     if ((e.key || e.code) === 'Enter') {
       toggleOpen();
     }

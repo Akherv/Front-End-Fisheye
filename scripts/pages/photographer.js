@@ -136,7 +136,7 @@ async function initPhotographerPage() {
           media.classList.remove('active');
           media.setAttribute('data-state', false);
           media.setAttribute('data-count', `${likes - 1}`);
-          media.setAttribute('aria-checked', false);
+          media.setAttribute('aria-pressed', false);
           likesNumbers[idx].textContent = likes - 1;
           currentItem[0].likes -= 1;
           currentItem[0].state = false;
@@ -147,7 +147,7 @@ async function initPhotographerPage() {
           media.classList.add('active');
           media.setAttribute('data-state', true);
           media.setAttribute('data-count', `${likes + 1}`);
-          media.setAttribute('aria-checked', true);
+          media.setAttribute('aria-pressed', true);
           likesNumbers[idx].textContent = likes + 1;
           currentItem[0].likes += 1;
           currentItem[0].state = true;

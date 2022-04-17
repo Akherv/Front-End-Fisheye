@@ -81,8 +81,8 @@ function mediaFactory(media, name) {
       img.classList.add('heart');
     }
     img.setAttribute('tabindex', '0');
-    img.setAttribute('role', 'checkbox');
-    img.setAttribute('aria-checked', 'false');
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-pressed', 'false');
 
     img.classList.add('heart');
 
