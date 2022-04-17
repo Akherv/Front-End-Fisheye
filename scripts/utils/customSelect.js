@@ -24,7 +24,7 @@ function customSelect() {
     oldOptions.forEach((el) => {
       const newValue = el.value;
       const newHTML = el.innerHTML;
-      listboxContainer.innerHTML += `<div class="new-option" data-value="${newValue}" role="option" aria-labelledby="${el.value}" aria-selected="false" tabindex="-1"><p id="${el.value}">${newHTML}</p></div>`;
+      listboxContainer.innerHTML += `<div id="${el.value}" class="new-option" data-value="${newValue}" role="option" aria-labelledby="${el.value}" aria-selected="false" tabindex="-1"><p id="${el.value}">${newHTML}</p></div>`;
       if (newValue === 'popularite') {
         document.querySelector(`.new-option[data-value="${newValue}"]`).setAttribute('aria-selected', 'true');
         document.querySelector(".selection").setAttribute('aria-activedescendant', `${newValue}`);

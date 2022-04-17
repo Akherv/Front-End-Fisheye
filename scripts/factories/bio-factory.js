@@ -12,30 +12,30 @@ function bioFactory(data) {
   const picture = `assets/photographers/Photographers_ID/${portrait}`;
 
   const photographHeader = document.querySelector('.photograph-header');
-  const presentationDiv = document.querySelector('.photograph-header__presentation');
-  const presentationTextDiv = document.querySelector('.presentationTextDiv');
-  const informationDiv = document.querySelector('.informationdiv');
-  const informationLikes = document.querySelector('.informationLikes');
+  const presentationDiv = document.querySelector('.photograph-header_presentation');
+  const photographText = document.querySelector('.photograph-header_presentation-text');
+  const informations = document.querySelector('.informations');
+  const informationsLikes = document.querySelector('.informations_likes');
 
   const h1 = `<h1>${name}</h1>`;
-  const p1 = `<p>${city}, ${country}</p>`;
-  const p2 = `<p>${tagline}</p>`;
-  const img = `<img class="photograph-header__picture" src="${picture}" alt="${name}"></img>`;
+  const span1 = `<span>${city}, ${country}</span>`;
+  const span2 = `<span>${tagline}</span>`;
+  const img = `<img class="photograph-header_picture" src="${picture}" alt="${name}"></img>`;
 
-  const informationLikesSpan1 = '<span class="informationLikesNumber"></span>';
-  const imgHeart = `<img class="informationDiv_imgHeart" src="${heart}" alt="likes"></img>`;
-  const informationPrice = `<span class="informationDiv__price">${price}€/jour</span>`;
+  const informationsLikesSpan1 = '<span class="informations_likes-number"></span>';
+  const imgHeart = `<img class="informations_img-heart" src="${heart}" alt="likes"></img>`;
+  const informationPrice = `<span class="informations_price">${price}€/jour</span>`;
 
   presentationDiv.insertAdjacentHTML('afterbegin', h1);
 
-  presentationTextDiv.insertAdjacentHTML('afterend', p1);
-  presentationTextDiv.insertAdjacentHTML('beforeend', p2);
+  photographText.insertAdjacentHTML('beforeend', span1);
+  photographText.insertAdjacentHTML('beforeend', span2);
 
   photographHeader.insertAdjacentHTML('beforeend', img);
 
-  informationLikes.insertAdjacentHTML('beforeend', informationLikesSpan1);
-  informationLikes.insertAdjacentHTML('beforeend', imgHeart);
+  informationsLikes.insertAdjacentHTML('beforeend', informationsLikesSpan1);
+  informationsLikes.insertAdjacentHTML('beforeend', imgHeart);
 
-  informationDiv.insertAdjacentHTML('beforeend', informationPrice);
+  informations.insertAdjacentHTML('beforeend', informationPrice);
 }
 export default bioFactory;

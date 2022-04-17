@@ -3,7 +3,7 @@ function displaySlider() {
   const main = document.querySelector('#main');
   const landmarks = document.querySelectorAll('#header a, #main .contact_button, .selection, .new-option, .media, .heart');
   const mediasPortfolio = document.querySelectorAll('.portfolio .media');
-  const portfolioMediaContainer = document.querySelectorAll('.portfolio_mediaContainer');
+  const portfolioMediaContainer = document.querySelectorAll('.portfolio_media-container');
   const sliderModal = document.querySelector('#slider_modal');
   const sliderCloseBtn = document.querySelector('#slider_modal .closeBtn');
   const prevBtn = document.querySelector('#prevBtn');
@@ -42,7 +42,7 @@ function displaySlider() {
       source.setAttribute('type', 'video/mp4');
       source.setAttribute('tabindex', '0');
       videoMedia.appendChild(source);
-      mediaContainer.appendChild(videoMedia);
+      mediaContainer.insertBefore(videoMedia, mediaTitle);
       mediaTitle.textContent = media.alt;
     } else { // if img
       const mediaClone = media.cloneNode();
@@ -53,7 +53,7 @@ function displaySlider() {
       mediaClone.setAttribute('aria-label', media.alt);
       mediaClone.removeAttribute('aria-haspopup');
       mediaClone.dataset.id = currentIndex;
-      mediaContainer.appendChild(mediaClone);
+      mediaContainer.insertBefore(mediaClone, mediaTitle);
       mediaTitle.textContent = media.alt;
     }
   }

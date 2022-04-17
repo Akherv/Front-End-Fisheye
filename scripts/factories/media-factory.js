@@ -31,28 +31,27 @@ function mediaFactory(media, name) {
   const mediaLinkPoster = getMediaLink();
 
   function getUserMediaDOM() {
+    const mediaWrapper = document.createElement('li');
     const mediaContainer = document.createElement('article');
-    mediaContainer.classList.add('portfolio_mediaContainer');
+    mediaContainer.classList.add('portfolio_media-container');
     const imageMedia = document.createElement('img');
     const imageVideoMedia = document.createElement('img');
 
     if (image) {
       imageMedia.setAttribute('src', mediaLink);
-      imageMedia.setAttribute('alt', title);
+      imageMedia.setAttribute('alt', `${title}, close up view`);
       imageMedia.classList.add('media', 'portfolio_picture');
       imageMedia.setAttribute('tabindex', '0');
       imageMedia.setAttribute('role', 'button');
-      imageMedia.setAttribute('aria-label', `ouvrir image ${title}`);
       imageMedia.setAttribute('aria-haspopup', 'dialog');
       imageMedia.dataset.id = id;
     }
     if (video) {
       imageVideoMedia.setAttribute('src', mediaLinkPoster.posterLink);
-      imageVideoMedia.setAttribute('alt', title);
+      imageVideoMedia.setAttribute('alt', `${title}, close up view`);
       imageVideoMedia.classList.add('media', 'portfolio_video');
       imageVideoMedia.setAttribute('tabindex', '0');
       imageVideoMedia.setAttribute('role', 'button');
-      imageVideoMedia.setAttribute('aria-label', `ouvrir video ${title}`);
       imageVideoMedia.setAttribute('aria-haspopup', 'dialog');
       imageVideoMedia.dataset.id = id;
     }
@@ -60,8 +59,8 @@ function mediaFactory(media, name) {
     const h2 = document.createElement('h2');
     h2.textContent = title;
 
-    const portfolioMediaContent = document.createElement('div');
-    portfolioMediaContent.classList.add('portfolioMediaContent');
+    const portfolioMediaInfos = document.createElement('div');
+    portfolioMediaInfos.classList.add('portfolio_media-informations');
     const p = document.createElement('p');
     const span1 = document.createElement('span');
     span1.classList.add('likesNumber');
@@ -83,15 +82,14 @@ function mediaFactory(media, name) {
     img.setAttribute('tabindex', '0');
     img.setAttribute('role', 'checkbox');
     img.setAttribute('aria-pressed', 'false');
-    img.setAttribute('aria-label', 'like');
 
     img.classList.add('heart');
 
     span2.appendChild(img);
     p.appendChild(span1);
     p.appendChild(span2);
-    portfolioMediaContent.appendChild(h2);
-    portfolioMediaContent.appendChild(p);
+    portfolioMediaInfos.appendChild(h2);
+    portfolioMediaInfos.appendChild(p);
 
     if (image) {
       mediaContainer.appendChild(imageMedia);
@@ -99,9 +97,9 @@ function mediaFactory(media, name) {
     if (video) {
       mediaContainer.appendChild(imageVideoMedia);
     }
-    mediaContainer.appendChild(portfolioMediaContent);
-
-    return mediaContainer;
+    mediaContainer.appendChild(portfolioMediaInfos);
+    mediaWrapper.appendChild(mediaContainer)
+    return mediaWrapper;
   }
   return {
     mediaLink,

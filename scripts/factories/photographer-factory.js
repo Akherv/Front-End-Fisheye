@@ -16,12 +16,12 @@ function photographerFactory(data) {
     const article = document.createElement('article');
     const a = document.createElement('a');
     a.setAttribute('href', portfolio);
-    a.setAttribute('aria-labelledby', `photographer-${id}`);
+    a.setAttribute('aria-label', name);
 
     const img = document.createElement('img');
     img.setAttribute('src', picture);
     img.setAttribute('id', `photographer-${id}`);
-    img.setAttribute('alt', name);
+    img.setAttribute('alt', '');
     img.classList.add('photographer_section_picture');
     const h2 = document.createElement('h2');
     h2.textContent = name;

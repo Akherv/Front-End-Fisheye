@@ -5,52 +5,58 @@
 .photograph-header {
     height: 300px;
     margin: 0 100px;
+    padding: 0 4%;
+    border-radius: 5px;
+    background-color: #FAFAFA;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 4%;
-    background-color: #FAFAFA;
 }
 
 .photograph-header h1 {
-    color: #DB8876
+    font-size: 2.5em;
+    color: #D3573C;
 }
 
-.photograph-header__presentation {
-    min-height: 200px;
+.photograph-header_presentation-text span {
+    display: block;
 }
 
-.presentationTextDiv :first-child {
+.photograph-header_presentation-text :first-child {
+    font-size: 1.2em;
     color: #901C1C;
 }
 
-.presentationTextDiv :last-child {
+.photograph-header_presentation-text :last-child {
+    margin-top: 15px;
     color: #525252;
 }
 
+/* button */
+
 .contact_button {
+    width: 170px;
+    height: 70px;
+    margin: 0 30px;
     font-size: 1.125em;
     font-weight: bold;
     color: white;
-    padding: 11px;
-    width: 170px;
-    height: 70px;
-    border: none;
     background-color: #901C1C;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin: 0 30px;
 }
 
-.contact_button.bio:hover,
-.contact_button.bio:focus-visible {
+.photograph-header_contact_button:hover,
+.photograph-header_contact_button:focus-visible {
     outline: none;
     background-color: #DB8876;
     color: #000;
 }
 
-.photographer_section_picture,
-.photograph-header__picture {
+/* picture */
+
+.photograph-header_picture {
     width: 200px;
     height: 200px;
     border-radius: 50%;
@@ -105,7 +111,6 @@
 
 .new-select-wrapper {
     margin: 40px 100px;
-    padding: 0 4%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -306,47 +311,36 @@
 .portfolio {
     display: grid;
     grid-gap: 20px;
-    margin: 0 100px;
     padding: 0 4% 60px 0;
     grid-template-columns: repeat(auto-fit, minmax(355px, 1fr));
     justify-items: center;
 }
 
-.portfolio_mediaContainer {
+.portfolio_media-container {
     height: 350px;
     width: 350px;
-    padding: 0 20px;
     padding-bottom: 40px;
 }
 
-.portfolioMediaContent {
+.portfolio_media-informations {
     display: flex;
     justify-content: space-between;
-    align-items: center;
 }
 
-.portfolio_mediaContent {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
-}
-
-.portfolio_mediaContainer h2,
-.portfolio_mediaContainer p {
+.portfolio_media-container h2,
+.portfolio_media-container p {
     display: inline-block;
+    margin-top: 10px;
     color: #901C1C
 }
 
-.portfolio_mediaContainer p {
+.portfolio_media-container p {
     display: inline-flex;
-    justify-content: center;
     align-items: center;
     line-height: 10px;
 }
 
-.portfolio_mediaContainer p span {
+.portfolio_media-container p span {
     margin-left: 10px;
 }
 
@@ -355,6 +349,7 @@
     height: 300px;
     width: 350px;
     object-fit: cover;
+    cursor: pointer;
 }
 
 /*=============================================
@@ -369,10 +364,6 @@
     visibility: hidden;
 }
 
-[role="dialog"][hidden] {
-    visibility: visible;
-}
-
 .hiddenElement {
     height: 1px;
     left: 0;
@@ -383,7 +374,6 @@
 }
 
 #contact_modal {
-    background-color: rgba(255, 255, 255, 0.8);
     height: 100vh;
     width: 100vw;
     position: absolute;
@@ -391,18 +381,19 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 20;
+    overflow: auto;
 }
 
 .modal {
+    width: 50%;
+    padding: 35px;
     border-radius: 5px;
     background-color: #DB8876;
-    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 35px;
-    margin: auto;
+
     position: absolute;
     top: 50%;
     left: 50%;
@@ -412,8 +403,7 @@
 .modal header {
     justify-content: space-between;
     width: 100%;
-    margin-top: 20px;
-    margin-bottom: 60px;
+    margin-bottom: 8%;
 }
 
 .modal header img {
@@ -429,15 +419,15 @@
 }
 
 form {
-    display: flex;
     width: 100%;
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
 form label {
     color: #312E2E;
-    font-size: 2.25em;
+    font-size: 2em;
 }
 
 form div {
@@ -450,7 +440,7 @@ form div {
 
 form input {
     width: 100%;
-    height: 68px;
+    height: 2.2em;
     border: none;
     border-radius: 5px;
 }
@@ -463,7 +453,11 @@ form textarea {
 
 input,
 textarea {
-    font-size: 24px;
+    font-size: 1.5em;
+}
+
+.formData {
+    margin: 0;
 }
 
 .formData[data-error]::after {
@@ -491,7 +485,7 @@ textarea.error {
     border: 4px solid #901C1C;
 }
 
-.formData {
+form .contact_button{
     margin: 0;
 }
 
@@ -499,15 +493,13 @@ form .contact_button:hover {
     transform: scale(0.98);
 }
 
-
 /*=============================================
 =                   slider                   =
 =============================================*/
 
 #slider_modal {
-    background-color: rgba(255, 255, 255, 0.8);
-    height: 100vh;
     width: 100%;
+    height: 100vh;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -516,10 +508,8 @@ form .contact_button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
     overflow: hidden;
     display: none;
-
 }
 
 #slider_modal .modal {
@@ -528,7 +518,16 @@ form .contact_button:hover {
     height: 100%;
     display: flex;
     justify-content: center;
+}
+
+#slider_modal .content {
+    height: 90%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+    position: relative;
+    border: none;
 }
 
 #slider_modal .closeBtn {
@@ -536,40 +535,23 @@ form .contact_button:hover {
     right: 20px;
     top: 0;
     cursor: pointer;
-    width: 30px;
-}
-
-#slider_modal header {
-    height: 100%;
-    width: 100%;
-    background-color: #fff;
-}
-
-#slider_modal .content {
-    height: 90%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    border: none;
-    width: 100vw;
+    width: 1.875em;
 }
 
 .sliderBtn {
     display: inline-block;
-    width: 60px;
-    height: 60px;
-    margin: 20px;
+    width: 3.75em;
+    height: 3.75em;
+    margin: 1.25em;
     cursor: pointer;
     position: relative;
 }
 
-
 #prevBtn::before {
     content: "";
     position: absolute;
-    width: 30px;
-    height: 5px;
+    width: 1.875em;
+    height: 0.313em;
     top: 55%;
     left: 0;
     transform-origin: left;
@@ -580,8 +562,8 @@ form .contact_button:hover {
 #prevBtn::after {
     content: "";
     position: absolute;
-    width: 30px;
-    height: 5px;
+    width: 1.875em;
+    height: 0.313em;
     z-index: 2;
     top: 50%;
     left: 0;
@@ -590,12 +572,11 @@ form .contact_button:hover {
     transform-origin: left;
 }
 
-
 #nextBtn::before {
     content: "";
     position: absolute;
-    width: 30px;
-    height: 5px;
+    width: 1.875em;
+    height: 0.313em;
     top: 55%;
     right: 0;
     transform-origin: right;
@@ -606,8 +587,8 @@ form .contact_button:hover {
 #nextBtn::after {
     content: "";
     position: absolute;
-    width: 30px;
-    height: 5px;
+    width: 1.875em;
+    height: 0.313em;
     top: 50%;
     right: 0;
     transform-origin: right;
@@ -617,16 +598,9 @@ form .contact_button:hover {
 
 #mediaContainer {
     height: 100%;
-    max-width: 1050px;
-    max-height: 900px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    position: relative;
 }
 
-.media {
+video {
     cursor: pointer;
 }
 
@@ -637,9 +611,6 @@ form .contact_button:hover {
 }
 
 #mediaTitle {
-    position: absolute;
-    bottom: -10px;
-    left: 20px;
     color: #901C1C;
 }
 
@@ -647,30 +618,38 @@ form .contact_button:hover {
 =                informations                 =
 =============================================*/
 
-.informationdiv {
+.informations {
+    width: 340px;
+    padding: 1em;
+    border-radius: 5px 5px 0 0;
     position: fixed;
     bottom: 0;
     right: 20px;
+    z-index: 10;
     background-color: #DB8876;
-    width: 380px;
     display: flex;
     justify-content: space-between;
-    padding: 1em;
-    border-radius: 5px 5px 0 0;
-    z-index: 10;
 }
 
-.informationdiv>span {
+.informations>span {
     display: flex;
     align-items: center;
 }
 
-.informationDiv_imgHeart {
+.informations_likes-number {
     margin-left: 5px;
 }
 
+.informations_img-heart {
+    margin-left: 5px;
+}
+
+.informations_price {
+    margin-right: 5px;
+}
+
 /*=============================================
-=                    Element                 =
+=                    heart                 =
 =============================================*/
 
 .heart {
@@ -689,6 +668,8 @@ form .contact_button:hover {
 =                    RWD                     =
 =============================================*/
 @media screen and (max-width: 1440px) {
+    /* presentation */
+
     .photograph-header {
         margin: 0 4%
     }
@@ -697,23 +678,17 @@ form .contact_button:hover {
         margin: 0;
     }
 
-    .filterContainer {
-        margin: 0 4%
-    }
-
-    .portfolio {
-        margin: 0 4%;
-    }
-
-    #filterContainer {
-        margin: 40px 4%;
-    }
-
+    /* filter */
     .new-select-wrapper {
         margin: 40px 4%;
     }
 
-    @media screen and (max-width:830px) {
+    /* portfolio */
+    .portfolio {
+        margin: 0 4%;
+    }
+
+    @media screen and (max-width:850px) {
 
         /* presentation */
 
@@ -722,8 +697,7 @@ form .contact_button:hover {
             flex-direction: column-reverse;
         }
 
-        .photograph-header__presentation {
-            min-height: unset;
+        .photograph-header_presentation {
             text-align: center;
         }
 
@@ -731,29 +705,18 @@ form .contact_button:hover {
             padding: 4%;
         }
 
-        .contact_button {
+        .photograph-header_contact_button {
             margin: 8% 0;
         }
 
         /* filter */
 
-        #filterContainer {
-            display: flex;
+        .new-select-wrapper {
             flex-direction: column;
-            align-items: center;
-            margin: 40px;
         }
 
-        #filterContainer>label {
-            margin-bottom: 5px;
-        }
-
-        /* informations */
-
-        .informationdiv {
-            width: 60%;
-            left: 50%;
-            transform: translateX(-50%);
+        .new-select {
+            margin: 10px auto 40px;
         }
 
         /* portfolio */
@@ -764,14 +727,10 @@ form .contact_button:hover {
             padding: 0 0 60px 0;
         }
 
-        .portfolio_mediaContainer {
+        .portfolio_media-container {
             width: 100%;
             padding: 0;
             margin-bottom: 20px;
-        }
-
-        .portfolio:last-child {
-            margin-bottom: 30px;
         }
 
         .portfolio_picture,
@@ -780,17 +739,16 @@ form .contact_button:hover {
         }
 
         /* slider */
-        
+
         #slider_modal .content {
             flex-direction: column;
-            height: 100vh;
+            height: 90%;
             width: 100%;
         }
 
         #slider_modal .closeBtn {
-            width: 25px;
-            top: 38px;
-            right: 25px;
+            top: 2.375em;
+            right: 1.563em;
         }
 
         #prevBtn {
@@ -802,23 +760,16 @@ form .contact_button:hover {
         }
 
         #mediaContainer {
-            height: 100%;
             height: 60vh;
             padding: 0;
         }
 
         #slider_modal .mediaModal {
-            height: auto;
             height: 100%;
         }
 
         #mediaTitle {
-            bottom: -30px;
-            left: 0;
-        }
-
-        .new-select {
-            margin: 10px auto 40px;
+            margin-left: 10px;
         }
 
         /* contact_modal */
@@ -828,27 +779,31 @@ form .contact_button:hover {
         }
 
         #contact_modal .modal {
+            height: unset;
             width: 80%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             overflow: auto;
-            height: 90vh;
         }
 
         #contact_modal .modal header {
-            margin-top: 20px;
-            margin-bottom: 2em;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            position: relative;
         }
 
         #contact_modal .modal header h2 {
-            margin-top: 0;
             width: 100%;
+            margin-top: 0;
+            font-size: 2em;
         }
 
         #contact_modal .closeBtn {
-            right: 40px;
-            position: absolute;
+            width: 2.5em;
+        }
+
+        form {
+            margin: auto;
         }
 
         form div {
@@ -859,11 +814,13 @@ form .contact_button:hover {
             font-size: 2em;
         }
 
-        .new-select-wrapper {
-            padding: 0 4%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        /* informations */
+
+        .informations {
+            width: 60%;
+            left: 50%;
+            transform: translateX(-50%);
         }
+
     }
 }

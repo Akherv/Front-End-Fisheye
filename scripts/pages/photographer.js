@@ -90,7 +90,7 @@ async function initPhotographerPage() {
     if (main.querySelector('.portfolio') != null) {
       main.lastChild.remove();
     }
-    const portfolioDiv = document.createElement('div');
+    const portfolioDiv = document.createElement('ul');
     portfolioDiv.classList.add('portfolio');
 
     medias.forEach((media) => {
@@ -104,9 +104,9 @@ async function initPhotographerPage() {
 
   // create & initialize likes counters
   function initCounter(medias) {
-    const likesMedia = document.querySelectorAll('.portfolioMediaContent .heart');
+    const likesMedia = document.querySelectorAll('.portfolio_media-informations .heart');
     const likesNumbers = document.querySelectorAll('.likesNumber');
-    const informationLikesNumber = document.querySelector('.informationLikesNumber');
+    const informationsLikesNumber = document.querySelector('.informations_likes-number');
 
     // refresh global sum variable
     function refreshGlobalLikesCounter() {
@@ -114,7 +114,7 @@ async function initPhotographerPage() {
       const arrElUpdated = JSON.parse(localStorage.getItem('photographersMedias'));
       const currentsElUpdated = arrElUpdated.filter((el) => el.photographerId === +photographerId);
       currentsElUpdated.forEach((media) => sum += media.likes);
-      informationLikesNumber.textContent = `${sum}`;
+      informationsLikesNumber.textContent = `${sum}`;
       return sum;
     }
     refreshGlobalLikesCounter();
@@ -122,7 +122,7 @@ async function initPhotographerPage() {
     // handle local likes variable & fire the global refresh function at the end
     function likeCheck() {
       function likesChangeState(media, idx) {
-        const x = document.querySelectorAll('.portfolio_mediaContainer');
+        const x = document.querySelectorAll('.portfolio_media-container');
         const localIdx = x[idx].firstChild.dataset.id;
         const arrItems = JSON.parse(localStorage.getItem('photographersMedias'));
         const currentItem = arrItems.filter((el) => el.id === +localIdx);
