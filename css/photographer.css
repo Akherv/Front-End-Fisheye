@@ -122,11 +122,13 @@
     text-align: center;
     color: #fff;
     border-radius: 5px;
-    line-height: 50px;
+    /* line-height: 50px; */
+    line-height: 68px;
     position: relative;
     font-size: 1.25em;
     font-weight: bold;
     z-index: 10;
+    
 }
 
 .new-select.open::after {
@@ -166,7 +168,7 @@
 .new-select .selection:active {
     background-color: #901C1C;
 }
-
+.new-select:focus-visible,
 .new-select .selection:focus-visible {
     outline: none;
     background-color: #DB8876;
@@ -187,11 +189,12 @@
     height: 100%;
     background-color: #fff;
     cursor: pointer;
-    position: relative;
+    /* position: relative; */
     z-index: 20;
     background-color: #901C1C;
     border-radius: 5px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     overflow: -moz-hidden-unscrollable;
@@ -217,7 +220,7 @@
 }
 
 .new-select .selection p {
-    width: calc(100% - 60px);
+    width: calc(100% - 16px);
     position: relative;
     margin: 0 0 0 16px;
     text-align: left;
@@ -265,13 +268,16 @@
     background-color: #901C1C;
     border-radius: 5px;
     position: absolute;
+    z-index: -1;
+
+    width: 100%;
 }
 
 .new-option p {
     width: calc(100% - 60px);
     margin: -1px;
     text-align: left;
-    padding-left: 16px;
+    /* padding-left: 16px; */
     height: 70px;
     display: flex;
     justify-content: space-between;
@@ -311,7 +317,7 @@
 .portfolio {
     display: grid;
     grid-gap: 20px;
-    padding: 0 4% 60px 0;
+    /* padding: 0 4% 60px 0; */
     grid-template-columns: repeat(auto-fit, minmax(355px, 1fr));
     justify-items: center;
 }

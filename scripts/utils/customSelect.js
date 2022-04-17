@@ -24,7 +24,7 @@ function customSelect() {
     oldOptions.forEach((el) => {
       const newValue = el.value;
       const newHTML = el.innerHTML;
-      listboxContainer.innerHTML += `<div id="${el.value}" class="new-option" data-value="${newValue}" role="option" aria-labelledby="${el.value}" aria-selected="false" tabindex="-1"><p id="${el.value}">${newHTML}</p></div>`;
+      document.querySelector('.selection').innerHTML += `<div id="${el.value}" class="new-option" data-value="${newValue}" role="option" aria-selected="false" tabindex="-1"><p id="id-${el.value}">${newHTML}</p></div>`;
       if (newValue === 'popularite') {
         document.querySelector(`.new-option[data-value="${newValue}"]`).setAttribute('aria-selected', 'true');
         document.querySelector(".selection").setAttribute('aria-activedescendant', `${newValue}`);
@@ -77,7 +77,7 @@ function customSelect() {
     // Move focus to the listbox container
     document.querySelector('.selection').focus();
   }
-  closeSelect();
+
 
   // handle Open / Close filter
   function toggleOpen() {
@@ -103,10 +103,10 @@ function customSelect() {
   }
 
   // open filter on Click
-  listbox.addEventListener('click', toggleOpen);
+  listboxContainer.addEventListener('click', toggleOpen);
 
   // open filter on Keyboard Enter
-  listbox.addEventListener('keydown', (e) => {
+  listboxContainer.addEventListener('keydown', (e) => {
     if ((e.key || e.code) === 'Enter') {
       toggleOpen();
     }
@@ -120,12 +120,12 @@ function customSelect() {
   }, true));
 
   // close filter on Click outside
-  document.addEventListener('click', (e) => {
-    const isClickInsideElement = listboxContainer.contains(e.target);
-    if (!isClickInsideElement) {
-      closeSelect();
-    }
-  });
+  // document.addEventListener('click', (e) => {
+  //   const isClickInsideElement = listboxContainer.contains(e.target);
+  //   if (!isClickInsideElement) {
+  //     closeSelect();
+  //   }
+  // });
 
   // handle options change inside the filter
   function handleChangeOptions(elt) {
@@ -134,11 +134,8 @@ function customSelect() {
       el = this;
     }
     const newValue = el.dataset.value;
-    const listboxOpen = document.querySelector('.selection.open');
-    const listboxLabelOpen = document.querySelector('.selection.open p span');
-
     // Selection New Select
-    listboxLabelOpen.innerHTML = el.querySelector('p').innerHTML;
+    document.querySelector('.selection p span').innerHTML = el.querySelector('p').innerHTML;
     document.querySelector('.new-option[aria-selected="true"]').setAttribute('aria-selected', 'false');
     document.querySelector(`.new-option[data-value="${newValue}"]`).setAttribute('aria-selected', 'true');
 
@@ -149,7 +146,7 @@ function customSelect() {
     // change textContent
     el.setAttribute('aria-selected', 'true');
     el.setAttribute('tabindex', '0');
-    listboxOpen.setAttribute('aria-activedescendant',`${newValue}`);
+    document.querySelector(".selection").setAttribute('aria-activedescendant', `${newValue}`);
     // hide from list selected textContent
     el.classList.remove('reveal');
     el.classList.add('hideCurrentOption');
@@ -158,11 +155,11 @@ function customSelect() {
       opt.classList.remove('hideCurrentOption');
       opt.classList.add('reveal');
     });
-    toggleOpen();
+    closeSelect();
   }
 
   // fire handle option change on Click
-  newOptions.forEach((el) => el.addEventListener('click', handleChangeOptions));
+  newOptions.forEach((el) => el.addEventListener('mousedown', handleChangeOptions));
 
   // fire handle option change on Keyboard
   newOptions.forEach((el) => el.addEventListener('keydown', (e) => {

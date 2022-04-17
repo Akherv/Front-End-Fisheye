@@ -3,6 +3,7 @@ function displaySlider() {
   const main = document.querySelector('#main');
   const landmarks = document.querySelectorAll('#header a, #main .contact_button, .selection, .new-option, .media, .heart');
   const mediasPortfolio = document.querySelectorAll('.portfolio .media');
+  const mediaContent = document.querySelector('#slider_modal .content');
   const portfolioMediaContainer = document.querySelectorAll('.portfolio_media-container');
   const sliderModal = document.querySelector('#slider_modal');
   const sliderCloseBtn = document.querySelector('#slider_modal .closeBtn');
@@ -44,6 +45,7 @@ function displaySlider() {
       videoMedia.appendChild(source);
       mediaContainer.insertBefore(videoMedia, mediaTitle);
       mediaTitle.textContent = media.alt;
+      mediaContent.setAttribute('aria-label', 'video closeup view')
     } else { // if img
       const mediaClone = media.cloneNode();
       mediaClone.classList.remove('portfolio_picture');
@@ -55,6 +57,7 @@ function displaySlider() {
       mediaClone.dataset.id = currentIndex;
       mediaContainer.insertBefore(mediaClone, mediaTitle);
       mediaTitle.textContent = media.alt;
+      mediaContent.setAttribute('aria-label', 'image closeup view')
     }
   }
 

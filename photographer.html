@@ -14,7 +14,7 @@
 
 <body>
   <header id="header" role="banner">
-    <a href="index.html" aria-labelledby="homepage">
+    <a href="index.html" aria-labelledby="homepage" >
       <img src="assets/images/logo.png" id="homepage" class="logo" alt="Fisheye Home page" />
     </a>
   </header>
@@ -25,7 +25,6 @@
       </div>
       <button type="button" class="photograph-header_contact_button contact_button" aria-label="Contact Me" tabindex="0">Contactez-moi</button>
     </div>
-    <label id="old-select-label" class="old-select-label" aria-hidden="true" tabindex="-1">Trier par</label>
     <select class="old-select" aria-hidden="true" aria-labelledby="old-select-label" tabindex="-1">
       <label for="filter" aria-hidden="true">Trier par</label>
       <option value="popularite" selected aria-hidden="true">Popularité</option>
@@ -33,8 +32,8 @@
       <option value="title" aria-hidden="true">Titre</option>
     </select>
     <div class="new-select-wrapper" aria-label="">
-      <label id="new-select-label" class="new-select-label">Trier par</label>
-      <div role="button" class="new-select" aria-haspopup="listbox" aria-expanded="false" tabindex="-1">
+      <label id="new-select-label" class="new-select-label" tabindex="-1">Trier par</label>
+      <div role="button" class="new-select" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="new-select-label" tabindex="0" >
         <div class="selection" role="listbox" aria-labelledby="new-select-label" tabindex="0" aria-activedescendant="">
           <p aria-hidden="true">
             <span id="selection"></span>

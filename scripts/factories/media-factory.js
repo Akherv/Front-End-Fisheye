@@ -72,6 +72,7 @@ function mediaFactory(media, name) {
     img.setAttribute('src', heart);
     img.setAttribute('alt', 'likes');
     img.setAttribute('data-count', likes);
+    img.setAttribute('aria-label', 'likes');
     if (state) {
       img.setAttribute('data-state', state);
       img.classList.add('heart', 'active');
@@ -81,7 +82,7 @@ function mediaFactory(media, name) {
     }
     img.setAttribute('tabindex', '0');
     img.setAttribute('role', 'checkbox');
-    img.setAttribute('aria-pressed', 'false');
+    img.setAttribute('aria-checked', 'false');
 
     img.classList.add('heart');
 
