@@ -380,19 +380,19 @@
 }
 
 #contact_modal {
-    height: 100vh;
-    width: 100vw;
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
     background-color: rgb(250, 250, 250, 0.8);
-    transform: translate(-50%, -50%);
     z-index: 20;
     overflow: auto;
 }
 
 .modal {
-    width: 50%;
+    width: 100%;
+    max-width: 500px;
     padding: 35px;
     border-radius: 5px;
     background-color: #DB8876;
@@ -400,7 +400,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-
     position: absolute;
     top: 50%;
     left: 50%;
@@ -436,6 +435,7 @@ form {
 form label {
     color: #312E2E;
     font-size: 2em;
+    margin-bottom: 5px;
 }
 
 form div {
@@ -465,7 +465,7 @@ textarea {
 }
 
 .formData {
-    margin: 0;
+    margin-bottom: 10px;
 }
 
 .formData[data-error]::after {
@@ -787,9 +787,10 @@ video {
         }
 
         #contact_modal .modal {
-            height: unset;
-            width: 80%;
-            overflow: auto;
+            margin: 0 auto;
+            margin-top: 0px;
+            height: 100vh;
+            margin-top: 10vh;
         }
 
         #contact_modal .modal header {
@@ -800,10 +801,10 @@ video {
             position: relative;
         }
 
-        #contact_modal .modal header h2 {
+        #contact_modal .modal header h1 {
             width: 100%;
             margin-top: 0;
-            font-size: 2em;
+            font-size: 1.5em;
         }
 
         #contact_modal .closeBtn {
@@ -819,7 +820,7 @@ video {
         }
 
         form label {
-            font-size: 2em;
+            font-size: 1.4em;
         }
 
         /* informations */
