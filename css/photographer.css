@@ -322,6 +322,10 @@
     justify-items: center;
 }
 
+.portfolio li {
+    margin-bottom: 20px;
+}
+
 .portfolio_media-container {
     height: 350px;
     width: 350px;
