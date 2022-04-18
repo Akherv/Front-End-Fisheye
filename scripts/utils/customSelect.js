@@ -164,7 +164,7 @@ function customSelect() {
   }
 
   // fire handle option change on Click
-  newOptions.forEach((el) => el.addEventListener('mousedown', handleChangeOptions));
+  newOptions.forEach((el) => el.addEventListener('click', handleChangeOptions));
 
   // fire handle option change on Keyboard
   newOptions.forEach((el) => el.addEventListener('keydown', (e) => {
