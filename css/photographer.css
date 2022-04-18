@@ -379,17 +379,6 @@
     width: 1px;
 }
 
-#contact_modal {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    
-    z-index: 20;
-    overflow: auto;
-}
-
 #contact_modal .modal {
     max-width: 600px;
     background-color: #DB8876;
@@ -398,6 +387,7 @@
 }
 
 #contact_modal  {
+    height: 100%;
     width: 100%;
     padding: 35px;
     background-color: rgb(250, 250, 250, 0.8);
@@ -405,10 +395,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    overflow: auto;
 }
 
 .modal header {
@@ -794,6 +785,7 @@ video {
 
         #contact_modal{
             display: flex;
+            padding: 0;
         }
 
         #contact_modal .modal {
