@@ -199,7 +199,6 @@ async function initPhotographerPage() {
         }});
       el.setAttribute('aria-selected', 'true');
       el.parentElement.classList.remove('open');
-      console.log(el.parentElement)
       el.parentElement.setAttribute('aria-expanded', 'false');
     }, true));
     // accessibility

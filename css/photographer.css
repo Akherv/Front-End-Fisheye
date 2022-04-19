@@ -67,41 +67,6 @@
 =                    filter                 =
 =============================================*/
 
-#filterContainer {
-    margin-bottom: 40px;
-    margin: 40px 100px;
-    padding: 0 4%;
-}
-
-.select-wrapper {
-    display: inline-block;
-    position: relative;
-}
-
-.select-wrapper:before {
-    content: "";
-    position: absolute;
-    width: 0.8em;
-    height: 0.5em;
-    top: 50%;
-    right: 20px;
-    background-color: rgb(255, 255, 255);
-    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
-    pointer-events: none;
-    z-index: 2
-}
-
-#filter {
-    background-color: #901C1C;
-    color: #fff;
-    border-radius: 5px;
-    width: 170px;
-    height: 69px;
-    position: relative;
-    font-size: 1.125em;
-    font-weight: bold;
-}
-
 .old-select {
     position: absolute;
     top: -9999px;
@@ -109,8 +74,9 @@
     display: none;
 }
 
+/* select customisé */
+
 .new-select-wrapper {
-    margin: 40px 100px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -118,187 +84,123 @@
     margin: 70px 100px;
 }
 
-.listboxContainer{
-    position: absolute;
-    z-index: 20;
-    top: -20px;
-    left: 90px;
-}
-
-.selection {
-    width: 170px;
-    height: 70px;
-    text-align: center;
-    color: #fff;
-    border-radius: 5px;
-    line-height: 68px;
-    font-size: 1.25em;
-    font-weight: bold;
-    z-index: 10;
-}
-
-.selection::after {
-    position: absolute;
-    content: "";
-    height: 70px;
-    top: 0;
-    width: 100%;
-    left: 0;
-    background-color: #901C1C;
-    border-radius: 5px;
-    z-index: -1;
-    overflow: hidden;
-}
-
-.selection.open::after {
-    position: absolute;
-    content: "";
-    height: 210px;
-    top: 0;
-    width: 100%;
-    left: 0;
-    background-color: #901C1C;
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: 2px 2px 10px #525252;
-}
-
 .new-select-label {
     font-size: 1.1em;
     font-weight: bold;
-    color: #000;
-    margin-right: 10px;
 }
 
- .selection:active {
-    background-color: #901C1C;
+.listboxContainer{
+    position: absolute;
+    top: -22px;
+    left: 90px;
+    z-index: 10;
 }
 
-
- .selection:focus-visible {
-    outline: none;
-    border: 4px solid #D3573C;
-    background-color: #DB8876;
-}
-
-.selection.open:focus,
-.selection.open:focus-visible {
-    outline: none;
-    border: none;
-}
-
-.selection:focus {
-    border: 4px solid #D3573C;
-    background-color: #DB8876;
-}
-
- .selection.open:hover {
-    outline: none;
+.listbox {
+    width: 170px;
+    border-radius: 5px;
     color: #fff;
-}
-
- .selection {
-    height: 100%;
-    background-color: #fff;
+    line-height: 68px;
+    font-size: 1.25em;
+    font-weight: bold;
     cursor: pointer;
     z-index: 20;
-    background-color: #901C1C;
-    border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    overflow: -moz-hidden-unscrollable;
 }
 
- .selection.open {
+.listbox::after {
+    position: absolute;
+    content: "";
+    height: 70px;
+    width: 100%;
+    background-color: #901C1C;
+    border-radius: 5px;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.listbox:focus,
+.listbox:focus-visible {
+    outline: none;
+    border: 4px solid #D3573C;
+    background-color: #DB8876;
+}
+
+.listbox.open:focus,
+.listbox.open:focus-visible {
+    outline: none;
+    border: none;
+}
+
+.listbox.open {
     position: relative;
-    overflow: visible;
 }
 
- .selection.open::before {
+.listbox.open::before {
     content: "";
     position: absolute;
     width: 90%;
     height: 1px;
-    background-color: #fff;
-    z-index: 40;
     left: 50%;
     top: 70px;
     transform: translateX(-50%);
+    background-color: #fff;
     box-shadow: 0 70px 0 0 #fff;
+    z-index: 10;
 }
 
- .selection p {
+.listbox.open::after {
+    height: 210px;
+    box-shadow: 2px 2px 10px #525252;
+} 
+
+.listbox p {
     width: calc(100% - 16px);
     position: relative;
-    margin: 0 0 0 16px;
-    text-align: left;
-    z-index: 30;
-    background-color: transparent;
+    margin-left: 16px;
 }
 
+/* arrow */
 
- .selection>span {
+.listbox > span {
     display: block;
+    content: url(../assets/icons/arrow.svg);
     width: 30px;
     height: 25px;
+    position: absolute;
+    top: 16px;
+    right: 10px;
     border-style: solid;
     border-width: 14px 8px 0 8px;
-    content: url(../assets/icons/arrow.svg);
-    position: absolute;
-    top: 16px;
-    right: 10px;
     color: transparent;
-    z-index: 40;
+    z-index: 10;
 }
 
- .selection.open>span {
-    display: block;
-    width: 30px;
-    height: 25px;
-    border-style: solid;
+.listbox.open > span {
     border-width: 0 8px 14px 8px;
-    content: url(../assets/icons/arrow.svg);
-    position: absolute;
-    top: 16px;
-    right: 10px;
     transform: rotate(180deg);
-    /* background: transparent; */
-    color: transparent;
 }
+
+/* options */
 
 .new-option {
-    text-align: center;
-    background-color: #fff;
-    cursor: pointer;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    position: relative;
-    margin-top: 1px;
+    position: absolute;
+    top: 0;
     left: 0;
     right: 0;
-    top: 0;
-    background-color: #901C1C;
     border-radius: 5px;
-    position: absolute;
+    background-color: #901C1C;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     width: 100%;
     z-index: -1;
+    cursor: pointer;
 }
 
 .new-option p {
-    text-align: left;
     height: 70px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.new-option.reveal:hover,
-.new-option.reveal:focus-visible {
-    outline: none;
-    border: 6px solid #D3573C;
-    border-radius: 0;
-    z-index: 50;
 }
 
 .new-option.reveal {
@@ -310,14 +212,18 @@
     border-radius: 0 0 5px 5px;
 }
 
+.new-option.reveal:hover,
+.new-option.reveal:focus-visible {
+    outline: none;
+    border: 4px solid #D3573C;
+    border-radius: 0;
+    z-index: 50;
+}
+
 .hideCurrentOption {
     position: absolute;
     top: 0;
     visibility: hidden;
-}
-
-.visible {
-    position: static;
 }
 
 /*=============================================
@@ -644,7 +550,7 @@ video {
     position: fixed;
     bottom: 0;
     right: 20px;
-    z-index: 10;
+    z-index: 20;
     background-color: #DB8876;
     display: flex;
     justify-content: space-between;
@@ -807,7 +713,7 @@ video {
         #contact_modal .modal {
             width: 100%;
             margin: 0 auto;
-            margin-top: 0px;
+            margin-top: 0;
             height: fit-content;
             margin-top: 10vh;
             position: static;

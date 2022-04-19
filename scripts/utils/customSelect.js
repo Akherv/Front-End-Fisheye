@@ -3,13 +3,12 @@ function customSelect() {
   const oldSelectedOption = document.querySelector('.old-select option[selected]');
   const oldSelectedOptionDefault = document.querySelector('.old-select option:first-child');
   const oldOptions = document.querySelectorAll('.old-select option');
-  const listboxWrapper = document.querySelector('.new-select-wrapper');
-  const listboxLabel = document.querySelector('.selection p span');
+  const listboxLabel = document.querySelector('.listbox p span');
     // selection to keep focus inside modal
   const  focusableElements =
     '.new-option[aria-selected="true"], [tabindex]:not([tabindex="0"])';
-  const firstFocusableElement = document.querySelector(".selection").querySelectorAll(focusableElements)[0];
-  const focusableContent = document.querySelector(".selection").querySelectorAll(focusableElements);
+  const firstFocusableElement = document.querySelector(".listbox").querySelectorAll(focusableElements)[0];
+  const focusableContent = document.querySelector(".listbox").querySelectorAll(focusableElements);
   const lastFocusableElement = focusableContent[focusableContent.length - 1];
 
   // Initialisation
@@ -23,24 +22,24 @@ function customSelect() {
     oldOptions.forEach((el) => {
       const newValue = el.value;
       const newHTML = el.innerHTML;
-      document.querySelector('.selection').innerHTML += `<div id="${el.value}" class="new-option" data-value="${newValue}" role="option" aria-selected="false" tabindex="-1"><p id="id-${el.value}">${newHTML}</p></div>`;
+      document.querySelector('.listbox').innerHTML += `<div id="${el.value}" class="new-option" data-value="${newValue}" role="option" aria-selected="false" tabindex="-1"><p id="id-${el.value}">${newHTML}</p></div>`;
       if (newValue === 'popularite') {
         document.querySelector(`.new-option[data-value="${newValue}"]`).setAttribute('aria-selected', 'true');
-        document.querySelector(".selection").setAttribute('aria-activedescendant', `${newValue}`);
+        document.querySelector(".listbox").setAttribute('aria-activedescendant', `${newValue}`);
       }
     });
   }
   createNewDOMSelect();
 
   // DOM selection for element who need to wait for initialisation
-  const listbox = document.querySelector('.selection');
+  const listbox = document.querySelector('.listbox');
   const newOptions = document.querySelectorAll('.new-option');
 
   function openSelect() {
     // handle change on container
     listbox.classList.add('open');
     listbox.setAttribute('aria-expanded', 'true');
-    const listboxLabelOpenContent = document.querySelector('.selection.open p span').textContent;
+    const listboxLabelOpenContent = document.querySelector('.listbox.open p span').textContent;
     // handle change on options
     newOptions.forEach((el) => {
       // if the current option is selected hide from list
@@ -74,7 +73,7 @@ function customSelect() {
       el.setAttribute('tabindex', '-1');
     });
     // Move focus to the listbox container
-    document.querySelector('.selection').focus();
+    document.querySelector('.listbox').focus();
   }
 
 
@@ -138,7 +137,7 @@ function customSelect() {
     }
     const newValue = el.dataset.value;
     // Selection New Select
-    document.querySelector('.selection p span').innerHTML = el.querySelector('p').innerHTML;
+    document.querySelector('.listbox p span').innerHTML = el.querySelector('p').innerHTML;
     document.querySelector('.new-option[aria-selected="true"]').setAttribute('aria-selected', 'false');
     document.querySelector(`.new-option[data-value="${newValue}"]`).setAttribute('aria-selected', 'true');
 
@@ -149,7 +148,7 @@ function customSelect() {
     // change textContent
     el.setAttribute('aria-selected', 'true');
     el.setAttribute('tabindex', '0');
-    document.querySelector(".selection").setAttribute('aria-activedescendant', `${newValue}`);
+    document.querySelector(".listbox").setAttribute('aria-activedescendant', `${newValue}`);
     // hide from list selected textContent
     el.classList.remove('reveal');
     el.classList.add('hideCurrentOption');
