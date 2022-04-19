@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <header id="header" class="header" role="banner">
+  <header id="header" class="header">
     <a href="index.html" aria-labelledby="homepage" >
       <img src="assets/images/logo.png" id="homepage" class="logo" alt="Fisheye Home page" />
     </a>
@@ -25,16 +25,16 @@
       </div>
       <button type="button" class="photograph-header_contact_button contact_button" aria-label="Contact Me" tabindex="0">Contactez-moi</button>
     </div>
+    <label for="filter" aria-hidden="true"></label>
     <select id="filter" class="old-select" aria-hidden="true" tabindex="-1">
-      <label for="filter" aria-hidden="true">Trier par</label>
       <option value="popularite" selected aria-hidden="true">Popularité</option>
       <option value="date" aria-hidden="true">Date</option>
       <option value="title" aria-hidden="true">Titre</option>
     </select>
     <div class="new-select-wrapper" aria-label="">
-      <label id="new-select-label" class="new-select-label" tabindex="-1">Trier par</label>
+      <p id="new-select-label" class="new-select-label" tabindex="-1">Trier par</p>
       <div role="button" class="new-select" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="new-select-label" tabindex="-1" >
-        <div class="selection" role="listbox" aria-labelledby="new-select-label" tabindex="0" aria-activedescendant="">
+        <div class="selection" role="listbox" aria-labelledby="new-select-label" tabindex="0" aria-activedescendant="popularite" aria-owns="popularite, date, titre">
           <p aria-hidden="true">
             <span id="selection"></span>
           </p>
@@ -50,24 +50,24 @@
     <div class="modal" role="document">
       <header>
         <h1 id="modalHeader" tabindex="-1">Contactez-moi</h1>
-        <img class="closeBtn" src="assets/icons/close.svg" role="button" aria-label="Close Contact form"
-          alt=""/>
+        <img class="closeBtn" src="assets/icons/close.svg" role="button" tabindex="0" aria-label="Close Contact form"
+          alt="Close Contact form"/>
       </header>
       <form action="./index.html" method="get" >
         <div role="region">
           <div class="formData">
           <label for="Firstname">Prénom</label>
-          <input type="text" name="Firstname" id="Firstname" class="fields" aria-labelledby="Firstname" aria-describedby="FirstnameHelp" aria-required="true" autocomplete="true">
+          <input type="text" name="Firstname" id="Firstname" class="fields" aria-labelledby="Firstname" aria-describedby="FirstnameHelp" aria-required="true" autocomplete="on">
           <span id="FirstnameHelp" class="hiddenElement">Le prénom doit contenir au moins 2 lettres</span>
           </div>
           <div class="formData">
           <label for="Lastname">Nom</label>
-          <input type="text" name="Lastname" id="Lastname" class="fields" aria-labelledby="Lastname" aria-describedby="LastnameHelp" aria-required="true" autocomplete="true">
+          <input type="text" name="Lastname" id="Lastname" class="fields" aria-labelledby="Lastname" aria-describedby="LastnameHelp" aria-required="true" autocomplete="on">
           <span id="LastnameHelp" class="hiddenElement">Le nom doit contenir au moins 2 lettres</span>
           </div>
           <div class="formData">
           <label for="Email">Email</label>
-          <input type="email" name="Email" id="Email" class="fields" aria-labelledby="Email" aria-describedby="EmailHelp" aria-required="true" autocomplete="true">
+          <input type="email" name="Email" id="Email" class="fields" aria-labelledby="Email" aria-describedby="EmailHelp" aria-required="true" autocomplete="on">
           <span id="EmailHelp" class="hiddenElement">L'email doit être correct</span>
           </div>
           <div class="formData">
@@ -84,7 +84,7 @@
     <div class="modal" role="document">
       <div class="content" aria-label="image closeup view">
         <img class="closeBtn" src="assets/icons/closeSlider.svg" role="button" tabindex="0" aria-label="Close dialog"
-          alt="" />
+          alt="Close dialog" />
         <div id="prevBtn" class="sliderBtn" role="button" tabindex="0" aria-label="previous image"></div>
         <div id="mediaContainer">
           <div id="mediaTitle" tabindex="-1"></div>
