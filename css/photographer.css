@@ -14,6 +14,7 @@
 }
 
 .photograph-header h1 {
+    margin-right: 0;
     font-size: 2.5em;
     color: #D3573C;
 }
@@ -308,9 +309,10 @@
 }
 
 #contact_modal .modal {
+    width: 100%;
     max-width: 600px;
     background-color: #DB8876;
-    padding: 5%;
+    padding: 3%;
     border-radius: 5px;
 }
 
@@ -702,7 +704,7 @@ video {
             height: 100%;
         }
 
-        #prevBtn::before, 
+        #prevBtn::before,
         #prevBtn::after,
         #nextBtn::before,
         #nextBtn::after {
@@ -717,6 +719,55 @@ video {
             margin-left: 10px;
         }
 
+        @media (orientation: landscape) {
+
+
+            #slider_modal .content {
+                height: 100%;
+                width: 100%;
+                display: unset;
+                position: relative;
+            }
+
+            #slider_modal .closeBtn {
+                top: 1em;
+                right: 1em;
+                z-index: 3;
+            }
+
+            #mediaContainer {
+                height: unset;
+                width: 100%;
+                position: absolute;
+                z-index: 1;
+                top: 0;
+                left: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .sliderBtn {
+                z-index: 2;
+                top: 40%;
+            }
+
+            #nextBtn {
+                position: absolute;
+                right: 0;
+            }
+
+            #slider_modal .mediaModal {
+                height: 90vh;
+                width: auto;
+              }
+
+            #mediaTitle {
+                margin: 0;
+            }
+
+        }
         /* contact_modal */
 
         ::-webkit-scrollbar {
