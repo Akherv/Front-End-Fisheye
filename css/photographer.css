@@ -234,7 +234,7 @@
 .portfolio {
     display: grid;
     grid-gap: 20px;
-    margin: 0 4%;
+    margin: 0 4% 100px;
     grid-template-columns: repeat(auto-fit, minmax(355px, 1fr));
     justify-items: center;
 }
@@ -612,11 +612,6 @@ video {
         margin: 0;
     }
 
-    /* portfolio */
-    .portfolio {
-        margin: 0 4%;
-    }
-
     @media screen and (max-width:850px) {
 
         /* presentation */
@@ -661,6 +656,7 @@ video {
             display: flex;
             flex-direction: column;
             padding: 0 0 60px 0;
+            margin: 0 4%;
         }
 
         .portfolio_media-container {
