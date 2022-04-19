@@ -114,23 +114,30 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    position: relative;
+    margin: 70px 100px;
 }
 
-.new-select {
+.listboxContainer{
+    position: absolute;
+    z-index: 20;
+    top: -20px;
+    left: 90px;
+}
+
+.selection {
     width: 170px;
     height: 70px;
     text-align: center;
     color: #fff;
     border-radius: 5px;
     line-height: 68px;
-    position: relative;
     font-size: 1.25em;
     font-weight: bold;
     z-index: 10;
-    
 }
 
-.new-select.open::after {
+.selection::after {
     position: absolute;
     content: "";
     height: 70px;
@@ -143,7 +150,7 @@
     overflow: hidden;
 }
 
-.new-select.open::after {
+.selection.open::after {
     position: absolute;
     content: "";
     height: 210px;
@@ -152,7 +159,6 @@
     left: 0;
     background-color: #901C1C;
     border-radius: 5px;
-    z-index: -1;
     overflow: hidden;
     box-shadow: 2px 2px 10px #525252;
 }
@@ -164,32 +170,31 @@
     margin-right: 10px;
 }
 
-.new-select .selection:active {
+ .selection:active {
     background-color: #901C1C;
 }
 
-.new-select:focus-visible,
-.new-select .selection:focus-visible {
+
+ .selection:focus-visible {
     outline: none;
     border: 4px solid #D3573C;
     background-color: #DB8876;
 }
 
 .selection:focus {
+    border: 4px solid #D3573C;
     background-color: #DB8876;
 }
 
-.new-select .selection.open:hover {
+ .selection.open:hover {
     outline: none;
     color: #fff;
 }
 
-.new-select .selection {
-    width: 100%;
+ .selection {
     height: 100%;
     background-color: #fff;
     cursor: pointer;
-    /* position: relative; */
     z-index: 20;
     background-color: #901C1C;
     border-radius: 5px;
@@ -200,33 +205,35 @@
     overflow: -moz-hidden-unscrollable;
 }
 
-.new-select .selection.open {
+ .selection.open {
     position: relative;
-    background-color: transparent;
     overflow: visible;
 }
 
-.new-select .selection.open::before {
+ .selection.open::before {
     content: "";
     position: absolute;
     width: 90%;
     height: 1px;
     background-color: #fff;
-    z-index: 20;
+    z-index: 40;
     left: 50%;
-    bottom: 0;
+    top: 70px;
     transform: translateX(-50%);
     box-shadow: 0 70px 0 0 #fff;
 }
 
-.new-select .selection p {
+ .selection p {
     width: calc(100% - 16px);
     position: relative;
     margin: 0 0 0 16px;
     text-align: left;
+    z-index: 30;
+    background-color: transparent;
 }
 
-.new-select .selection>span {
+
+ .selection>span {
     display: block;
     width: 30px;
     height: 25px;
@@ -236,11 +243,12 @@
     position: absolute;
     top: 16px;
     right: 10px;
-    background: transparent;
+    /* background: transparent; */
     color: transparent;
+    z-index: 40;
 }
 
-.new-select .selection.open>span {
+ .selection.open>span {
     display: block;
     width: 30px;
     height: 25px;
@@ -251,7 +259,7 @@
     top: 16px;
     right: 10px;
     transform: rotate(180deg);
-    background: transparent;
+    /* background: transparent; */
     color: transparent;
 }
 
@@ -268,14 +276,11 @@
     background-color: #901C1C;
     border-radius: 5px;
     position: absolute;
-    z-index: -1;
-
     width: 100%;
+    z-index: -1;
 }
 
 .new-option p {
-    width: calc(100% - 60px);
-    margin: -1px;
     text-align: left;
     height: 70px;
     display: flex;
@@ -293,6 +298,7 @@
 
 .new-option.reveal {
     position: unset;
+    z-index: 0;
 }
 
 .new-option.reveal:last-of-type {
@@ -686,11 +692,6 @@ video {
         margin: 0;
     }
 
-    /* filter */
-    .new-select-wrapper {
-        margin: 40px 4%;
-    }
-
     /* portfolio */
     .portfolio {
         margin: 0 4%;
@@ -721,11 +722,18 @@ video {
 
         .new-select-wrapper {
             flex-direction: column;
+            margin: 40px auto 130px;
+            
         }
 
         .new-select {
             margin: 10px auto 40px;
         }
+
+        .listboxContainer {
+            top: 40px;
+            left: unset;
+          }
 
         /* portfolio */
 

@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Fisheye, page de présentation de la biographie et du portfolio du photographe/vidéaste">
+  <meta name="description"
+    content="Fisheye, page de présentation de la biographie et du portfolio du photographe/vidéaste">
   <link href="https://fonts.googleapis.com/css?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet" type="text/css" />
   <link rel="icon" type="image/png" href="#">
@@ -14,7 +15,7 @@
 
 <body>
   <header id="header" class="header">
-    <a href="index.html" aria-labelledby="homepage" >
+    <a href="index.html" aria-labelledby="homepage">
       <img src="assets/images/logo.png" id="homepage" class="logo" alt="Fisheye Home page" />
     </a>
   </header>
@@ -23,7 +24,8 @@
       <div class="photograph-header_presentation">
         <p class="photograph-header_presentation-text"></p>
       </div>
-      <button type="button" class="photograph-header_contact_button contact_button" aria-label="Contact Me" tabindex="0">Contactez-moi</button>
+      <button type="button" class="photograph-header_contact_button contact_button" aria-label="Contact Me"
+        tabindex="0">Contactez-moi</button>
     </div>
     <label for="filter" aria-hidden="true"></label>
     <select id="filter" class="old-select" aria-hidden="true" tabindex="-1">
@@ -33,8 +35,8 @@
     </select>
     <div class="new-select-wrapper" aria-label="">
       <p id="new-select-label" class="new-select-label" tabindex="-1">Trier par</p>
-      <div role="button" class="new-select" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="new-select-label" tabindex="-1" >
-        <div class="selection" role="listbox" aria-labelledby="new-select-label" tabindex="0" aria-activedescendant="popularite" aria-owns="popularite, date, titre">
+      <div class="listboxContainer">
+        <div id="listbox" class="selection" role="listbox" aria-labelledby="new-select-label" tabindex="0" aria-activedescendant="popularite">
           <p aria-hidden="true">
             <span id="selection"></span>
           </p>
@@ -46,34 +48,39 @@
       <span class="informations_likes"></span>
     </div>
   </main>
-  <div id="contact_modal" role="dialog" aria-labelledby="modalHeader" aria-describedby="modalHeader" tabindex="-1" hidden>
+  <div id="contact_modal" role="dialog" aria-labelledby="modalHeader" aria-describedby="modalHeader" tabindex="-1"
+    hidden>
     <div class="modal" role="document">
       <header>
         <h1 id="modalHeader" tabindex="-1">Contactez-moi</h1>
         <img class="closeBtn" src="assets/icons/close.svg" role="button" tabindex="0" aria-label="Close Contact form"
-          alt="Close Contact form"/>
+          alt="Close Contact form" />
       </header>
-      <form action="./index.html" method="get" >
+      <form action="./index.html" method="get">
         <div role="region">
           <div class="formData">
-          <label for="Firstname">Prénom</label>
-          <input type="text" name="Firstname" id="Firstname" class="fields" aria-labelledby="Firstname" aria-describedby="FirstnameHelp" aria-required="true" autocomplete="on">
-          <span id="FirstnameHelp" class="hiddenElement">Le prénom doit contenir au moins 2 lettres</span>
+            <label for="Firstname">Prénom</label>
+            <input type="text" name="Firstname" id="Firstname" class="fields" aria-labelledby="Firstname"
+              aria-describedby="FirstnameHelp" aria-required="true" autocomplete="on">
+            <span id="FirstnameHelp" class="hiddenElement">Le prénom doit contenir au moins 2 lettres</span>
           </div>
           <div class="formData">
-          <label for="Lastname">Nom</label>
-          <input type="text" name="Lastname" id="Lastname" class="fields" aria-labelledby="Lastname" aria-describedby="LastnameHelp" aria-required="true" autocomplete="on">
-          <span id="LastnameHelp" class="hiddenElement">Le nom doit contenir au moins 2 lettres</span>
+            <label for="Lastname">Nom</label>
+            <input type="text" name="Lastname" id="Lastname" class="fields" aria-labelledby="Lastname"
+              aria-describedby="LastnameHelp" aria-required="true" autocomplete="on">
+            <span id="LastnameHelp" class="hiddenElement">Le nom doit contenir au moins 2 lettres</span>
           </div>
           <div class="formData">
-          <label for="Email">Email</label>
-          <input type="email" name="Email" id="Email" class="fields" aria-labelledby="Email" aria-describedby="EmailHelp" aria-required="true" autocomplete="on">
-          <span id="EmailHelp" class="hiddenElement">L'email doit être correct</span>
+            <label for="Email">Email</label>
+            <input type="email" name="Email" id="Email" class="fields" aria-labelledby="Email"
+              aria-describedby="EmailHelp" aria-required="true" autocomplete="on">
+            <span id="EmailHelp" class="hiddenElement">L'email doit être correct</span>
           </div>
           <div class="formData">
-          <label for="Yourmessage">Votre message</label>
-          <textarea name="Yourmessage" id="Yourmessage" class="fields" cols="30" rows="5" aria-labelledby="Yourmessage" aria-describedby="MessageHelp" aria-required="true"></textarea>
-          <span id="MessageHelp" class="hiddenElement">Le message ne doit pas être vide</span>
+            <label for="Yourmessage">Votre message</label>
+            <textarea name="Yourmessage" id="Yourmessage" class="fields" cols="30" rows="5"
+              aria-labelledby="Yourmessage" aria-describedby="MessageHelp" aria-required="true"></textarea>
+            <span id="MessageHelp" class="hiddenElement">Le message ne doit pas être vide</span>
           </div>
         </div>
         <button class="contact_button" aria-label="Envoyer">Envoyer</button>
@@ -82,7 +89,7 @@
   </div>
   <div id="slider_modal" role="dialog" aria-labelledby="mediaTitle" tabindex="-1" hidden>
     <div class="modal" role="document">
-      <div class="content" aria-label="image closeup view">
+      <div class="content">
         <img class="closeBtn" src="assets/icons/closeSlider.svg" role="button" tabindex="0" aria-label="Close dialog"
           alt="Close dialog" />
         <div id="prevBtn" class="sliderBtn" role="button" tabindex="0" aria-label="previous image"></div>

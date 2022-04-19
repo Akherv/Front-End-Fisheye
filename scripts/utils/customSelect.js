@@ -4,7 +4,6 @@ function customSelect() {
   const oldSelectedOptionDefault = document.querySelector('.old-select option:first-child');
   const oldOptions = document.querySelectorAll('.old-select option');
   const listboxWrapper = document.querySelector('.new-select-wrapper');
-  const listboxContainer = document.querySelector('.new-select');
   const listboxLabel = document.querySelector('.selection p span');
     // selection to keep focus inside modal
   const  focusableElements =
@@ -39,7 +38,7 @@ function customSelect() {
 
   function openSelect() {
     // handle change on container
-    listboxContainer.classList.add('open');
+    listbox.classList.add('open');
     listbox.setAttribute('aria-expanded', 'true');
     const listboxLabelOpenContent = document.querySelector('.selection.open p span').textContent;
     // handle change on options
@@ -65,7 +64,7 @@ function customSelect() {
 
   function closeSelect() {
     // handle change on container
-    listboxContainer.classList.remove('open');
+    listbox.classList.remove('open');
     listbox.classList.remove('open');
     listbox.setAttribute('aria-expanded', 'false');
     // handle change on options
@@ -125,7 +124,7 @@ function customSelect() {
 
   // close filter on Click outside
   // document.addEventListener('click', (e) => {
-  //   const isClickInsideElement = listboxContainer.contains(e.target);
+  //   const isClickInsideElement = listbox.contains(e.target);
   //   if (!isClickInsideElement) {
   //     closeSelect();
   //   }
