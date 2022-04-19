@@ -184,6 +184,7 @@ function displayContactModal() {
         checkfieldsIsValid();
         return false;
       }
+      console.log(valuesArr);
       closeContactModal();
       this.reset();
       return true;
