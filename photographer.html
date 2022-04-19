@@ -20,6 +20,7 @@
     </a>
   </header>
   <main id="main">
+    <!-- biography -->
     <div class="photograph-header">
       <div class="photograph-header_presentation">
         <p class="photograph-header_presentation-text"></p>
@@ -27,6 +28,7 @@
       <button type="button" class="photograph-header_contact_button contact_button" aria-label="Contact Me"
         tabindex="0">Contactez-moi</button>
     </div>
+    <!-- filter -->
     <label class="hiddenElement" for="filter" aria-hidden="true">Trier par</label>
     <select id="filter" class="old-select" aria-hidden="true" tabindex="-1">
       <option value="popularite" selected aria-hidden="true">Popularité</option>
@@ -36,7 +38,8 @@
     <div class="new-select-wrapper" aria-label="">
       <p id="new-select-label" class="new-select-label" tabindex="-1">Trier par</p>
       <div class="listboxContainer">
-        <div id="listbox" class="listbox" role="listbox" aria-labelledby="new-select-label" tabindex="0" aria-activedescendant="popularite">
+        <div id="listbox" class="listbox" role="listbox" aria-labelledby="new-select-label" tabindex="0"
+          aria-activedescendant="popularite">
           <p aria-hidden="true">
             <span id="selection"></span>
           </p>
@@ -44,10 +47,13 @@
         </div>
       </div>
     </div>
+    <!-- informations -->
     <div class="informations">
       <span class="informations_likes"></span>
     </div>
+    <!-- portofolio (appear at this place dynamically with JS) -->
   </main>
+  <!-- contact modal -->
   <div id="contact_modal" role="dialog" aria-labelledby="modalHeader" aria-describedby="modalHeader" tabindex="-1"
     hidden>
     <div class="modal" role="document">
@@ -56,6 +62,7 @@
         <img class="closeBtn" src="assets/icons/close.svg" role="button" tabindex="0" aria-label="Close Contact form"
           alt="Close Contact form" />
       </header>
+      <!-- form -->
       <form action="./index.html" method="get">
         <div role="region">
           <div class="formData">
@@ -87,12 +94,14 @@
       </form>
     </div>
   </div>
+  <!-- slider -->
   <div id="slider_modal" role="dialog" aria-labelledby="mediaTitle" tabindex="-1" hidden>
     <div class="modal" role="document">
       <div class="content">
         <img class="closeBtn" src="assets/icons/closeSlider.svg" role="button" tabindex="0" aria-label="Close dialog"
           alt="Close dialog" />
         <div id="prevBtn" class="sliderBtn" role="button" tabindex="0" aria-label="previous image"></div>
+        <!-- media container -->
         <div id="mediaContainer">
           <div id="mediaTitle" tabindex="-1"></div>
         </div>

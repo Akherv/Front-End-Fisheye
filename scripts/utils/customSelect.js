@@ -121,14 +121,6 @@ function customSelect() {
     }
   }, true));
 
-  // close filter on Click outside
-  // document.addEventListener('click', (e) => {
-  //   const isClickInsideElement = listbox.contains(e.target);
-  //   if (!isClickInsideElement) {
-  //     closeSelect();
-  //   }
-  // });
-
   // handle options change inside the filter
   function handleChangeOptions(elt) {
     let el = elt;
