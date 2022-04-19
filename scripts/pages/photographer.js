@@ -193,7 +193,15 @@ async function initPhotographerPage() {
     const filterBtn = document.querySelectorAll('.new-option');
     filterBtn.forEach((el) => el.addEventListener('click', () => {
       sortMedia(el);
-    }));
+      [...el.parentElement.children].forEach((elt) => {
+        if (elt.getAttribute('aria-selected') === 'true') {
+          elt.setAttribute('aria-selected', 'false');
+        }});
+      el.setAttribute('aria-selected', 'true');
+      el.parentElement.classList.remove('open');
+      console.log(el.parentElement)
+      el.parentElement.setAttribute('aria-expanded', 'false');
+    }, true));
     // accessibility
     filterBtn.forEach((el) => el.addEventListener('keydown', (event) => {
       if ((event.key || event.code) === ('Enter' || 13)) {

@@ -50,10 +50,10 @@ function customSelect() {
         if ((el.nextElementSibling != null) && (el.nextElementSibling.style.display !== 'none')) {
           // Move focus to the sibling
           el.nextElementSibling.setAttribute('tabindex', '0');
-          el.nextElementSibling.focus();
+          // el.nextElementSibling.focus();
         } else {
           el.previousElementSibling.setAttribute('tabindex', '0');
-          el.previousElementSibling.focus();
+          // el.previousElementSibling.focus();
         }
       } else { // reveal others options
         el.classList.remove('hideCurrentOption');
@@ -158,7 +158,12 @@ function customSelect() {
       opt.classList.remove('hideCurrentOption');
       opt.classList.add('reveal');
     });
-    closeSelect();
+
+    if (this) {
+      toggleOpen();
+    } else {
+      closeSelect();
+    }
   }
 
   // fire handle option change on Click
