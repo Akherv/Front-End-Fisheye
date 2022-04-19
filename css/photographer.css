@@ -698,6 +698,17 @@ video {
             padding: 0;
         }
 
+        #slider_modal .content {
+            height: 100%;
+        }
+
+        #prevBtn::before, 
+        #prevBtn::after,
+        #nextBtn::before,
+        #nextBtn::after {
+            width: 1em;
+        }
+
         #slider_modal .mediaModal {
             height: 100%;
         }
