@@ -27,6 +27,8 @@ function displayContactModal() {
     contactModalCloseBtn.setAttribute('tabindex', '0');
     contactModal.setAttribute('aria-modal', 'true');
     contactModal.removeAttribute('hidden');
+    contactModal.classList.remove('invisible');
+    contactModal.classList.add('visible');
     // Move focus
     contactModalCloseBtn.focus();
   }
@@ -51,6 +53,9 @@ function displayContactModal() {
     contactModalCloseBtn.setAttribute('tabindex', '-1');
     contactModal.removeAttribute('aria-modal');
     contactModal.setAttribute('hidden', '');
+    contactModal.classList.remove('visible');
+    contactModal.classList.add('invisible');
+
     // Move focus
     contactModalBtn.setAttribute('tabindex', '0');
     contactModalBtn.focus();
