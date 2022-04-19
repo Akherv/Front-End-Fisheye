@@ -316,7 +316,6 @@
 .portfolio {
     display: grid;
     grid-gap: 20px;
-    /* padding: 0 4% 60px 0; */
     margin: 0 4%;
     grid-template-columns: repeat(auto-fit, minmax(355px, 1fr));
     justify-items: center;
