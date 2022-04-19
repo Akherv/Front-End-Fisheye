@@ -96,7 +96,6 @@ function customSelect() {
       // reveal focus behind
       landmarks.forEach((el) => {
         if (el.classList.contains('header')) {
-          console.log(el)
           el.removeAttribute('tabindex');
         } else {
           el.setAttribute('tabindex', '0');

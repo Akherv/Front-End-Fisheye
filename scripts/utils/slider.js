@@ -80,7 +80,6 @@ function displaySlider() {
     body.style.overflow = 'auto';
 
     landmarks.forEach((el) => {
-      console.log(el.classList)
       if (el.classList.contains('header')) {
         el.removeAttribute('tabindex');
       } else {
